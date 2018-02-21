@@ -8,7 +8,7 @@
     "compose": "docker-compose up"
   },
   "dependencies": {
-    "@iou/core": "git+https://github.com/alexbechmann/iou-core.git#v0.1.4"
+    "@iou/core": "file:../core"
   },
   "devDependencies": {
     "@types/parse": "^2.4.3",
