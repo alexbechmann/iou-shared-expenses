@@ -4,11 +4,9 @@
   "description": "IOU Core",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexbechmann/iou-core.git"
+    "prepublish": "npm run build",
+    "build": "tsc",
+    "watch": "tsc -w"
   },
   "author": "",
   "license": "ISC",
@@ -16,11 +14,12 @@
     "url": "https://github.com/alexbechmann/iou-core/issues"
   },
   "homepage": "https://github.com/alexbechmann/iou-core#readme",
-  "typings": "./iou-core.d.ts",
+  "typings": "./lib/index.d.ts",
   "devDependencies": {
-    "@types/parse": "^2.4.4",
+    "@types/parse": "2.4.4",
     "typescript": "^2.7.2"
   },
+  "main": "lib/index.js",
   "files": [
     "lib/",
     "index.d.ts",

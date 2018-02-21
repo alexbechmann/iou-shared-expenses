@@ -1,8 +1,7 @@
 import { SocialService } from "../social/social.service";
 import { User } from "parse";
 import { createUserPointer } from "../shared/pointer.factory";
-import { Settlement, SettlementOverview} from "@iou/core";
-import { Currency } from "@iou/core/lib/currency";
+import { Settlement, SettlementOverview, Currency } from "@iou/core";
 
 export class SettlementService {
   async getSettlementOverviewForUser(user: User): Promise<SettlementOverview[]> {

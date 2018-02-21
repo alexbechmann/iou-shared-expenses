@@ -6,5 +6,8 @@
     "baseUrl": "./",
     "paths": {
     }
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

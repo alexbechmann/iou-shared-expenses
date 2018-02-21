@@ -1,21 +1,21 @@
-import { Pointer } from "parse";
+import * as Parse from 'parse';
 
 export class FriendRequest extends Parse.Object {
   constructor() {
     super("FriendRequest");
   }
   
-  get fromUser(): Pointer {
+  get fromUser(): Parse.Pointer  {
     return this.get('fromUser');
   }
-  set fromUser(value: Pointer) {
+  set fromUser(value: Parse.Pointer ) {
    this.set('fromUser', value);
   }
   
-  get toUser(): Pointer {
+  get toUser(): Parse.Pointer  {
     return this.get('toUser');
   }
-  set toUser(value: Pointer) {
+  set toUser(value: Parse.Pointer ) {
    this.set('toUser', value);
   }
 }
