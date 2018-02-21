@@ -1,0 +1,41 @@
+{
+  "name": "react-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@iou/core": "git+https://github.com/alexbechmann/iou-core.git#v0.1.5",
+    "material-ui": "^1.0.0-beta.33",
+    "material-ui-icons": "^1.0.0-beta.17",
+    "parse": "^1.11.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts-ts": "2.13.0",
+    "redux": "^3.7.2",
+    "redux-promise": "^0.5.3",
+    "rxjs": "^5.5.6",
+    "typeface-roboto": "0.0.54"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject"
+  },
+  "devDependencies": {
+    "@types/jest": "^22.1.2",
+    "@types/node": "^9.4.5",
+    "@types/parse": "^2.4.3",
+    "@types/react": "^16.0.36",
+    "@types/react-dom": "^16.0.3",
+    "@types/react-redux": "^5.0.14",
+    "@types/react-router": "^4.0.21",
+    "@types/react-router-dom": "^4.2.3",
+    "@types/react-tap-event-plugin": "0.0.30",
+    "@types/redux-promise": "^0.5.28",
+    "react-tap-event-plugin": "^3.0.2",
+    "typescript": "^2.7.1"
+  }
+}

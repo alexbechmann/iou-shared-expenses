@@ -1,0 +1,21 @@
+{
+  "name": "@iou/cloud-code",
+  "scripts": {
+    "lint": "tslint -p tslint.json",
+    "build": "tsc",
+    "start": "npm run build && npm run compose",
+    "ts:watch": "tsc -w",
+    "compose": "docker-compose up"
+  },
+  "dependencies": {
+    "@iou/core": "git+https://github.com/alexbechmann/iou-core.git#v0.1.4"
+  },
+  "devDependencies": {
+    "@types/parse": "^2.4.3",
+    "npm-run-all": "^4.1.2",
+    "parse": "^1.11.0",
+    "tslint": "^5.8.0",
+    "typescript": "^2.5.3"
+  },
+  "private": true
+}

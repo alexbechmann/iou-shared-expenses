@@ -1,0 +1,50 @@
+version: "3"
+services:
+  mongo:
+    restart: unless-stopped
+    build:
+      context: ./parse/db
+      dockerfile: Dockerfile
+
+  parse-server:
+    restart: unless-stopped
+    build:
+      context: ./parse/server
+      dockerfile: Dockerfile
+    volumes:
+      - ./parse/server/cloud:/parse-server/cloud
+    links:
+      - mongo
+    environment:
+      - PARSE_SERVER_DATABASE_URI=mongodb://mongo/db
+      - PARSE_SERVER_CLOUD=/parse-server/cloud/lib/main.js
+      - PARSE_SERVER_APPLICATION_ID=iou-shared-expenses
+      - PARSE_SERVER_MASTER_KEY=62GqBlnLJKvM
+    ports:
+      - "1337:1337"
+
+  parse-dashboard:
+    restart: unless-stopped
+    image: parseplatform/parse-dashboard
+    links:
+      - parse-server
+    environment:
+      - PARSE_DASHBOARD_SERVER_URL=http://localhost:1337/parse
+      - PARSE_DASHBOARD_MASTER_KEY=62GqBlnLJKvM
+      - PARSE_DASHBOARD_JAVASCRIPT_KEY=PC2WwBFjuT14Xal7a
+      - PARSE_DASHBOARD_APP_ID=iou-shared-expenses
+      - PARSE_DASHBOARD_APP_NAME=iou-shared-expenses
+      - PARSE_DASHBOARD_USER_ID=admin
+      - PARSE_DASHBOARD_USER_PASSWORD=pass
+      - PORT=4040
+      - PARSE_DASHBOARD_ALLOW_INSECURE_HTTP=1
+    ports:
+      - "4040:4040"
+
+  dashboard:
+    restart: unless-stopped
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    links:
+      - mongo

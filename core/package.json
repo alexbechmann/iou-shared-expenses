@@ -1,0 +1,29 @@
+{
+  "name": "@iou/core",
+  "version": "1.0.1",
+  "description": "IOU Core",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexbechmann/iou-core.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexbechmann/iou-core/issues"
+  },
+  "homepage": "https://github.com/alexbechmann/iou-core#readme",
+  "typings": "./iou-core.d.ts",
+  "devDependencies": {
+    "@types/parse": "^2.4.4",
+    "typescript": "^2.7.2"
+  },
+  "files": [
+    "lib/",
+    "index.d.ts",
+    "index.ts"
+  ]
+}
