@@ -9,7 +9,7 @@
         "declaration": true
     },
     "files": [
-        "iou-core.ts"
+        "index.ts"
     ],
     "exclude": [
         "node_modules"
