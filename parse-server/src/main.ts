@@ -1,7 +1,7 @@
 import { SocialService } from './social/social.service';
 import { createUserPointer } from "./shared/pointer.factory";
 import { SettlementService } from "./settlements/settlement.service";
-import { SettlementOverview, FriendRequest } from "@iou/core";
+import { SettlementOverview, FriendRequest } from "@iou/core/src";
 import { UserService } from "./users/user.service";
 import { User } from "parse"; 
 

@@ -1,5 +1,4 @@
 import { TransactionType } from "../shared/transaction-type";
-import * as Parse from 'parse';
 
 export class Transaction extends Parse.Object {
   constructor() {

@@ -1,5 +1,3 @@
-import * as Parse from 'parse';
-
 export class FriendRequest extends Parse.Object {
   constructor() {
     super("FriendRequest");

@@ -1,6 +1,6 @@
 import { createUserPointer } from "../shared/pointer.factory";
 import { Pointer, User } from "parse";
-import { FriendRequest } from "@iou/core";
+import { FriendRequest } from "@iou/core/src";
 
 export class SocialService {
   async insertFriendRequestIfNeeded(currentUserId: string, toUserId: string): Promise<void> {
