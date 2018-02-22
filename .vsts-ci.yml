@@ -11,6 +11,13 @@ steps:
 
 - task: Npm@1
   inputs:
+    command: 'custom'
+    workingDir: 'core'
+    verbose: 'false'
+    customCommand: 'run build'
+
+- task: Npm@1
+  inputs:
     workingDir: 'react-app'
     verbose: 'false'
 
