@@ -4,6 +4,7 @@ COPY ./parse-server/package.json /usr/src/app/
 COPY ./parse-server/tsconfig.json /usr/src/app/
 COPY ./parse-server/tslint.json /usr/src/app/
 COPY ./parse-server/src/ /usr/src/app/src/
+COPY ./parse-server/gulpfile.js /usr/src/app/
 COPY ./core /usr/src/core
 
 RUN npm install -g yarn

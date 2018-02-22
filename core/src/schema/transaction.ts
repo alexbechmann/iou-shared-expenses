@@ -1,21 +1,22 @@
 import { TransactionType } from "../shared/transaction-type";
+import { Object, Pointer } from 'parse';
 
-export class Transaction extends Parse.Object {
+export class Transaction extends Object {
   constructor() {
     super("Transaction");
   }
 
-  get fromUser(): Parse.Pointer {
+  get fromUser(): Pointer {
     return this.get('fromUser');
   }
-  set fromUser(value: Parse.Pointer ) {
+  set fromUser(value: Pointer ) {
    this.set('fromUser', value);
   }
   
-  get toUser(): Parse.Pointer  {
+  get toUser(): Pointer  {
     return this.get('toUser');
   }
-  set toUser(value: Parse.Pointer ) {
+  set toUser(value: Pointer ) {
    this.set('toUser', value);
   }
 

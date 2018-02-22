@@ -1,5 +1,5 @@
 export { Currency } from './models/currency';
-export { SettlementOverview } from './models/settlement-Overview';
+export { SettlementOverview } from './models/settlement-overview';
 export { Settlement } from './models/settlement';
 
 export { Transaction } from './schema/transaction';
