@@ -1,0 +1,27 @@
+queue:
+  name: Hosted Linux Preview
+  demands: npm
+
+
+steps:
+- task: Npm@1
+  inputs:
+    workingDir: 'core'
+    verbose: 'false'
+
+- task: Npm@1
+  inputs:
+    workingDir: 'react-app'
+    verbose: 'false'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'react-app'
+    verbose: 'false'
+    customCommand: 'run build'
+
+- task: Docker@0
+  inputs:
+    dockerFile: 'Dockerfile-ParseServer'
+
