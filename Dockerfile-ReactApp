@@ -1,0 +1,22 @@
+FROM node
+
+COPY ./react-app/package.json /usr/src/app/
+COPY ./react-app/package-lock.json /usr/src/app/
+COPY ./react-app/tsconfig.json /usr/src/app/
+COPY ./react-app/.env /usr/src/app/
+COPY ./react-app/tslint.json /usr/src/app/
+COPY ./core /usr/src/core
+
+RUN npm install -g yarn
+
+WORKDIR /usr/src/core
+
+RUN yarn install
+RUN yarn run build
+
+WORKDIR /usr/src/app
+
+RUN npm install
+EXPOSE 3000
+
+CMD [ "npm", "start" ]

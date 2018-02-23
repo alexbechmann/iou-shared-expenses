@@ -6,6 +6,33 @@ services:
   #     context: ./db
   #     dockerfile: Dockerfile
 
+  core:
+    restart: unless-stopped
+    build:
+      context: ./core
+      dockerfile: Dockerfile
+    volumes:
+      - ./core/src:/usr/src/app/src
+      - ./core/lib:/usr/src/app/lib
+
+  react-app:
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile-ReactApp
+    volumes:
+      - ./react-app/src:/usr/src/app/src
+      - ./react-app/public:/usr/src/app/public
+      - ./core:/usr/src/core
+    expose:
+      - "35729"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+
   mongo:
     image: mongo
 
