@@ -7,7 +7,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Action } from "redux";
 import { FindFriends, FriendRequests } from "src/social";
 import { Overview } from "src/settlements";
-import { Login } from 'src/auth';
+import { Authorize } from 'src/auth';
 import { AppMenuContainer } from 'src/menu';
 import { EditTransaction } from 'src/transactions';
 
@@ -50,11 +50,7 @@ export class App extends React.Component<Props> {
       );
     } else if (this.props.parseInitialized) {
       return (
-        <Grid container={true} spacing={24} className="root container">
-          <Grid item={true} xs={12}>
-            <Login />
-          </Grid>
-        </Grid>
+        <Authorize />
       );
     } else {
       return (

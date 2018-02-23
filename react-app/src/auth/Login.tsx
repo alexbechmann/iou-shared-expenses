@@ -34,8 +34,8 @@ class LoginComponent extends React.Component<Props, State> {
           label="Username"
           value={this.state.username}
           fullWidth={true}
-          onChange={(username: React.ChangeEvent<HTMLInputElement>) => this.setState({
-            username: username.target.value
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.setState({
+            username: event.target.value
           })}
         />
         <TextField
@@ -43,8 +43,8 @@ class LoginComponent extends React.Component<Props, State> {
           label="Password"
           value={this.state.password}
           fullWidth={true}
-          onChange={(password: React.ChangeEvent<HTMLInputElement>) => this.setState({
-            password: password.target.value
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.setState({
+            password: event.target.value
           })}
         />
 
