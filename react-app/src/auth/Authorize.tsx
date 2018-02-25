@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Tabs, Tab, Paper } from 'material-ui';
-import { Field, reduxForm, InjectedFormProps } from 'redux-form';
+import { Tabs, Tab, Paper, TextField } from 'material-ui';
+import { Field, InjectedFormProps } from 'redux-form';
+import { Login } from "./Login";
 
 interface State {
   activeTab: number;
@@ -19,7 +20,7 @@ export class Authorize extends React.Component<Props, State> {
         <Paper>
           <Tabs
             value={this.state.activeTab}
-            onChange={this.handleChange}
+            onChange={this.handleTabChange}
             indicatorColor="primary"
             textColor="primary"
           >
@@ -27,6 +28,7 @@ export class Authorize extends React.Component<Props, State> {
             <Tab label="Register" />
           </Tabs>
         </Paper>
+        <Login />
         {this.renderLoginForm()}
       </div>
     );
@@ -37,51 +39,18 @@ export class Authorize extends React.Component<Props, State> {
     return (
       <form onSubmit={handleSubmit}>
         <div>
-          <label>First Name</label>
           <div>
-            <Field name="firstName" component="input" type="text" placeholder="First Name" />
-          </div>
-        </div>
-        <div>
-          <label>Last Name</label>
-          <div>
-            <Field name="lastName" component="input" type="text" placeholder="Last Name" />
-          </div>
-        </div>
-        <div>
-          <label>Email</label>
-          <div>
-            <Field name="email" component="input" type="email" placeholder="Email" />
-          </div>
-        </div>
-        <div>
-          <label>Sex</label>
-          <div>
-            <label><Field name="sex" component="input" type="radio" value="male" /> Male</label>
-            <label><Field name="sex" component="input" type="radio" value="female" /> Female</label>
-          </div>
-        </div>
-        <div>
-          <label>Favorite Color</label>
-          <div>
-            <Field name="favoriteColor" component="select">
-              <option></option>
-              <option value="ff0000">Red</option>
-              <option value="00ff00">Green</option>
-              <option value="0000ff">Blue</option>
-            </Field>
-          </div>
-        </div>
-        <div>
-          <label htmlFor="employed">Employed</label>
-          <div>
-            <Field name="employed" id="employed" component="input" type="checkbox" />
-          </div>
-        </div>
-        <div>
-          <label>Notes</label>
-          <div>
-            <Field name="notes" component="textarea" />
+            <Field
+              name="firstName"
+              component={(props: any) => (
+                <TextField
+                  autoFocus={true}
+                  label="First Name"
+                  fullWidth={true}
+                  error={props.meta.touched && props.meta.error}
+                />
+              )}
+            />
           </div>
         </div>
         <div>
@@ -89,10 +58,10 @@ export class Authorize extends React.Component<Props, State> {
           <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
         </div>
       </form>
-    )
+    );
   }
 
-  handleChange = (event, value) => {
+  handleTabChange = (event, value) => {
     this.setState({
       activeTab: value
     });
