@@ -46,7 +46,7 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    workingDir: 'parse-server
+    workingDir: 'parse-server'
     verbose: 'false'
     customCommand: 'run build'
 
