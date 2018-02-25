@@ -10,6 +10,27 @@ steps:
     workingDir: ''
     verbose: 'false'
 
+steps:
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'core'
+    verbose: 'false'
+
+steps:
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'parse-server'
+    verbose: 'false'
+
+steps:
+- task: Npm@1
+  inputs:
+    command: 'install'
+    workingDir: 'react-app'
+    verbose: 'false'
+
 - task: Npm@1
   inputs:
     command: 'custom'
@@ -21,6 +42,13 @@ steps:
   inputs:
     command: 'custom'
     workingDir: 'core'
+    verbose: 'false'
+    customCommand: 'run build'
+
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    workingDir: 'parse-server
     verbose: 'false'
     customCommand: 'run build'
 
