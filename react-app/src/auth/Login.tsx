@@ -9,6 +9,11 @@ export interface LoginDispatchProps {
   loginWithPassword: (username: string, password: string) => Action;
 }
 
+interface FormData {
+  username: string;
+  password: string;
+}
+
 interface Props extends InjectedFormProps, LoginDispatchProps { }
 
 export class Login extends React.Component<Props> {
@@ -33,13 +38,6 @@ export class Login extends React.Component<Props> {
             label="Email"
           />
           <Field
-            name="username"
-            component={TextField}
-            type="text"
-            placeholder="Username"
-            label="Username"
-          />
-          <Field
             name="password"
             component={TextField}
             type="password"
@@ -47,19 +45,18 @@ export class Login extends React.Component<Props> {
             label="Password"
           />
 
-          <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting}>
+          <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login
           </Button>
-          <div>
-            <button type="submit" disabled={pristine || submitting}>Submit</button>
-            <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-          </div>
+          <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting} onClick={reset}>
+            Clear
+          </Button>
         </form>
       </div >
     );
   }
 
-  handleOnSubmit(formData: any) {
+  handleOnSubmit(formData: FormData) {
     const { username, password } = formData;
     this.props.loginWithPassword(username, password);
   }

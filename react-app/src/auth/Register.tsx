@@ -2,6 +2,7 @@ import * as React from 'react';
 import { InjectedFormProps, Field } from "redux-form";
 import { Action } from "redux";
 import { TextField } from "redux-form-material-ui";
+import { Button } from "material-ui";
 
 export interface RegisterDispatchProps {
   register: (username: string, email: string, password: string) => Action;
@@ -38,8 +39,12 @@ export class Register extends React.Component<Props> {
           />
         </div>
         <div>
-          <button type="submit" disabled={pristine || submitting}>Submit</button>
-          <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
+          <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
+            Login
+          </Button>
+          <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting} onClick={reset}>
+            Clear
+          </Button>
         </div>
       </form>
     );
