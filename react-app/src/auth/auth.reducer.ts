@@ -1,9 +1,9 @@
-import { User } from "parse";
+import { User } from 'parse';
 import * as Parse from 'parse';
-import { PARSE_INITIALIZED } from "src/parse";
-import { LOGIN, LOGOUT } from "./auth.actions";
-import { AuthState } from "src/auth";
-import { AnyAction } from "redux";
+import { PARSE_INITIALIZED } from 'src/parse';
+import { LOGIN, LOGOUT } from './auth.actions';
+import { AuthState } from 'src/auth';
+import { AnyAction } from 'redux';
 
 const defaultState: AuthState = {
   currentUser: null

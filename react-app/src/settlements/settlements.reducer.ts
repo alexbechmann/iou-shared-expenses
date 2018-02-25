@@ -1,7 +1,7 @@
-import { SettlementsState } from "./settlements.state";
-import { GETTING_SETTLEMENTS, GET_SETTLEMENTS } from "./settlements.actions";
-import { SettlementOverview } from "@iou/core";
-import { AnyAction } from "redux";
+import { SettlementsState } from './settlements.state';
+import { GETTING_SETTLEMENTS, GET_SETTLEMENTS } from './settlements.actions';
+import { SettlementOverview } from '@iou/core';
+import { AnyAction } from 'redux';
 
 const defaultState: SettlementsState = {
   gettingSettlements: false,

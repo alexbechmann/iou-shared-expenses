@@ -12,7 +12,7 @@ const social_service_1 = require("./social/social.service");
 const pointer_factory_1 = require("./shared/pointer.factory");
 const settlement_service_1 = require("./settlements/settlement.service");
 const user_service_1 = require("./users/user.service");
-Parse.Cloud.define("sendFriendRequest", (req, res) => {
+Parse.Cloud.define('sendFriendRequest', (req, res) => {
     const params = req.params;
     const currentUser = req.user;
     const socialService = new social_service_1.SocialService();
@@ -22,7 +22,7 @@ Parse.Cloud.define("sendFriendRequest", (req, res) => {
         res.error(err);
     });
 });
-Parse.Cloud.define("acceptFriendRequest", (req, res) => __awaiter(this, void 0, void 0, function* () {
+Parse.Cloud.define('acceptFriendRequest', (req, res) => __awaiter(this, void 0, void 0, function* () {
     const params = req.params;
     const currentUser = req.user;
     const socialService = new social_service_1.SocialService();
@@ -40,7 +40,7 @@ Parse.Cloud.define("acceptFriendRequest", (req, res) => __awaiter(this, void 0, 
     }
     return res.success({});
 }));
-Parse.Cloud.define("getSettlements", (req, res) => __awaiter(this, void 0, void 0, function* () {
+Parse.Cloud.define('getSettlements', (req, res) => __awaiter(this, void 0, void 0, function* () {
     const currentUser = req.user;
     const settlementService = new settlement_service_1.SettlementService();
     const settlements = yield settlementService.getSettlementOverviewForUser(currentUser);

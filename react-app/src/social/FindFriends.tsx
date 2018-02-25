@@ -1,16 +1,16 @@
 import * as React from 'react';
-import { TextField, CircularProgress, ListItem, List, ListItemText, ListItemSecondaryAction, ListItemIcon, IconButton, Avatar } from "material-ui";
+import { TextField, CircularProgress, ListItem, List, ListItemText, ListItemSecondaryAction, ListItemIcon, IconButton, Avatar } from 'material-ui';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import { connect } from "react-redux";
-import { User } from "parse";
+import { connect } from 'react-redux';
+import { User } from 'parse';
 import * as Icons from 'material-ui-icons';
-import { Action } from "redux";
-import { AppState } from "@shared/index";
-import { findUsers, setSearchText, sendFriendRequest } from "src/social/social.actions";
+import { Action } from 'redux';
+import { AppState } from '@shared/index';
+import { findUsers, setSearchText, sendFriendRequest } from 'src/social/social.actions';
 
 interface Props {
   findUsers: (searchText: string) => Action;
@@ -58,7 +58,7 @@ export class FindFriendsComponent extends React.Component<Props> {
               </ListItemIcon>
               <ListItemText primary={user.id} />
               <ListItemSecondaryAction>
-                <IconButton aria-label={"Add Friend"} color="secondary" onClick={() => this.props.sendFriendRequest(user.id)}>
+                <IconButton aria-label={'Add Friend'} color="secondary" onClick={() => this.props.sendFriendRequest(user.id)}>
                   {this.props.sendingFriendRequests.indexOf(user.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>
@@ -67,18 +67,12 @@ export class FindFriendsComponent extends React.Component<Props> {
         </List>
       );
     } else {
-      return (
-        <span />
-      );
+      return <span />;
     }
   }
 
   renderLoadingState() {
-    return (this.props.loading ? (
-      <CircularProgress />
-    ) : (
-        <span />
-      ));
+    return this.props.loading ? <CircularProgress /> : <span />;
   }
 
   handleSearchBoxInput(e: any) {
@@ -87,7 +81,8 @@ export class FindFriendsComponent extends React.Component<Props> {
   }
 
   componentDidMount() {
-    this.search$.asObservable()
+    this.search$
+      .asObservable()
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(searchText => {
@@ -107,4 +102,8 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FindFriends = connect(mapStateToProps, { findUsers, setSearchText, sendFriendRequest })(FindFriendsComponent);
+export const FindFriends = connect(mapStateToProps, {
+  findUsers,
+  setSearchText,
+  sendFriendRequest
+})(FindFriendsComponent);

@@ -1,4 +1,4 @@
-import { CurrencyType } from "../shared/currency-type";
+import { CurrencyType } from '../shared/currency-type';
 
 export interface Currency {
   name: string;

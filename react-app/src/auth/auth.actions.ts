@@ -1,27 +1,27 @@
-import { User } from "parse";
+import { User } from 'parse';
 import * as Parse from 'parse';
-import { store } from "@shared/index";
-import { AnyAction } from "redux";
+import { store } from '@shared/index';
+import { AnyAction } from 'redux';
 
-export const LOGIN = "IOU/LOGIN";
-export const LOGOUT = "IOU/LOGOUT";
-export const REGISTERING = "IOU/REGISTERING";
-export const REGISTERED = "IOU/REGISTERED";
+export const LOGIN = 'IOU/LOGIN';
+export const LOGOUT = 'IOU/LOGOUT';
+export const REGISTERING = 'IOU/REGISTERING';
+export const REGISTERED = 'IOU/REGISTERED';
 
 export function loginWithFacebook(): AnyAction {
   const payload = new Promise<User>((resolve, reject) => {
     Parse.FacebookUtils.logIn(null, {
       success: (user: User) => {
         if (!user.existed()) {
-          console.log("User signed up and logged in through Facebook!");
+          console.log('User signed up and logged in through Facebook!');
         } else {
-          console.log("User logged in through Facebook!");
+          console.log('User logged in through Facebook!');
         }
         console.log(user.attributes);
         resolve(user);
       },
       error: (user, error) => {
-        console.log("User cancelled the Facebook login or did not fully authorize.");
+        console.log('User cancelled the Facebook login or did not fully authorize.');
         reject(error);
       }
     });

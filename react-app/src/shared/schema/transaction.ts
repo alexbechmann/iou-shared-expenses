@@ -1,71 +1,71 @@
-import { TransactionType } from "@iou/core";
+import { TransactionType } from '@iou/core';
 import * as Parse from 'parse';
 
 export class Transaction extends Parse.Object {
   constructor() {
-    super("Transaction");
+    super('Transaction');
   }
 
   get fromUser(): Parse.Pointer {
     return this.get('fromUser');
   }
   set fromUser(value: Parse.Pointer) {
-   this.set('fromUser', value);
+    this.set('fromUser', value);
   }
 
-  get toUser(): Parse.Pointer  {
+  get toUser(): Parse.Pointer {
     return this.get('toUser');
   }
   set toUser(value: Parse.Pointer) {
-   this.set('toUser', value);
+    this.set('toUser', value);
   }
 
   get isSecure(): boolean {
     return this.get('isSecure');
   }
   set isSecure(value: boolean) {
-   this.set('isSecure', value);
+    this.set('isSecure', value);
   }
 
   get currencyId(): number {
     return this.get('currencyId');
   }
   set currencyId(value: number) {
-   this.set('currencyId', value);
+    this.set('currencyId', value);
   }
 
   get transactionDate(): Date {
     return this.get('transactionDate');
   }
   set transactionDate(value: Date) {
-   this.set('transactionDate', value);
+    this.set('transactionDate', value);
   }
 
   get purchaseTransactionLinkUUID(): string {
     return this.get('purchaseTransactionLinkUUID');
   }
   set purchaseTransactionLinkUUID(value: string) {
-   this.set('purchaseTransactionLinkUUID', value);
+    this.set('purchaseTransactionLinkUUID', value);
   }
 
   get amount(): number {
     return this.get('amount');
   }
   set amount(value: number) {
-   this.set('amount', value);
+    this.set('amount', value);
   }
 
   get title(): string {
     return this.get('title');
   }
   set title(value: string) {
-   this.set('title', value);
+    this.set('title', value);
   }
 
   get transactionType(): TransactionType {
     return this.get('transactionType');
   }
   set transactionType(value: TransactionType) {
-   this.set('transactionType', value);
+    this.set('transactionType', value);
   }
 }

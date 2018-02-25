@@ -3,14 +3,14 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
-import { connect } from "react-redux";
-import { User } from "parse";
-import { AppState } from "@shared/index";
-import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon, CircularProgress } from "material-ui";
+import { connect } from 'react-redux';
+import { User } from 'parse';
+import { AppState } from '@shared/index';
+import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon, CircularProgress } from 'material-ui';
 import * as Icons from 'material-ui-icons';
-import { Action } from "redux";
-import { acceptFriendRequest, getFriendRequests } from "src/social";
-import { FriendRequest } from "@shared/schema";
+import { Action } from 'redux';
+import { acceptFriendRequest, getFriendRequests } from 'src/social';
+import { FriendRequest } from '@shared/schema';
 
 interface Props {
   acceptingFriendRequests: string[];
@@ -23,11 +23,7 @@ interface Props {
 
 export class FriendRequestsComponent extends React.Component<Props> {
   render() {
-    return (
-      <div>
-        {this.renderResults()}
-      </div>
-    );
+    return <div>{this.renderResults()}</div>;
   }
 
   componentWillMount() {
@@ -36,9 +32,7 @@ export class FriendRequestsComponent extends React.Component<Props> {
 
   renderResults() {
     if (this.props.loading) {
-      return (
-        <CircularProgress />
-      );
+      return <CircularProgress />;
     } else if (this.props.friendRequests) {
       console.log(this.props.friendRequests);
       return (
@@ -50,7 +44,7 @@ export class FriendRequestsComponent extends React.Component<Props> {
               </ListItemIcon>
               <ListItemText primary={friendRequest.fromUser.id} />
               <ListItemSecondaryAction>
-                <IconButton aria-label={"Add Friend"} color="secondary" onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}>
+                <IconButton aria-label={'Add Friend'} color="secondary" onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}>
                   {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>
@@ -59,9 +53,7 @@ export class FriendRequestsComponent extends React.Component<Props> {
         </List>
       );
     } else {
-      return (
-        <span />
-      );
+      return <span />;
     }
   }
 }

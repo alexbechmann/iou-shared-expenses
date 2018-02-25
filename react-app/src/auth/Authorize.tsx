@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { Tabs, Tab, Paper, Grid } from 'material-ui';
-import { RegisterContainer } from "./RegisterContainer";
-import { LoginContainer } from "./LoginContainer";
+import { RegisterContainer } from './RegisterContainer';
+import { LoginContainer } from './LoginContainer';
 
 interface State {
   activeTab: number;
 }
 
-interface Props { }
+interface Props {}
 
 export class Authorize extends React.Component<Props, State> {
   state: State = {
@@ -18,12 +18,7 @@ export class Authorize extends React.Component<Props, State> {
     return (
       <div>
         <Paper>
-          <Tabs
-            value={this.state.activeTab}
-            onChange={this.handleTabChange}
-            indicatorColor="primary"
-            textColor="primary"
-          >
+          <Tabs value={this.state.activeTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
             <Tab label="Login" />
             <Tab label="Register" />
           </Tabs>
@@ -33,7 +28,6 @@ export class Authorize extends React.Component<Props, State> {
             {this.renderForm()}
           </Grid>
         </Grid>
-
       </div>
     );
   }
@@ -41,16 +35,10 @@ export class Authorize extends React.Component<Props, State> {
   renderForm() {
     switch (this.state.activeTab) {
       case 0: {
-        return (
-          <div>
-            <LoginContainer />
-          </div>
-        );
+        return <LoginContainer />;
       }
       case 1: {
-        return (
-          <RegisterContainer />
-        );
+        return <RegisterContainer />;
       }
       default:
         break;
@@ -63,5 +51,5 @@ export class Authorize extends React.Component<Props, State> {
     this.setState({
       activeTab: value
     });
-  }
+  };
 }

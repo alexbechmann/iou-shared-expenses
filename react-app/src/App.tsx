@@ -2,11 +2,11 @@ import * as React from 'react';
 import './styles/main.css';
 import 'typeface-roboto';
 import Grid from 'material-ui/Grid';
-import { LinearProgress } from "material-ui";
+import { LinearProgress } from 'material-ui';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Action } from "redux";
-import { FindFriends, FriendRequests } from "src/social";
-import { Overview } from "src/settlements";
+import { Action } from 'redux';
+import { FindFriends, FriendRequests } from 'src/social';
+import { Overview } from 'src/settlements';
 import { Authorize } from 'src/auth';
 import { AppMenuContainer } from 'src/menu';
 import { EditTransaction } from 'src/transactions';
@@ -20,7 +20,7 @@ export interface AppDispatchProps {
   initParseSDK: () => Action;
 }
 
-interface Props extends AppProps, AppDispatchProps { }
+interface Props extends AppProps, AppDispatchProps {}
 
 export class App extends React.Component<Props> {
   render() {
@@ -30,7 +30,7 @@ export class App extends React.Component<Props> {
           <AppMenuContainer />
           {this.renderApp()}
         </div>
-      </BrowserRouter >
+      </BrowserRouter>
     );
   }
 
@@ -49,9 +49,7 @@ export class App extends React.Component<Props> {
         </Grid>
       );
     } else if (this.props.parseInitialized) {
-      return (
-        <Authorize />
-      );
+      return <Authorize />;
     } else {
       return (
         <div>
