@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { Tabs, Tab, Paper, TextField } from 'material-ui';
-import { Field, InjectedFormProps } from 'redux-form';
-import { Login } from "./Login";
+import { Tabs, Tab, Paper, Grid } from 'material-ui';
+import { RegisterContainer } from "./RegisterContainer";
+import { LoginContainer } from "./LoginContainer";
 
 interface State {
   activeTab: number;
 }
 
-interface Props extends InjectedFormProps { }
+interface Props { }
 
 export class Authorize extends React.Component<Props, State> {
   state: State = {
@@ -28,37 +28,35 @@ export class Authorize extends React.Component<Props, State> {
             <Tab label="Register" />
           </Tabs>
         </Paper>
-        <Login />
-        {this.renderLoginForm()}
+        <Grid container={true} spacing={24} className="root container">
+          <Grid item={true} xs={12}>
+            {this.renderForm()}
+          </Grid>
+        </Grid>
+
       </div>
     );
   }
 
-  renderLoginForm() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
-    return (
-      <form onSubmit={handleSubmit}>
-        <div>
+  renderForm() {
+    switch (this.state.activeTab) {
+      case 0: {
+        return (
           <div>
-            <Field
-              name="firstName"
-              component={(props: any) => (
-                <TextField
-                  autoFocus={true}
-                  label="First Name"
-                  fullWidth={true}
-                  error={props.meta.touched && props.meta.error}
-                />
-              )}
-            />
+            <LoginContainer />
           </div>
-        </div>
-        <div>
-          <button type="submit" disabled={pristine || submitting}>Submit</button>
-          <button type="button" disabled={pristine || submitting} onClick={reset}>Clear Values</button>
-        </div>
-      </form>
-    );
+        );
+      }
+      case 1: {
+        return (
+          <RegisterContainer />
+        );
+      }
+      default:
+        break;
+    }
+
+    return null;
   }
 
   handleTabChange = (event, value) => {
