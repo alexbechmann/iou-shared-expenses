@@ -16,8 +16,13 @@
     "start:core": "cd ./core && npm start",
     "start:parse-server": "cd ./parse-server && npm start",
     "start:react-app": "cd ./react-app && npm start",
-    "start": "npm-run-all -p start:core start:parse-server start:react-app docker-compose",
-    "docker-compose": "docker-compose up"
+    "start": "npm-run-all -p start:core start:parse-server start:react-app docker-compose prettier:watch",
+    "docker-compose": "docker-compose up",
+    "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
+    "prettier:all": "npm-run-all -p prettier:ts prettier:css prettier:md",
+    "prettier:ts": "prettier --config ./.prettierrc --write **/*.ts*",
+    "prettier:css": "prettier --config ./.prettierrc --write **/*.css",
+    "prettier:md": "prettier --config ./.prettierrc --write **/*.md"
   },
   "repository": {
     "type": "git",
@@ -30,7 +35,10 @@
   },
   "homepage": "https://github.com/alexbechmann/iou-shared-expenses#readme",
   "devDependencies": {
+    "husky": "^0.15.0-rc.8",
     "npm-run-all": "^4.1.2",
+    "onchange": "^3.3.0",
+    "prettier": "1.10.2",
     "remove-node-modules": "^1.7.2"
   }
 }

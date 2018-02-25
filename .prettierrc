@@ -1,0 +1,15 @@
+printWidth: 100
+useTabs: false
+semi: true
+bracketSpacing: true
+parser: typescript
+overrides:
+- files: "**/*.ts*"
+  options:
+    parser: typescript
+- files: "**/*.css*"
+  options:
+    parser: css
+- files: "**/*.md*"
+  options:
+    parser: markdown
