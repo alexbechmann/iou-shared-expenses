@@ -4,7 +4,7 @@
   "description": "* Docker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "prettier --config ./.prettierrc --list-different \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
     "install:core": "cd ./core && npm install",
     "install:parse-server": "cd ./parse-server && npm install",
     "install:react-app": "cd ./react-app && npm install",
@@ -19,10 +19,7 @@
     "start": "npm-run-all -p start:core start:parse-server start:react-app docker-compose prettier:watch",
     "docker-compose": "docker-compose up",
     "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
-    "prettier:all": "npm-run-all -p prettier:ts prettier:css prettier:md",
-    "prettier:ts": "prettier --config ./.prettierrc --write **/*.ts*",
-    "prettier:css": "prettier --config ./.prettierrc --write **/*.css",
-    "prettier:md": "prettier --config ./.prettierrc --write **/*.md"
+    "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\""
   },
   "repository": {
     "type": "git",
