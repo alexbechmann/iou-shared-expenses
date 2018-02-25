@@ -1,6 +1,6 @@
 import * as Parse from 'parse';
 import { Action } from "redux";
-import { FriendRequest, Transaction } from '@iou/core';
+import { Transaction, FriendRequest } from "@shared/schema";
 let parse = require('parse');
 
 export const PARSE_INITIALIZED = "IOU/PARSE_INITIALIZED";
@@ -19,7 +19,7 @@ export function initParseSDK(): Action {
 
   Parse.Object.registerSubclass('Transaction', Transaction);
   Parse.Object.registerSubclass('FriendRequest', FriendRequest);
-  
+
   Parse.FacebookUtils.init({ // this line replaces FB.init({
     appId: facebookConfig.appId, // Facebook App ID
     status: true,  // check Facebook Login status

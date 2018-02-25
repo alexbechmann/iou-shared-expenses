@@ -1,0 +1,36 @@
+{
+  "name": "@iou/dev",
+  "version": "1.0.0",
+  "description": "* Docker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install:core": "cd ./core && npm install",
+    "install:parse-server": "cd ./parse-server && npm install",
+    "install:react-app": "cd ./react-app && npm install",
+    "clean:core": "remove-node-modules ./react-app/node_modules/",
+    "clean:parse-server": "remove-node-modules ./parse-server/node_modules/",
+    "clean:react-app": "remove-node-modules ./react-app/node_modules/",
+    "clean": "npm-run-all -p clean:core clean:parse-server clean:react-app",
+    "postinstall": "npm-run-all -p install:core install:parse-server install:react-app",
+    "start:core": "cd ./core && npm start",
+    "start:parse-server": "cd ./parse-server && npm start",
+    "start:react-app": "cd ./react-app && npm start",
+    "start": "npm-run-all -p start:core start:parse-server start:react-app docker-compose",
+    "docker-compose": "docker-compose up"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexbechmann/iou-shared-expenses.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexbechmann/iou-shared-expenses/issues"
+  },
+  "homepage": "https://github.com/alexbechmann/iou-shared-expenses#readme",
+  "devDependencies": {
+    "npm-run-all": "^4.1.2",
+    "remove-node-modules": "^1.7.2"
+  }
+}

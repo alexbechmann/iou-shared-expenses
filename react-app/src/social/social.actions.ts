@@ -3,7 +3,7 @@ let parse = require('parse');
 import { User } from "parse";
 import { Action } from "redux";
 import { store } from "@shared/index";
-import { FriendRequest } from '@iou/core';
+import { FriendRequest } from "@shared/schema";
 
 export const FIND_USERS = "IOU/FIND_USERS";
 export const FOUND_USERS = "IOU/FOUND_USERS";

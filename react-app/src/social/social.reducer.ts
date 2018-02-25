@@ -11,7 +11,7 @@ import {
   GETTING_FRIEND_REQUESTS,
   SocialState
 } from "src/social";
-import { FriendRequest } from "@iou/core";
+import { FriendRequest } from "@shared/schema";
 
 const defaultState: SocialState = {
   searchText: "alexbechmann",

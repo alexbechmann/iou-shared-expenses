@@ -10,7 +10,7 @@ import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryActi
 import * as Icons from 'material-ui-icons';
 import { Action } from "redux";
 import { acceptFriendRequest, getFriendRequests } from "src/social";
-import { FriendRequest } from '@iou/core';
+import { FriendRequest } from "@shared/schema";
 
 interface Props {
   acceptingFriendRequests: string[];
@@ -40,17 +40,18 @@ export class FriendRequestsComponent extends React.Component<Props> {
         <CircularProgress />
       );
     } else if (this.props.friendRequests) {
+      console.log(this.props.friendRequests);
       return (
         <List>
           {this.props.friendRequests.map((friendRequest: FriendRequest) => (
-            <ListItem button={true} key={friendRequest.fromUser.objectId}>
+            <ListItem button={true} key={friendRequest.fromUser.id}>
               <ListItemIcon>
                 <Avatar alt="Remy Sharp" src="https://picsum.photos/100/100" />
               </ListItemIcon>
-              <ListItemText primary={friendRequest.fromUser.objectId} />
+              <ListItemText primary={friendRequest.fromUser.id} />
               <ListItemSecondaryAction>
-                <IconButton aria-label={"Add Friend"} color="secondary" onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.objectId)}>
-                  {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.objectId) ? <Icons.AddCircle /> : null}
+                <IconButton aria-label={"Add Friend"} color="secondary" onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}>
+                  {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

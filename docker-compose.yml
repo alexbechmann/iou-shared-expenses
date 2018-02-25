@@ -6,53 +6,56 @@ services:
   #     context: ./db
   #     dockerfile: Dockerfile
 
-  core:
-    restart: unless-stopped
-    build:
-      context: ./core
-      dockerfile: Dockerfile
-    volumes:
-      - ./core/src:/usr/src/app/src
-      - ./core/lib:/usr/src/app/lib
+  # core:
+  #   restart: unless-stopped
+  #   build:
+  #     context: ./core
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./core/src:/usr/src/app/src
+  #     - ./core/lib:/usr/src/app/lib
 
-  react-app:
-    restart: unless-stopped
-    build:
-      context: ./
-      dockerfile: Dockerfile-ReactApp
-    volumes:
-      - ./react-app/src:/usr/src/app/src
-      - ./react-app/public:/usr/src/app/public
-      - ./core:/usr/src/core
-    expose:
-      - "35729"
-    environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true
-    ports:
-      - "3000:3000"
-      - "35729:35729"
+  # react-app:
+  #   restart: unless-stopped
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile-ReactApp
+  #   volumes:
+  #     - ./react-app/src:/usr/src/app/src
+  #     - ./react-app/public:/usr/src/app/public
+  #     - ./core:/usr/src/core
+  #   expose:
+  #     - "35729"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - CHOKIDAR_USEPOLLING=true
+  #   ports:
+  #     - "3000:3000"
+  #     - "35729:35729"
 
   mongo:
     image: mongo
-
-  parse-server:
-    restart: unless-stopped
-    # image: parseplatform/parse-server
-    build:
-      context: ./
-      dockerfile: Dockerfile-ParseServer
-    # volumes:
-    #   - ./:/parse-server/cloud
-    links:
-      - mongo
-    environment:
-      - PARSE_SERVER_DATABASE_URI=mongodb://mongo/db
-      - PARSE_SERVER_CLOUD=/parse-server/cloud2/dist/main.js
-      - PARSE_SERVER_APPLICATION_ID=iou-shared-expenses
-      - PARSE_SERVER_MASTER_KEY=62GqBlnLJKvM
+    expose: 
+      - 27017
     ports:
-      - "1337:1337"
+      - "27017:27017"
+  # parse-server:
+  #   restart: unless-stopped
+  #   image: parseplatform/parse-server
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile-ParseServer
+  #   volumes:
+  #     - ./:/parse-server/cloud
+  #   links:
+  #     - mongo
+  #   environment:
+  #     - PARSE_SERVER_DATABASE_URI=mongodb://mongo/db
+  #     - PARSE_SERVER_CLOUD=/parse-server/cloud2/dist/main.js
+  #     - PARSE_SERVER_APPLICATION_ID=iou-shared-expenses
+  #     - PARSE_SERVER_MASTER_KEY=62GqBlnLJKvM
+  #   ports:
+  #     - "1337:1337"
 
   parse-dashboard:
     restart: unless-stopped

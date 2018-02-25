@@ -1,9 +1,10 @@
 import { SocialService } from './social/social.service';
 import { createUserPointer } from "./shared/pointer.factory";
 import { SettlementService } from "./settlements/settlement.service";
-import { SettlementOverview, FriendRequest } from "@iou/core";
+import { SettlementOverview } from "@iou/core";
 import { UserService } from "./users/user.service";
 import { User } from "parse";
+import { FriendRequest } from "./shared/schema";
 
 Parse.Cloud.define("sendFriendRequest", (req: Parse.Cloud.FunctionRequest, res: Parse.Cloud.FunctionResponse) => {
   const params: {

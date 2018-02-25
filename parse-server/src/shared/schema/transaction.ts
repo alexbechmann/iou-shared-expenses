@@ -1,5 +1,4 @@
-import * as Parse from 'parse';
-import { TransactionType } from "../shared/transaction-type";
+import { TransactionType } from "@iou/core";
 
 export class Transaction extends Parse.Object {
   constructor() {
