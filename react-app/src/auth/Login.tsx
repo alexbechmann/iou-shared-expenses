@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Button } from "material-ui";
 import { Action } from "redux";
 import { InjectedFormProps, Field } from "redux-form";
+import { TextField } from 'redux-form-material-ui';
 
 export interface LoginDispatchProps {
   loginWithFacebook: () => Action;
@@ -26,23 +27,24 @@ export class Login extends React.Component<Props> {
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
           <Field
             name="email"
-            component="input"
+            component={TextField}
             type="email"
             placeholder="Email"
+            label="Email"
           />
-
           <Field
             name="username"
-            component="input"
+            component={TextField}
             type="text"
             placeholder="Username"
+            label="Username"
           />
-
           <Field
             name="password"
-            component="input"
+            component={TextField}
             type="password"
             placeholder="Password"
+            label="Password"
           />
 
           <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting}>

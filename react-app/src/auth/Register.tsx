@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { InjectedFormProps, Field } from "redux-form";
 import { Action } from "redux";
+import { TextField } from "redux-form-material-ui";
 
 export interface RegisterDispatchProps {
   register: (username: string, email: string, password: string) => Action;
@@ -16,23 +17,24 @@ export class Register extends React.Component<Props> {
         <div>
           <Field
             name="email"
-            component="input"
+            component={TextField}
             type="email"
             placeholder="Email"
+            label="Email"
           />
-
           <Field
             name="username"
-            component="input"
+            component={TextField}
             type="text"
             placeholder="Username"
+            label="Username"
           />
-
           <Field
             name="password"
-            component="input"
+            component={TextField}
             type="password"
             placeholder="Password"
+            label="Password"
           />
         </div>
         <div>
