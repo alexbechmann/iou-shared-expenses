@@ -17,14 +17,12 @@ steps:
     workingDir: 'core'
     verbose: 'false'
 
-steps:
 - task: Npm@1
   inputs:
     command: 'install'
     workingDir: 'parse-server'
     verbose: 'false'
 
-steps:
 - task: Npm@1
   inputs:
     command: 'install'
