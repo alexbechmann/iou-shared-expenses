@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { connect } from "react-redux";
-import { Action } from "redux";
-import { AppState } from "@shared/index";
-import { getSettlementOverviews } from "./settlements.actions";
+import { connect } from 'react-redux';
+import { Action } from 'redux';
+import { AppState } from '@shared/index';
+import { getSettlementOverviews } from './settlements.actions';
 import { SettlementOverview } from '@iou/core';
 import { CircularProgress, withStyles, Button } from 'material-ui';
 import { OverviewCard } from './components/OverviewCard';
@@ -11,7 +11,7 @@ import * as Icons from 'material-ui-icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { NewTransactionDialog } from 'src/transactions';
 
-type ClassNames = | 'actionButton';
+type ClassNames = 'actionButton';
 // | 'content';
 
 const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
@@ -46,14 +46,12 @@ class OverviewComponent extends React.Component<Props, State> {
     return (
       <div>
         {this.props.overviews.map(overview => {
-          return (
-            <OverviewCard key={overview.user.id} overview={overview} />
-          );
+          return <OverviewCard key={overview.user.id} overview={overview} />;
         })}
         <Button variant="fab" className={this.props.classes.actionButton} color="primary" onClick={this.openNewTransactionDialog}>
           <Icons.Add />
         </Button>
-        <NewTransactionDialog open={this.state.newTransactionDialogOpen} handleClose={this.closeNewTransactionDialog}/>
+        <NewTransactionDialog open={this.state.newTransactionDialogOpen} handleClose={this.closeNewTransactionDialog} />
       </div>
     );
   }
@@ -68,11 +66,11 @@ class OverviewComponent extends React.Component<Props, State> {
 
   openNewTransactionDialog = () => {
     this.setState({ newTransactionDialogOpen: true });
-  }
+  };
 
   closeNewTransactionDialog = () => {
     this.setState({ newTransactionDialogOpen: false });
-  }
+  };
 }
 
 function mapStateToProps(state: AppState, prevProps: any) {
@@ -83,6 +81,4 @@ function mapStateToProps(state: AppState, prevProps: any) {
   };
 }
 
-export const Overview = withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent)
-);
+export const Overview = withStyles(styles, { withTheme: true })(connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent));

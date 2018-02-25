@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { AppBar, MenuItem, Drawer, Toolbar, IconButton, Typography, Divider, ListItemIcon, ListItemText, Badge } from 'material-ui';
 import * as Icons from 'material-ui-icons';
-import { Link } from "react-router-dom";
-import { Action } from "redux";
+import { Link } from 'react-router-dom';
+import { Action } from 'redux';
 
 export interface AppMenuProps {
   isLoggedIn: boolean;
@@ -13,7 +13,7 @@ export interface AppMenuDispatchProps {
   logout: () => Action;
 }
 
-interface Props extends AppMenuProps, AppMenuDispatchProps { }
+interface Props extends AppMenuProps, AppMenuDispatchProps {}
 
 interface State {
   showDrawer: boolean;
@@ -36,7 +36,7 @@ export class AppMenu extends React.Component<Props, State> {
             <IconButton onClick={this.toggleMenu} color="inherit" aria-label="Menu">
               <Icons.Menu />
             </IconButton>
-            <Typography variant="title" color="inherit" >
+            <Typography variant="title" color="inherit">
               IOU Shared Expenses
             </Typography>
           </Toolbar>
@@ -87,10 +87,10 @@ export class AppMenu extends React.Component<Props, State> {
         <MenuItem onClick={this.toggleMenu}>Close</MenuItem>
       </Drawer>
     ) : (
-        <Drawer open={this.state.showDrawer} onClose={this.toggleMenu}>
-          <MenuItem onClick={this.toggleMenu}>Close</MenuItem>
-        </Drawer>
-      );
+      <Drawer open={this.state.showDrawer} onClose={this.toggleMenu}>
+        <MenuItem onClick={this.toggleMenu}>Close</MenuItem>
+      </Drawer>
+    );
   }
 
   logout() {

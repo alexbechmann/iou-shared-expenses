@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 import { store } from '@shared/index';
 import { Provider } from 'react-redux';
-import { AppContainer } from "./AppContainer";
+import { AppContainer } from './AppContainer';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -16,8 +16,5 @@ const Root = () => (
   </Provider>
 );
 
-ReactDOM.render(
-  <Root />,
-  document.getElementById('root') as HTMLElement
-);
+ReactDOM.render(<Root />, document.getElementById('root') as HTMLElement);
 registerServiceWorker();

@@ -1,4 +1,4 @@
-import { User } from "parse";
+import { User } from 'parse';
 
 export class UserService {
   async userForId(id: string): Promise<User> {

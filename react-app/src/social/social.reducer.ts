@@ -1,4 +1,4 @@
-import { User } from "parse";
+import { User } from 'parse';
 import {
   SET_SEARCH_TEXT,
   FIND_USERS,
@@ -10,11 +10,11 @@ import {
   GET_FRIEND_REQUESTS,
   GETTING_FRIEND_REQUESTS,
   SocialState
-} from "src/social";
-import { FriendRequest } from "@iou/core";
+} from 'src/social';
+import { FriendRequest } from '@shared/schema';
 
 const defaultState: SocialState = {
-  searchText: "alexbechmann",
+  searchText: 'alexbechmann',
   searchResults: [],
   loading: false,
   sendingFriendRequests: [],

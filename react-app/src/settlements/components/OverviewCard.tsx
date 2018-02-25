@@ -16,11 +16,7 @@ export class OverviewCard extends React.Component<Props> {
     return (
       <Card>
         <CardHeader
-          avatar={
-            <Avatar>
-              R
-            </Avatar>
-          }
+          avatar={<Avatar>R</Avatar>}
           action={
             <IconButton>
               <MoreVertIcon />
@@ -29,7 +25,7 @@ export class OverviewCard extends React.Component<Props> {
           title={this.props.overview.user.id}
         />
         <CardContent>
-          <SettlementsTable settlements={this.props.overview.settlements}/>
+          <SettlementsTable settlements={this.props.overview.settlements} />
         </CardContent>
         <CardActions>
           <Button fullWidth={true} variant="raised" color="secondary">

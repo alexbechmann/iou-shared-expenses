@@ -16,7 +16,7 @@ export class BottomMenu extends React.Component<any, State> {
 
   handleChange = (event: any, value: any) => {
     this.setState({ value });
-  }
+  };
 
   render() {
     const { value } = this.state;

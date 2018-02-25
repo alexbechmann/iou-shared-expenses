@@ -1,23 +1,27 @@
-import { User } from "parse";
+import { User } from 'parse';
 import * as Parse from 'parse';
-import { Action } from "redux";
+import { store } from '@shared/index';
+import { AnyAction } from 'redux';
 
-export const LOGIN = "IOU/LOGIN";
-export const LOGOUT = "IOU/LOGOUT";
+export const LOGIN = 'IOU/LOGIN';
+export const LOGOUT = 'IOU/LOGOUT';
+export const REGISTERING = 'IOU/REGISTERING';
+export const REGISTERED = 'IOU/REGISTERED';
 
-export function loginWithFacebook(): Action {
+export function loginWithFacebook(): AnyAction {
   const payload = new Promise<User>((resolve, reject) => {
     Parse.FacebookUtils.logIn(null, {
       success: (user: User) => {
         if (!user.existed()) {
-          console.log("User signed up and logged in through Facebook!");
+          console.log('User signed up and logged in through Facebook!');
         } else {
-          console.log("User logged in through Facebook!");
+          console.log('User logged in through Facebook!');
         }
+        console.log(user.attributes);
         resolve(user);
       },
       error: (user, error) => {
-        console.log("User cancelled the Facebook login or did not fully authorize.");
+        console.log('User cancelled the Facebook login or did not fully authorize.');
         reject(error);
       }
     });
@@ -26,19 +30,32 @@ export function loginWithFacebook(): Action {
   return {
     type: LOGIN,
     payload: payload
-  } as Action;
+  };
 }
 
-export function loginWithPassword(username: string, password: string): Action {
+export function loginWithPassword(username: string, password: string): AnyAction {
   return {
     type: LOGIN,
     payload: Parse.User.logIn(username, password)
-  } as Action;
+  };
 }
 
-export function logout(): Action {
+export function logout(): AnyAction {
   return {
     type: LOGOUT,
     payload: Parse.User.logOut()
-  } as Action;
+  };
+}
+
+export function register(username: string, email: string, password: string): AnyAction {
+  store.dispatch({
+    type: REGISTERING
+  });
+
+  return {
+    type: REGISTERED,
+    payload: Parse.User.signUp(username, password, {
+      email: email
+    })
+  };
 }

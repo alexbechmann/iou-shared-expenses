@@ -1,4 +1,4 @@
-import { Settlement } from "./settlement";
+import { Settlement } from './settlement';
 
 export interface SettlementOverview {
   user: Parse.User;

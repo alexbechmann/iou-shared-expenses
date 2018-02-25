@@ -1,6 +1,6 @@
-import { createUserPointer } from "../shared/pointer.factory";
-import { Pointer, User } from "parse";
-import { FriendRequest } from "@iou/core";
+import { createUserPointer } from '../shared/pointer.factory';
+import { Pointer, User } from 'parse';
+import { FriendRequest } from '../shared/schema';
 
 export class SocialService {
   async insertFriendRequestIfNeeded(currentUserId: string, toUserId: string): Promise<void> {
@@ -16,7 +16,7 @@ export class SocialService {
   }
 
   async friendRequestExists(currentUser: Pointer, toUser: Pointer): Promise<boolean> {
-    return await this.friendRequestsBetweenQuery(currentUser, toUser).count() > 0;
+    return (await this.friendRequestsBetweenQuery(currentUser, toUser).count()) > 0;
   }
 
   async friendRequestsBetween(currentUser: Pointer, toUser: Pointer): Promise<FriendRequest[]> {
@@ -26,15 +26,18 @@ export class SocialService {
 
   private friendRequestsBetweenQuery(currentUser: Pointer, toUser: Pointer): Parse.Query<FriendRequest> {
     const query = new Parse.Query(FriendRequest);
-    query.equalTo("fromUser", currentUser);
-    query.include("fromUser");
-    query.include("toUser");
-    query.equalTo("toUser", toUser);
+    query.equalTo('fromUser', currentUser);
+    query.include('fromUser');
+    query.include('toUser');
+    query.equalTo('toUser', toUser);
     console.log(query);
     return query;
   }
 
   async getFriendsForUser(user: User): Promise<User[]> {
-    return await user.relation('friends').query().find() as User[];
+    return (await user
+      .relation('friends')
+      .query()
+      .find()) as User[];
   }
 }

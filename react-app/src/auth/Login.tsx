@@ -1,59 +1,51 @@
 import * as React from 'react';
-import { Button, TextField } from "material-ui";
-import { connect } from "react-redux";
-import { Action } from "redux";
-import { loginWithFacebook, loginWithPassword } from "./auth.actions";
+import { Button } from 'material-ui';
+import { Action } from 'redux';
+import { InjectedFormProps, Field } from 'redux-form';
+import { TextField } from 'redux-form-material-ui';
 
-interface Props {
+export interface LoginDispatchProps {
   loginWithFacebook: () => Action;
   loginWithPassword: (username: string, password: string) => Action;
 }
 
-interface State {
+interface FormData {
   username: string;
   password: string;
 }
 
-class LoginComponent extends React.Component<Props, State> {
+interface Props extends InjectedFormProps, LoginDispatchProps {}
+
+export class Login extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.state = {
-      username: "ioubot",
-      password: "password"
-    };
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   render() {
+    const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <div>
         <Button variant="raised" color="primary" onClick={this.props.loginWithFacebook}>
           Login with Facebook
         </Button>
 
-        <TextField
-          autoFocus={true}
-          label="Username"
-          value={this.state.username}
-          fullWidth={true}
-          onChange={(username: React.ChangeEvent<HTMLInputElement>) => this.setState({
-            username: username.target.value
-          })}
-        />
-        <TextField
-          autoFocus={true}
-          label="Password"
-          value={this.state.password}
-          fullWidth={true}
-          onChange={(password: React.ChangeEvent<HTMLInputElement>) => this.setState({
-            password: password.target.value
-          })}
-        />
+        <form onSubmit={handleSubmit(this.handleOnSubmit)}>
+          <Field name="email" component={TextField} type="email" placeholder="Email" label="Email" />
+          <Field name="password" component={TextField} type="password" placeholder="Password" label="Password" />
 
-        <Button variant="raised" color="secondary" onClick={() => this.props.loginWithPassword(this.state.username, this.state.password)}>
-          Login
-        </Button>
+          <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
+            Login
+          </Button>
+          <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting} onClick={reset}>
+            Clear
+          </Button>
+        </form>
       </div>
     );
   }
-}
 
-export const Login = connect(null, { loginWithFacebook, loginWithPassword })(LoginComponent);
+  handleOnSubmit(formData: FormData) {
+    const { username, password } = formData;
+    this.props.loginWithPassword(username, password);
+  }
+}
