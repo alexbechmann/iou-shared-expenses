@@ -1,8 +1,7 @@
 {
   "name": "@iou/dev",
   "version": "1.0.0",
-  "description": "* Docker",
-  "main": "index.js",
+  "description": "IOU Shared expenses developer commands",
   "scripts": {
     "test": "prettier --config ./.prettierrc --list-different \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
     "install:core": "cd ./core && npm install",
