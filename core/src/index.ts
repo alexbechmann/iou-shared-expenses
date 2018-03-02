@@ -4,3 +4,5 @@ export { Settlement } from './models/settlement';
 
 export { CurrencyType } from './shared/currency-type';
 export { TransactionType } from './shared/transaction-type';
+
+export { nameof } from './shared/nameof';

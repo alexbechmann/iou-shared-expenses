@@ -4,6 +4,10 @@ import { Action } from 'redux';
 import { InjectedFormProps, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
 
+export interface LoginProps {
+  loginError?: string;
+}
+
 export interface LoginDispatchProps {
   loginWithFacebook: () => Action;
   loginWithPassword: (username: string, password: string) => Action;
@@ -14,7 +18,9 @@ interface FormData {
   password: string;
 }
 
-interface Props extends InjectedFormProps, LoginDispatchProps {}
+export interface Props extends InjectedFormProps, LoginDispatchProps, LoginProps {}
+
+const FullWidthTextField = props => <TextField {...props} fullWidth={true} />;
 
 export class Login extends React.Component<Props> {
   constructor(props: Props) {
@@ -22,6 +28,7 @@ export class Login extends React.Component<Props> {
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
   render() {
+    console.log(this.props.loginWithPassword, this.props.loginError);
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <div>
@@ -30,8 +37,8 @@ export class Login extends React.Component<Props> {
         </Button>
 
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field name="email" component={TextField} type="email" placeholder="Email" label="Email" />
-          <Field name="password" component={TextField} type="password" placeholder="Password" label="Password" />
+          <Field name="email" component={FullWidthTextField} type="email" placeholder="Email" label="Email" />
+          <Field name="password" component={FullWidthTextField} type="password" placeholder="Password" label="Password" />
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login
@@ -40,8 +47,16 @@ export class Login extends React.Component<Props> {
             Clear
           </Button>
         </form>
+        {this.renderError()}
       </div>
     );
+  }
+
+  renderError() {
+    if (this.props.loginError) {
+      return <p>{this.props.loginError}</p>;
+    }
+    return null;
   }
 
   handleOnSubmit(formData: FormData) {

@@ -1,3 +1,5 @@
 export interface AuthState {
-  currentUser: any;
+  currentUser?: Parse.User;
+  loginError?: string;
+  registerError?: string;
 }

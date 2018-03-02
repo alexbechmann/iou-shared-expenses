@@ -6,28 +6,30 @@ import { AuthState } from 'src/auth';
 import { AnyAction } from 'redux';
 
 const defaultState: AuthState = {
-  currentUser: null
+  loginError: '',
+  registerError: ''
 };
 
 export function authReducer(state: AuthState = defaultState, action: AnyAction) {
   switch (action.type) {
     case PARSE_INITIALIZED: {
-      const newState = Object.assign({}, state);
+      const newState: AuthState = Object.assign({}, state);
       newState.currentUser = Parse.User.current();
       return newState;
     }
     case LOGIN: {
       if (action.payload instanceof User) {
-        const newState = Object.assign({}, state);
+        const newState: AuthState = Object.assign({}, state);
         newState.currentUser = action.payload as User;
         return newState;
       } else {
-        console.log(action.payload);
-        return state;
+        const newState: AuthState = Object.assign({}, state);
+        newState.loginError = action.payload.message;
+        return newState;
       }
     }
     case LOGOUT: {
-      const newState = Object.assign({}, state);
+      const newState: AuthState = Object.assign({}, state);
       newState.currentUser = Parse.User.current();
       return newState;
     }
