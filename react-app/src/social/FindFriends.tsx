@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
   TextField,
-  CircularProgress,
   ListItem,
   List,
   ListItemText,
@@ -19,7 +18,7 @@ import { connect } from 'react-redux';
 import { User } from 'parse';
 import * as Icons from 'material-ui-icons';
 import { Action } from 'redux';
-import { AppState } from '@shared/index';
+import { AppState, Loader } from '@shared/index';
 import { findUsers, setSearchText, sendFriendRequest } from 'src/social/social.actions';
 
 interface Props {
@@ -86,7 +85,7 @@ export class FindFriendsComponent extends React.Component<Props> {
   }
 
   renderLoadingState() {
-    return this.props.loading ? <CircularProgress /> : <span />;
+    return this.props.loading ? <Loader /> : <span />;
   }
 
   handleSearchBoxInput(e: any) {

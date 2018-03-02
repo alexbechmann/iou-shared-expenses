@@ -7,7 +7,8 @@ import { combineContainers } from '@shared/combine-containers';
 
 function mapStateToProps(state: AppState): LoginProps {
   return {
-    loginError: state.auth.loginError
+    loginError: state.auth.loginError,
+    loggingIn: state.auth.loggingIn
   };
 }
 

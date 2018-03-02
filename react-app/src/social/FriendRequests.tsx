@@ -5,17 +5,8 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
-import { AppState } from '@shared/index';
-import {
-  List,
-  ListItem,
-  Avatar,
-  ListItemText,
-  IconButton,
-  ListItemSecondaryAction,
-  ListItemIcon,
-  CircularProgress
-} from 'material-ui';
+import { AppState, Loader } from '@shared/index';
+import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from 'material-ui';
 import * as Icons from 'material-ui-icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social';
@@ -41,7 +32,7 @@ export class FriendRequestsComponent extends React.Component<Props> {
 
   renderResults() {
     if (this.props.loading) {
-      return <CircularProgress />;
+      return <Loader />;
     } else if (this.props.friendRequests) {
       console.log(this.props.friendRequests);
       return (

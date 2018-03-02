@@ -3,9 +3,11 @@ import { Button } from 'material-ui';
 import { Action } from 'redux';
 import { InjectedFormProps, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
+import { Loader } from '@shared/index';
 
 export interface LoginProps {
   loginError?: string;
+  loggingIn: boolean;
 }
 
 export interface LoginDispatchProps {
@@ -27,8 +29,12 @@ export class Login extends React.Component<Props> {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+
   render() {
-    console.log(this.props.loginWithPassword, this.props.loginError);
+    return !this.props.loggingIn ? this.renderForm() : <Loader />;
+  }
+
+  renderForm() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <div>
