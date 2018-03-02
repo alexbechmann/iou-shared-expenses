@@ -2,6 +2,7 @@ import { User } from 'parse';
 import * as Parse from 'parse';
 import { store } from '@shared/index';
 import { AnyAction } from 'redux';
+import { RegisterModel } from './register/register.model';
 
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
@@ -47,15 +48,15 @@ export function logout(): AnyAction {
   };
 }
 
-export function register(username: string, email: string, password: string): AnyAction {
+export function register(registerModel: RegisterModel): AnyAction {
   store.dispatch({
     type: REGISTERING
   });
 
   return {
     type: REGISTERED,
-    payload: Parse.User.signUp(username, password, {
-      email: email
+    payload: Parse.User.signUp(registerModel.username, registerModel.password, {
+      email: registerModel.email
     })
   };
 }

@@ -18,7 +18,12 @@ export class Authorize extends React.Component<Props, State> {
     return (
       <div>
         <Paper>
-          <Tabs value={this.state.activeTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
+          <Tabs
+            value={this.state.activeTab}
+            onChange={this.handleTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+          >
             <Tab label="Login" />
             <Tab label="Register" />
           </Tabs>

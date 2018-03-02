@@ -1,5 +1,16 @@
 import * as React from 'react';
-import { AppBar, MenuItem, Drawer, Toolbar, IconButton, Typography, Divider, ListItemIcon, ListItemText, Badge } from 'material-ui';
+import {
+  AppBar,
+  MenuItem,
+  Drawer,
+  Toolbar,
+  IconButton,
+  Typography,
+  Divider,
+  ListItemIcon,
+  ListItemText,
+  Badge
+} from 'material-ui';
 import * as Icons from 'material-ui-icons';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';

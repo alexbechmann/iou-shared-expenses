@@ -1,5 +1,15 @@
 import * as React from 'react';
-import { TextField, CircularProgress, ListItem, List, ListItemText, ListItemSecondaryAction, ListItemIcon, IconButton, Avatar } from 'material-ui';
+import {
+  TextField,
+  CircularProgress,
+  ListItem,
+  List,
+  ListItemText,
+  ListItemSecondaryAction,
+  ListItemIcon,
+  IconButton,
+  Avatar
+} from 'material-ui';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
@@ -58,7 +68,11 @@ export class FindFriendsComponent extends React.Component<Props> {
               </ListItemIcon>
               <ListItemText primary={user.id} />
               <ListItemSecondaryAction>
-                <IconButton aria-label={'Add Friend'} color="secondary" onClick={() => this.props.sendFriendRequest(user.id)}>
+                <IconButton
+                  aria-label={'Add Friend'}
+                  color="secondary"
+                  onClick={() => this.props.sendFriendRequest(user.id)}
+                >
                   {this.props.sendingFriendRequests.indexOf(user.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>

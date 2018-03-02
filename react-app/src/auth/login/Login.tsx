@@ -37,8 +37,14 @@ export class Login extends React.Component<Props> {
         </Button>
 
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field name="email" component={FullWidthTextField} type="email" placeholder="Email" label="Email" />
-          <Field name="password" component={FullWidthTextField} type="password" placeholder="Password" label="Password" />
+          <Field name="username" component={FullWidthTextField} type="text" placeholder="Username" label="Username" />
+          <Field
+            name="password"
+            component={FullWidthTextField}
+            type="password"
+            placeholder="Password"
+            label="Password"
+          />
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login

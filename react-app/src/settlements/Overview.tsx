@@ -48,7 +48,12 @@ class OverviewComponent extends React.Component<Props, State> {
         {this.props.overviews.map(overview => {
           return <OverviewCard key={overview.user.id} overview={overview} />;
         })}
-        <Button variant="fab" className={this.props.classes.actionButton} color="primary" onClick={this.openNewTransactionDialog}>
+        <Button
+          variant="fab"
+          className={this.props.classes.actionButton}
+          color="primary"
+          onClick={this.openNewTransactionDialog}
+        >
           <Icons.Add />
         </Button>
         <NewTransactionDialog open={this.state.newTransactionDialogOpen} handleClose={this.closeNewTransactionDialog} />
@@ -81,4 +86,6 @@ function mapStateToProps(state: AppState, prevProps: any) {
   };
 }
 
-export const Overview = withStyles(styles, { withTheme: true })(connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent));
+export const Overview = withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent)
+);

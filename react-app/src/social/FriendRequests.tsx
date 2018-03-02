@@ -6,7 +6,16 @@ import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
 import { AppState } from '@shared/index';
-import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon, CircularProgress } from 'material-ui';
+import {
+  List,
+  ListItem,
+  Avatar,
+  ListItemText,
+  IconButton,
+  ListItemSecondaryAction,
+  ListItemIcon,
+  CircularProgress
+} from 'material-ui';
 import * as Icons from 'material-ui-icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social';
@@ -44,7 +53,11 @@ export class FriendRequestsComponent extends React.Component<Props> {
               </ListItemIcon>
               <ListItemText primary={friendRequest.fromUser.id} />
               <ListItemSecondaryAction>
-                <IconButton aria-label={'Add Friend'} color="secondary" onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}>
+                <IconButton
+                  aria-label={'Add Friend'}
+                  color="secondary"
+                  onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}
+                >
                   {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>
@@ -67,4 +80,6 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FriendRequests = connect(mapStateToProps, { acceptFriendRequest, getFriendRequests })(FriendRequestsComponent);
+export const FriendRequests = connect(mapStateToProps, { acceptFriendRequest, getFriendRequests })(
+  FriendRequestsComponent
+);
