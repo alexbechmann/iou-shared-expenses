@@ -6,7 +6,7 @@ import { UserService } from './users/user.service';
 import { User } from 'parse';
 import { FriendRequest } from './shared/schema';
 import { sendFriendRequest, acceptFriendRequest } from './social/controllers/social.controller';
-import { getSettlements } from 'settlements/controllers/settlement.controller';
+import { getSettlements } from './settlements/controllers/settlement.controller';
 
 Parse.Cloud.define('sendFriendRequest', sendFriendRequest);
 Parse.Cloud.define('acceptFriendRequest', acceptFriendRequest);

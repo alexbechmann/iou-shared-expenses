@@ -1,4 +1,4 @@
-import { SettlementService } from 'settlements/settlement.service';
+import { SettlementService } from '../settlement.service';
 import { SettlementOverview } from '@iou/core';
 
 export async function getSettlements(req: Parse.Cloud.FunctionRequest, res: Parse.Cloud.FunctionResponse) {
