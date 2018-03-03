@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
-import { AppState, Loader } from '@shared/index';
+import { AppState } from '@shared/state';
 import { getSettlementOverviews } from './settlements.actions';
 import { SettlementOverview } from '@iou/core';
 import { withStyles, Button } from 'material-ui';
@@ -10,6 +10,7 @@ import { StyleRulesCallback, Theme } from 'material-ui/styles';
 import * as Icons from 'material-ui-icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { NewTransactionDialog } from 'src/transactions';
+import { Loader } from '@shared/ui';
 
 type ClassNames = 'actionButton';
 // | 'content';

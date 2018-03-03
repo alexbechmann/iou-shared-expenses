@@ -1,7 +1,7 @@
 import * as Parse from 'parse';
 import { Action } from 'redux';
 import { Settlement } from '@iou/core';
-import { store } from '@shared/index';
+import { store } from '@shared/state';
 
 export const GET_SETTLEMENTS = 'IOU/GET_SETTLEMENTS';
 export const GETTING_SETTLEMENTS = 'IOU/GETTING_SETTLEMENTS';

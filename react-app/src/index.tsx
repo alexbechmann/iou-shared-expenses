@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
-import { store } from '@shared/index';
+import { store } from '@shared/state';
 import { Provider } from 'react-redux';
 import { AppContainer } from './AppContainer';
 

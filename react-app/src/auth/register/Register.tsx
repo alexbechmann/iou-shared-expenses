@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { InjectedFormProps, Field } from 'redux-form';
 import { Action } from 'redux';
-import { TextField } from 'redux-form-material-ui';
 import { Button, CircularProgress } from 'material-ui';
 import { RegisterModel } from './register.model';
+import { nameof } from '@iou/core';
+import { FullWidthFormTextField } from '@shared/ui/redux-form';
 
 export interface RegisterProps {
   registerError?: string;
@@ -15,8 +16,6 @@ export interface RegisterDispatchProps {
 }
 
 interface Props extends InjectedFormProps, RegisterProps, RegisterDispatchProps {}
-
-const FullWidthTextField = props => <TextField {...props} fullWidth={true} />;
 
 export class Register extends React.Component<Props> {
   constructor(props: Props) {
@@ -34,11 +33,23 @@ export class Register extends React.Component<Props> {
       <div>
         <form onSubmit={handleSubmit(this.register)}>
           <div>
-            <Field name="email" component={FullWidthTextField} type="email" placeholder="Email" label="Email" />
-            <Field name="username" component={FullWidthTextField} type="text" placeholder="Username" label="Username" />
             <Field
-              name="password"
-              component={FullWidthTextField}
+              name={nameof<RegisterModel>('email')}
+              component={FullWidthFormTextField}
+              type="email"
+              placeholder="Email"
+              label="Email"
+            />
+            <Field
+              name={nameof<RegisterModel>('username')}
+              component={FullWidthFormTextField}
+              type="text"
+              placeholder="Username"
+              label="Username"
+            />
+            <Field
+              name={nameof<RegisterModel>('password')}
+              component={FullWidthFormTextField}
               type="password"
               placeholder="Password"
               label="Password"

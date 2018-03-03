@@ -12,15 +12,18 @@ import {
   SocialState
 } from 'src/social';
 import { FriendRequest } from '@shared/schema';
+import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
 
 const defaultState: SocialState = {
   searchText: 'alexbechmann',
   searchResults: [],
-  loading: false,
+  findingUsers: false,
   sendingFriendRequests: [],
   acceptingFriendRequests: [],
   friendRequests: [],
-  gettingFriendRequests: false
+  gettingFriendRequests: false,
+  friends: [],
+  gettingFriends: false
 };
 
 export function socialReducer(state: SocialState = defaultState, action: any) {
@@ -32,13 +35,13 @@ export function socialReducer(state: SocialState = defaultState, action: any) {
     }
     case FIND_USERS: {
       const newState = Object.assign({}, state);
-      newState.loading = true;
+      newState.findingUsers = true;
       return newState;
     }
     case FOUND_USERS: {
       const newState = Object.assign({}, state);
       newState.searchResults = action.payload as User[];
-      newState.loading = false;
+      newState.findingUsers = false;
       return newState;
     }
     case SENDING_FRIEND_REQUEST: {
@@ -75,6 +78,17 @@ export function socialReducer(state: SocialState = defaultState, action: any) {
       const newState = Object.assign({}, state);
       newState.friendRequests = action.payload as FriendRequest[];
       newState.gettingFriendRequests = false;
+      return newState;
+    }
+    case GETTING_FRIENDS: {
+      const newState = Object.assign({}, state);
+      newState.gettingFriends = true;
+      return newState;
+    }
+    case GET_FRIENDS: {
+      const newState = Object.assign({}, state);
+      newState.friendRequests = action.payload as FriendRequest[];
+      newState.gettingFriends = false;
       return newState;
     }
     default: {

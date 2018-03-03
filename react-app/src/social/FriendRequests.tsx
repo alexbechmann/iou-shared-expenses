@@ -5,12 +5,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
-import { AppState, Loader } from '@shared/index';
+import { AppState } from '@shared/state';
 import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from 'material-ui';
 import * as Icons from 'material-ui-icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social';
 import { FriendRequest } from '@shared/schema';
+import { Loader } from '@shared/ui';
 
 interface Props {
   acceptingFriendRequests: string[];

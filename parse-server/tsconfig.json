@@ -7,8 +7,7 @@
     "baseUrl": "./src",
     "paths": {
       "@shared/*": ["./shared/*"]
-    },
-    "allowJs": true
+    }
   },
   "exclude": [
     "node_modules"

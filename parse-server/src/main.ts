@@ -7,7 +7,6 @@ import { User } from 'parse';
 import { FriendRequest } from './shared/schema';
 import { sendFriendRequest, acceptFriendRequest } from './social/controllers/social.controller';
 import { getSettlements } from './settlements/controllers/settlement.controller';
-import * as _ from './legacy/legacy-cloud-code.js';
 
 Parse.Cloud.define('sendFriendRequest', sendFriendRequest);
 Parse.Cloud.define('acceptFriendRequest', acceptFriendRequest);
