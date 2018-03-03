@@ -6,9 +6,9 @@
     "outDir": "./cloud",
     "baseUrl": "./src",
     "paths": {
-      //"@core/*": ["../node_modules/@iou/core/src/*"]
       "@shared/*": ["./shared/*"]
-    }
+    },
+    "allowJs": true
   },
   "exclude": [
     "node_modules"
