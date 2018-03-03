@@ -3,6 +3,12 @@ import { Button } from 'material-ui';
 import { Action } from 'redux';
 import { InjectedFormProps, Field } from 'redux-form';
 import { TextField } from 'redux-form-material-ui';
+import { Loader } from '@shared/index';
+
+export interface LoginProps {
+  loginError?: string;
+  loggingIn: boolean;
+}
 
 export interface LoginDispatchProps {
   loginWithFacebook: () => Action;
@@ -14,14 +20,21 @@ interface FormData {
   password: string;
 }
 
-interface Props extends InjectedFormProps, LoginDispatchProps {}
+export interface Props extends InjectedFormProps, LoginDispatchProps, LoginProps {}
+
+const FullWidthTextField = props => <TextField {...props} fullWidth={true} />;
 
 export class Login extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
   }
+
   render() {
+    return !this.props.loggingIn ? this.renderForm() : <Loader />;
+  }
+
+  renderForm() {
     const { handleSubmit, pristine, reset, submitting } = this.props;
     return (
       <div>
@@ -30,8 +43,14 @@ export class Login extends React.Component<Props> {
         </Button>
 
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field name="email" component={TextField} type="email" placeholder="Email" label="Email" />
-          <Field name="password" component={TextField} type="password" placeholder="Password" label="Password" />
+          <Field name="username" component={FullWidthTextField} type="text" placeholder="Username" label="Username" />
+          <Field
+            name="password"
+            component={FullWidthTextField}
+            type="password"
+            placeholder="Password"
+            label="Password"
+          />
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login
@@ -40,8 +59,16 @@ export class Login extends React.Component<Props> {
             Clear
           </Button>
         </form>
+        {this.renderError()}
       </div>
     );
+  }
+
+  renderError() {
+    if (this.props.loginError) {
+      return <p>{this.props.loginError}</p>;
+    }
+    return null;
   }
 
   handleOnSubmit(formData: FormData) {

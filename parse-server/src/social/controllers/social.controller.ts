@@ -31,8 +31,14 @@ export async function acceptFriendRequest(req: Parse.Cloud.FunctionRequest, res:
 
   await Parse.Object.saveAll([fromUser, toUser], { useMasterKey: true });
 
-  var requests1 = await socialService.friendRequestsBetween(createUserPointer(currentUser.id), createUserPointer(params.toUserId));
-  var requests2 = await socialService.friendRequestsBetween(createUserPointer(params.toUserId), createUserPointer(currentUser.id));
+  var requests1 = await socialService.friendRequestsBetween(
+    createUserPointer(currentUser.id),
+    createUserPointer(params.toUserId)
+  );
+  var requests2 = await socialService.friendRequestsBetween(
+    createUserPointer(params.toUserId),
+    createUserPointer(currentUser.id)
+  );
   const requests: FriendRequest[] = Array.prototype.concat(requests1, requests2);
 
   for (let request of requests) {

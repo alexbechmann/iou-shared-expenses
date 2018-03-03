@@ -2,13 +2,18 @@ import { User } from 'parse';
 import * as Parse from 'parse';
 import { store } from '@shared/index';
 import { AnyAction } from 'redux';
+import { RegisterModel } from './register/register.model';
 
+export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
 export const REGISTERING = 'IOU/REGISTERING';
 export const REGISTERED = 'IOU/REGISTERED';
 
 export function loginWithFacebook(): AnyAction {
+  store.dispatch({
+    type: LOGGING_IN
+  });
   const payload = new Promise<User>((resolve, reject) => {
     Parse.FacebookUtils.logIn(null, {
       success: (user: User) => {
@@ -26,7 +31,6 @@ export function loginWithFacebook(): AnyAction {
       }
     });
   });
-
   return {
     type: LOGIN,
     payload: payload
@@ -34,6 +38,9 @@ export function loginWithFacebook(): AnyAction {
 }
 
 export function loginWithPassword(username: string, password: string): AnyAction {
+  store.dispatch({
+    type: LOGGING_IN
+  });
   return {
     type: LOGIN,
     payload: Parse.User.logIn(username, password)
@@ -47,15 +54,15 @@ export function logout(): AnyAction {
   };
 }
 
-export function register(username: string, email: string, password: string): AnyAction {
+export function register(registerModel: RegisterModel): AnyAction {
   store.dispatch({
     type: REGISTERING
   });
 
   return {
     type: REGISTERED,
-    payload: Parse.User.signUp(username, password, {
-      email: email
+    payload: Parse.User.signUp(registerModel.username, registerModel.password, {
+      email: registerModel.email
     })
   };
 }

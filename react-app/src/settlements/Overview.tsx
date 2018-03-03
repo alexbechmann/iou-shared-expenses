@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
-import { AppState } from '@shared/index';
+import { AppState, Loader } from '@shared/index';
 import { getSettlementOverviews } from './settlements.actions';
 import { SettlementOverview } from '@iou/core';
-import { CircularProgress, withStyles, Button } from 'material-ui';
+import { withStyles, Button } from 'material-ui';
 import { OverviewCard } from './components/OverviewCard';
 import { StyleRulesCallback, Theme } from 'material-ui/styles';
 import * as Icons from 'material-ui-icons';
@@ -39,7 +39,7 @@ class OverviewComponent extends React.Component<Props, State> {
   };
 
   render() {
-    return this.props.loading ? this.renderLoading() : this.renderOverview();
+    return this.props.loading ? <Loader /> : this.renderOverview();
   }
 
   renderOverview() {
@@ -48,16 +48,17 @@ class OverviewComponent extends React.Component<Props, State> {
         {this.props.overviews.map(overview => {
           return <OverviewCard key={overview.user.id} overview={overview} />;
         })}
-        <Button variant="fab" className={this.props.classes.actionButton} color="primary" onClick={this.openNewTransactionDialog}>
+        <Button
+          variant="fab"
+          className={this.props.classes.actionButton}
+          color="primary"
+          onClick={this.openNewTransactionDialog}
+        >
           <Icons.Add />
         </Button>
         <NewTransactionDialog open={this.state.newTransactionDialogOpen} handleClose={this.closeNewTransactionDialog} />
       </div>
     );
-  }
-
-  renderLoading() {
-    return <CircularProgress />;
   }
 
   componentDidMount() {
@@ -81,4 +82,6 @@ function mapStateToProps(state: AppState, prevProps: any) {
   };
 }
 
-export const Overview = withStyles(styles, { withTheme: true })(connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent));
+export const Overview = withStyles(styles, { withTheme: true })(
+  connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent)
+);

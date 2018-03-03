@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Tabs, Tab, Paper, Grid } from 'material-ui';
-import { RegisterContainer } from './RegisterContainer';
-import { LoginContainer } from './LoginContainer';
+import { RegisterContainer } from './register/RegisterContainer';
+import { LoginContainer } from './login/LoginContainer';
 
 interface State {
   activeTab: number;
@@ -18,16 +18,23 @@ export class Authorize extends React.Component<Props, State> {
     return (
       <div>
         <Paper>
-          <Tabs value={this.state.activeTab} onChange={this.handleTabChange} indicatorColor="primary" textColor="primary">
+          <Tabs
+            value={this.state.activeTab}
+            onChange={this.handleTabChange}
+            indicatorColor="primary"
+            textColor="primary"
+          >
             <Tab label="Login" />
             <Tab label="Register" />
           </Tabs>
         </Paper>
-        <Grid container={true} spacing={24} className="root container">
-          <Grid item={true} xs={12}>
-            {this.renderForm()}
+        <div>
+          <Grid container={true} spacing={24}>
+            <Grid item={true} xs={12}>
+              {this.renderForm()}
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
     );
   }
