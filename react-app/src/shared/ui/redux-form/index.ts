@@ -1,2 +1,2 @@
 export { FullWidthFormTextField } from './FullWidthFormTextField';
-export { FullWidthMultilineFormTextField } from './FullWidthMultilineFormTextField';
+export { FullWidthFormSelectField } from './FullWidthFormSelectField';

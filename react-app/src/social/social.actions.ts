@@ -97,13 +97,13 @@ export function getFriendRequests(currentUserId: string): AnyAction {
 
 export function getFriends(currentUser: User): AnyAction {
   store.dispatch({
-    type: GETTING_FRIEND_REQUESTS
+    type: GETTING_FRIENDS
   });
 
   const query = currentUser.relation('friends').query();
 
   return {
-    type: GET_FRIEND_REQUESTS,
+    type: GET_FRIENDS,
     payload: query.find()
   };
 }

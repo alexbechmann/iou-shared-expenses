@@ -4,17 +4,19 @@ import { AppState } from '@shared/state/app.state';
 import { combineContainers } from '@shared/combine-containers';
 import { EditTransactionProps, EditTransactionDispatchProps, EditTransaction } from './EditTransaction';
 import { saveTransaction } from './transaction.actions';
+import { getFriends } from 'src/social';
 
 function mapStateToProps(state: AppState): EditTransactionProps {
   return {
     friends: state.social.friends,
-    gettingFriends: state.social.gettingFriends
+    gettingFriends: state.social.gettingFriends,
+    currentUser: state.auth.currentUser!
   };
 }
 
-const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction };
+const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction, getFriends };
 
-export const LoginContainer = combineContainers(EditTransaction, [
+export const EditTransactionContainer = combineContainers(EditTransaction, [
   component => reduxForm({ form: 'editTransactionForm', destroyOnUnmount: true })(component),
   component => connect(mapStateToProps, mapDispatchToProps)(component)
 ]);

@@ -3,9 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import { Action } from 'redux';
 import { Transaction } from '@shared/schema';
 import { InjectedFormProps, Field } from 'redux-form';
-import { Button } from 'material-ui';
-import { FullWidthFormTextField, FullWidthMultilineFormTextField } from '@shared/ui/redux-form';
+import { Button, MenuItem } from 'material-ui';
+import { FullWidthFormTextField, FullWidthFormSelectField } from '@shared/ui/redux-form';
 import { nameof } from '@iou/core';
+import { User } from 'parse';
 
 interface RouteParameters {
   id: number;
@@ -15,10 +16,12 @@ interface RouteParameters {
 export interface EditTransactionProps {
   friends: Parse.User[];
   gettingFriends: boolean;
+  currentUser: Parse.User;
 }
 
 export interface EditTransactionDispatchProps {
   saveTransaction: (transaction: Transaction) => Action;
+  getFriends: (user: User) => Action;
 }
 
 interface Props
@@ -33,6 +36,7 @@ export class EditTransaction extends React.Component<Props> {
     return (
       <span>
         {id} {type}
+        {this.renderForm()}
       </span>
     );
   }
@@ -52,11 +56,23 @@ export class EditTransaction extends React.Component<Props> {
 
           <Field
             name={nameof<Transaction>('fromUser')}
-            component={FullWidthMultilineFormTextField}
-            type="text"
-            placeholder="Title"
-            label="Title"
-          />
+            component={FullWidthFormSelectField}
+            placeholder="From user"
+            label="From user"
+            disabled={this.props.gettingFriends}
+          >
+            {this.renderfriendOptions()}
+          </Field>
+
+          <Field
+            name={nameof<Transaction>('toUser')}
+            component={FullWidthFormSelectField}
+            placeholder="To user"
+            label="To user"
+            disabled={this.props.gettingFriends}
+          >
+            {this.renderfriendOptions()}
+          </Field>
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Save
@@ -70,11 +86,25 @@ export class EditTransaction extends React.Component<Props> {
     );
   }
 
+  renderfriendOptions() {
+    return this.props.friends.concat([this.props.currentUser]).map(user => {
+      return (
+        <MenuItem key={user.id} value={user.id}>
+          {user.id}
+        </MenuItem>
+      );
+    });
+  }
+
   handleOnSubmit(transaction: Transaction) {
     console.log(transaction);
   }
 
   renderError() {
     return <span />;
+  }
+
+  componentDidMount() {
+    this.props.getFriends(this.props.currentUser);
   }
 }

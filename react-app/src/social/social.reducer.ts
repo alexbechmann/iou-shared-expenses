@@ -87,7 +87,7 @@ export function socialReducer(state: SocialState = defaultState, action: any) {
     }
     case GET_FRIENDS: {
       const newState = Object.assign({}, state);
-      newState.friendRequests = action.payload as FriendRequest[];
+      newState.friends = action.payload as User[];
       newState.gettingFriends = false;
       return newState;
     }
