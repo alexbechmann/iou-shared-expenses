@@ -6,11 +6,13 @@ import { parseReducer } from 'src/parse';
 import { socialReducer } from 'src/social';
 import { settlementsReducer } from 'src/settlements';
 import { reducer as formReducer } from 'redux-form';
+import { currencyReducer } from 'src/currencies';
 
 export const rootReducer: Reducer<AppState> = combineReducers({
   auth: authReducer,
   parse: parseReducer,
   social: socialReducer,
   settlements: settlementsReducer,
-  form: formReducer
+  form: formReducer,
+  currency: currencyReducer
 });

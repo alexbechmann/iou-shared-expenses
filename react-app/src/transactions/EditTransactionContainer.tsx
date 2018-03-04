@@ -10,7 +10,8 @@ function mapStateToProps(state: AppState): EditTransactionProps {
   return {
     friends: state.social.friends,
     gettingFriends: state.social.gettingFriends,
-    currentUser: state.auth.currentUser!
+    currentUser: state.auth.currentUser!,
+    currencies: state.currency.avaiableCurrencies
   };
 }
 
