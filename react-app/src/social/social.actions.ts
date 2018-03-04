@@ -16,6 +16,8 @@ export const GETTING_FRIEND_REQUESTS = 'IOU/GETTING_FRIEND_REQUESTS';
 export const GET_FRIEND_REQUESTS = 'IOU/GET_FRIEND_REQUESTS';
 export const GETTING_FRIENDS = 'IOU/GETTING_FRIENDS';
 export const GET_FRIENDS = 'IOU/GET_FRIENDS';
+export const ENRICHING_PROFILE_FACEBOOK = 'IOU/ENRICHING_PROFILE_FACEBOOK';
+export const ENRICHED_PROFILE_FACEBOOK = 'IOU/ENRICHED_PROFILE_FACEBOOK';
 
 export function acceptFriendRequest(userId: string): AnyAction {
   store.dispatch({
@@ -105,5 +107,25 @@ export function getFriends(currentUser: User): AnyAction {
   return {
     type: GET_FRIENDS,
     payload: query.find()
+  };
+}
+
+export function enrichUserProfileWithFacebook(currentUser: User): AnyAction {
+  store.dispatch({
+    type: ENRICHING_PROFILE_FACEBOOK
+  });
+  const accessToken = currentUser.attributes.authData.access_token;
+  FB.api(
+    '/me',
+    {
+      access_token: accessToken,
+      fields: ['first_name', 'last_name']
+    },
+    response => {
+      console.log(response);
+    }
+  );
+  return {
+    type: ENRICHED_PROFILE_FACEBOOK
   };
 }

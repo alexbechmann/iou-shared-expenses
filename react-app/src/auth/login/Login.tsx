@@ -6,6 +6,7 @@ import { nameof } from '@iou/core';
 import { LoginModel } from './login.model';
 import { Loader } from '@shared/ui';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
+import { required } from 'redux-form-validators';
 
 export interface LoginProps {
   loginError?: string;
@@ -45,6 +46,7 @@ export class Login extends React.Component<Props> {
               type="text"
               placeholder="Username"
               label="Username"
+              validate={[required()]}
             />
           </FormControl>
 
