@@ -29,8 +29,8 @@ export class Authorize extends React.Component<Props, State> {
           </Tabs>
         </Paper>
         <div>
-          <Grid container={true} spacing={24}>
-            <Grid item={true} xs={12}>
+          <Grid container={true} spacing={24} justify="center">
+            <Grid item={true} xs={12} sm={7} md={6} lg={5}>
               {this.renderForm()}
             </Grid>
           </Grid>

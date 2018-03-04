@@ -37,8 +37,8 @@ export class App extends React.Component<Props> {
   renderApp() {
     if (this.props.currentUser) {
       return (
-        <Grid container={true} spacing={24} className="root container">
-          <Grid item={true} xs={12}>
+        <Grid container={true} spacing={24} className="root container" justify="center">
+          <Grid item={true} xs={12} sm={7} md={6} lg={5}>
             <Switch>
               <Route exact={true} path="/friends" component={FindFriends} />
               <Route exact={true} path="/friend-requests" component={FriendRequests} />
