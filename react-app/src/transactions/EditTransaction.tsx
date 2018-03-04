@@ -3,11 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import { Action } from 'redux';
 import { Transaction } from '@shared/schema';
 import { InjectedFormProps, Field } from 'redux-form';
-import { Button, MenuItem, FormControl, InputLabel } from 'material-ui';
-import { Select } from 'redux-form-material-ui';
+import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType } from '@iou/core';
 import { User } from 'parse';
-import { FullWidthFormTextField } from '@shared/ui/redux-form';
+import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse';
 
 interface RouteParameters {
@@ -22,7 +21,7 @@ export interface EditTransactionProps {
   currencies: Currency[];
 }
 
-interface TransactionFormData {
+export interface TransactionFormData {
   title: string;
   amount: number;
   fromUserId: string;
@@ -49,7 +48,9 @@ export class EditTransaction extends React.Component<Props> {
     const { type, id } = this.props.match.params;
     return (
       <span>
-        {id} {type}
+        <Typography variant="headline" gutterBottom={true}>
+          {id} {type}
+        </Typography>
         {this.renderForm()}
       </span>
     );
@@ -60,19 +61,22 @@ export class EditTransaction extends React.Component<Props> {
     return (
       <div>
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field
-            name={nameof<TransactionFormData>('title')}
-            component={FullWidthFormTextField}
-            type="text"
-            placeholder="Title"
-            label="Title"
-          />
+          <FormControl fullWidth={true}>
+            <InputLabel>Title</InputLabel>
+            <Field
+              name={nameof<TransactionFormData>('title')}
+              component={ReduxFormMaterialFields.TextField}
+              type="text"
+              placeholder="Title"
+              label="Title"
+            />
+          </FormControl>
 
           <FormControl fullWidth={true}>
             <InputLabel>From user</InputLabel>
             <Field
               name={nameof<TransactionFormData>('fromUserId')}
-              component={Select}
+              component={ReduxFormMaterialFields.Select}
               placeholder="To user"
               disabled={this.props.gettingFriends}
             >
@@ -84,7 +88,7 @@ export class EditTransaction extends React.Component<Props> {
             <InputLabel>To user</InputLabel>
             <Field
               name={nameof<TransactionFormData>('toUserId')}
-              component={Select}
+              component={ReduxFormMaterialFields.Select}
               placeholder="To user"
               disabled={this.props.gettingFriends}
             >
@@ -94,7 +98,11 @@ export class EditTransaction extends React.Component<Props> {
 
           <FormControl fullWidth={true}>
             <InputLabel>Currency</InputLabel>
-            <Field name={nameof<TransactionFormData>('currencyId')} component={Select} placeholder="Currency">
+            <Field
+              name={nameof<TransactionFormData>('currencyId')}
+              component={ReduxFormMaterialFields.Select}
+              placeholder="Currency"
+            >
               {this.props.currencies.map(currency => {
                 return (
                   <MenuItem key={currency.id} value={currency.id}>

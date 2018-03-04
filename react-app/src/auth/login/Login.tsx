@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { Button } from 'material-ui';
+import { Button, FormControl } from 'material-ui';
 import { Action } from 'redux';
 import { InjectedFormProps, Field } from 'redux-form';
-import { FullWidthFormTextField } from '@shared/ui/redux-form';
 import { nameof } from '@iou/core';
 import { LoginModel } from './login.model';
 import { Loader } from '@shared/ui';
+import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 
 export interface LoginProps {
   loginError?: string;
@@ -38,20 +38,25 @@ export class Login extends React.Component<Props> {
         </Button>
 
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field
-            name={nameof<LoginModel>('username')}
-            component={FullWidthFormTextField}
-            type="text"
-            placeholder="Username"
-            label="Username"
-          />
-          <Field
-            name={nameof<LoginModel>('password')}
-            component={FullWidthFormTextField}
-            type="password"
-            placeholder="Password"
-            label="Password"
-          />
+          <FormControl fullWidth={true}>
+            <Field
+              name={nameof<LoginModel>('username')}
+              component={ReduxFormMaterialFields.TextField}
+              type="text"
+              placeholder="Username"
+              label="Username"
+            />
+          </FormControl>
+
+          <FormControl fullWidth={true}>
+            <Field
+              name={nameof<LoginModel>('password')}
+              component={ReduxFormMaterialFields.TextField}
+              type="password"
+              placeholder="Password"
+              label="Password"
+            />
+          </FormControl>
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login

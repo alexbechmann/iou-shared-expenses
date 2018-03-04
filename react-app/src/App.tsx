@@ -1,7 +1,6 @@
 import * as React from 'react';
 import './styles/main.css';
 import 'typeface-roboto';
-import Grid from 'material-ui/Grid';
 import { LinearProgress } from 'material-ui';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Action } from 'redux';
@@ -10,6 +9,7 @@ import { Overview } from 'src/settlements';
 import { Authorize } from 'src/auth';
 import { AppMenuContainer } from 'src/menu';
 import { EditTransactionContainer } from 'src/transactions';
+import { RootGrid } from '@shared/ui';
 
 export interface AppProps {
   currentUser: any;
@@ -37,16 +37,14 @@ export class App extends React.Component<Props> {
   renderApp() {
     if (this.props.currentUser) {
       return (
-        <Grid container={true} spacing={24} className="root container" justify="center">
-          <Grid item={true} xs={12} sm={7} md={6} lg={5}>
-            <Switch>
-              <Route exact={true} path="/friends" component={FindFriends} />
-              <Route exact={true} path="/friend-requests" component={FriendRequests} />
-              <Route exact={true} path="/transactions/:type/:id?" component={EditTransactionContainer} />
-              <Route path="/" component={Overview} />
-            </Switch>
-          </Grid>
-        </Grid>
+        <RootGrid>
+          <Switch>
+            <Route exact={true} path="/friends" component={FindFriends} />
+            <Route exact={true} path="/friend-requests" component={FriendRequests} />
+            <Route exact={true} path="/transactions/:type/:id?" component={EditTransactionContainer} />
+            <Route path="/" component={Overview} />
+          </Switch>
+        </RootGrid>
       );
     } else if (this.props.parseInitialized) {
       return <Authorize />;

@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Tabs, Tab, Paper, Grid } from 'material-ui';
+import { Tabs, Tab, Paper } from 'material-ui';
 import { RegisterContainer } from './register/RegisterContainer';
 import { LoginContainer } from './login/LoginContainer';
+import { RootGrid } from '@shared/ui';
 
 interface State {
   activeTab: number;
@@ -29,11 +30,7 @@ export class Authorize extends React.Component<Props, State> {
           </Tabs>
         </Paper>
         <div>
-          <Grid container={true} spacing={24} justify="center">
-            <Grid item={true} xs={12} sm={7} md={6} lg={5}>
-              {this.renderForm()}
-            </Grid>
-          </Grid>
+          <RootGrid>{this.renderForm()}</RootGrid>
         </div>
       </div>
     );
