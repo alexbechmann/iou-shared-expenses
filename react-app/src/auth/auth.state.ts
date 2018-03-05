@@ -1,5 +1,7 @@
+import { User } from 'parse';
+
 export interface AuthState {
-  currentUser?: Parse.User;
+  currentUser?: User;
   loginError?: string;
   registerError?: string;
   registering: boolean;

@@ -1,5 +1,5 @@
-import { User } from 'parse';
 import { FriendRequest } from '@shared/schema';
+import { User } from 'parse';
 
 export interface SocialState {
   searchText: string;

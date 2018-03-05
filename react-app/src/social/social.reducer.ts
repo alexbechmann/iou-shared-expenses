@@ -1,4 +1,3 @@
-import { User } from 'parse';
 import {
   SET_SEARCH_TEXT,
   FIND_USERS,
@@ -13,6 +12,7 @@ import {
 } from 'src/social';
 import { FriendRequest } from '@shared/schema';
 import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
+import { User } from 'parse';
 
 const defaultState: SocialState = {
   searchText: 'alexbechmann',

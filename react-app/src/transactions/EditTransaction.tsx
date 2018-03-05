@@ -5,9 +5,9 @@ import { Transaction } from '@shared/schema';
 import { InjectedFormProps, Field } from 'redux-form';
 import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType } from '@iou/core';
-import { User } from 'parse';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse';
+import { User } from 'parse';
 
 interface RouteParameters {
   id: number;
@@ -15,9 +15,9 @@ interface RouteParameters {
 }
 
 export interface EditTransactionProps {
-  friends: Parse.User[];
+  friends: User[];
   gettingFriends: boolean;
-  currentUser: Parse.User;
+  currentUser: User;
   currencies: Currency[];
 }
 

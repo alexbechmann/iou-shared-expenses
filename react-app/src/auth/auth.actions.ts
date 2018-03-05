@@ -1,11 +1,10 @@
-import { User } from 'parse';
 import * as Parse from 'parse';
 import { store } from '@shared/state';
 import { AnyAction } from 'redux';
 import { RegisterModel } from './register/register.model';
 import { LoginModel } from './login/login.model';
 import { enrichUserProfileWithFacebook } from 'src/social/social.actions';
-
+import { User } from 'parse';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
