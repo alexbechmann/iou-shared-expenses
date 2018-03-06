@@ -19,6 +19,7 @@ export interface EditTransactionProps {
   gettingFriends: boolean;
   currentUser: User;
   currencies: Currency[];
+  formValues: Partial<TransactionFormData>;
 }
 
 export interface TransactionFormData {
@@ -43,7 +44,15 @@ interface Props
     EditTransactionDispatchProps,
     InjectedFormProps {}
 
-export class EditTransaction extends React.Component<Props> {
+interface State {
+  lastTouchedUserSelect: string;
+}
+
+export class EditTransaction extends React.Component<Props, State> {
+  state: State = {
+    lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId')
+  };
+
   render() {
     const { type, id } = this.props.match.params;
     return (
@@ -56,13 +65,23 @@ export class EditTransaction extends React.Component<Props> {
     );
   }
 
+  componentDidUpdate() {
+    if (this.props.formValues.fromUserId === this.props.formValues.toUserId) {
+      if (this.state.lastTouchedUserSelect === nameof<TransactionFormData>('fromUserId')) {
+        this.props.change(nameof<TransactionFormData>('toUserId'), '');
+      } else {
+        this.props.change(nameof<TransactionFormData>('fromUserId'), '');
+      }
+    }
+  }
+
   renderForm() {
-    const { handleSubmit, pristine, reset, submitting } = this.props;
+    const { handleSubmit, pristine, reset, submitting, error } = this.props;
     return (
       <div>
+        {error}
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
           <FormControl fullWidth={true}>
-            <InputLabel>Title</InputLabel>
             <Field
               name={nameof<TransactionFormData>('title')}
               component={ReduxFormMaterialFields.TextField}
@@ -79,6 +98,7 @@ export class EditTransaction extends React.Component<Props> {
               component={ReduxFormMaterialFields.Select}
               placeholder="To user"
               disabled={this.props.gettingFriends}
+              onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId') })}
             >
               {this.renderfriendOptions()}
             </Field>
@@ -91,6 +111,7 @@ export class EditTransaction extends React.Component<Props> {
               component={ReduxFormMaterialFields.Select}
               placeholder="To user"
               disabled={this.props.gettingFriends}
+              onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('toUserId') })}
             >
               {this.renderfriendOptions()}
             </Field>
