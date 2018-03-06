@@ -19,13 +19,16 @@ const validate = (values: TransactionFormData) => {
   if (nullOrEmpty(values.title)) {
     errors.title = 'Required';
   }
-  if (nullOrEmpty(values.fromUserId)) {
-    errors.fromUserId = 'Required';
-  }
-  if (nullOrEmpty(values.toUserId)) {
-    errors.fromUserId = 'Required';
+  if (!(values.amount > 0)) {
+    errors.amount = 'Amount must be greater than zero';
   }
   // Not ready due to: https://github.com/erikras/redux-form-material-ui/issues/216
+  // if (nullOrEmpty(values.fromUserId)) {
+  //   errors.fromUserId = 'Required';
+  // }
+  // if (nullOrEmpty(values.toUserId)) {
+  //   errors.fromUserId = 'Required';
+  // }
   // if (!nullOrEmpty(values.fromUserId) && !nullOrEmpty(values.toUserId) && values.fromUserId === values.toUserId) {
   //   errors.fromUserId = 'Cannot be equal to To user';
   //   errors.toUserId = 'Cannot be equal to From user';

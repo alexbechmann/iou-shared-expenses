@@ -134,6 +134,16 @@ export class EditTransaction extends React.Component<Props, State> {
             </Field>
           </FormControl>
 
+          <FormControl fullWidth={true}>
+            <Field
+              name={nameof<TransactionFormData>('amount')}
+              component={ReduxFormMaterialFields.TextField}
+              type="number"
+              placeholder="Amount"
+              label="Amount"
+            />
+          </FormControl>
+
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Save
           </Button>
