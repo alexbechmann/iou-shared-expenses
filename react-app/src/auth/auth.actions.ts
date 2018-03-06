@@ -3,7 +3,7 @@ import { store } from '@shared/state';
 import { AnyAction } from 'redux';
 import { RegisterModel } from './register/register.model';
 import { LoginModel } from './login/login.model';
-import { enrichUserProfileWithFacebook } from 'src/social/social.actions';
+import { enrichUserProfileWithFacebook, findFriendsWithFacebook } from 'src/social/social.actions';
 import { User } from 'parse';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
@@ -24,6 +24,7 @@ export function loginWithFacebook(): AnyAction {
           console.log('User logged in through Facebook!');
         }
         store.dispatch(enrichUserProfileWithFacebook(user));
+        store.dispatch(findFriendsWithFacebook(user));
         resolve(user);
       },
       error: (user, error) => {

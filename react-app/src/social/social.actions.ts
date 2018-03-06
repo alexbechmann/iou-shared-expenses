@@ -4,6 +4,7 @@ import { store } from '@shared/state';
 import { FriendRequest } from '@shared/schema';
 import { AnyAction } from 'redux';
 import { User } from 'parse';
+import { CustomUserProperties, nameof } from '@iou/core';
 
 export const FIND_USERS = 'IOU/FIND_USERS';
 export const FOUND_USERS = 'IOU/FOUND_USERS';
@@ -125,7 +126,8 @@ export function enrichUserProfileWithFacebook(currentUser: User): AnyAction {
         fields: ['first_name', 'last_name']
       },
       (response: { first_name: string; last_name: string }) => {
-        currentUser.set('displayName', `${response.first_name} ${response.last_name}`);
+        currentUser.set(nameof<CustomUserProperties>('displayName'), `${response.first_name} ${response.last_name}`);
+        currentUser.set(nameof<CustomUserProperties>('facebookId'), currentUser.attributes.authData.facebook.id);
         currentUser.save().then(resolve);
       }
     );
@@ -142,8 +144,11 @@ export function findFriendsWithFacebook(currentUser: User): AnyAction {
     type: FINDING_FRIENDS_FACEBOOK
   });
   const payload = new Promise<any>((resolve, reject) =>
-    FB.api('/me/friends', () => response => {
-      console.log(response);
+    FB.api('/me/friends', response => {
+      if (response && response.data) {
+        const ids = response.data.map(friend => friend.id);
+        Parse.Cloud.run('findFriendsWithFacebookIds', { facebookIds: ids }).then(resolve);
+      }
       resolve();
     })
   );
