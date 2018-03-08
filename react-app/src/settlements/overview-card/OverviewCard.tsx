@@ -47,7 +47,7 @@ export class OverviewCardComponent extends React.Component<Props> {
           <SettlementsTable settlements={this.props.settlements} />
         </CardContent>
         <CardActions>
-          <Link to={`/view-transactions/${this.props.friend.id}`}>
+          <Link style={{ width: '100%' }} to={`/view-transactions/${this.props.friend.id}`}>
             <Button fullWidth={true} variant="raised" color="secondary">
               View Transactions
             </Button>

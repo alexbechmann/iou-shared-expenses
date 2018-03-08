@@ -21,7 +21,9 @@ function mapStateToProps(
         transaction.toUser.objectId === ownProps.match.params.toUserId
     ),
     currentUser: state.auth.currentUser!,
-    friend: state.social.friends.find(user => user.id === ownProps.match.params.toUserId)
+    friend: state.social.friends.find(user => user.id === ownProps.match.params.toUserId),
+    gettingTransactions: state.transactions.gettingTransactions,
+    gettingFriends: state.social.gettingFriends
   };
 }
 
