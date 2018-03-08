@@ -35,7 +35,7 @@ export interface TransactionFormData {
 
 export interface EditTransactionDispatchProps {
   saveTransaction: (transaction: Transaction) => Action;
-  getFriends: (user: User) => Action;
+  getFriendsForUser: (user: User) => Action;
 }
 
 interface Props
@@ -179,6 +179,6 @@ export class EditTransaction extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.getFriends(this.props.currentUser);
+    this.props.getFriendsForUser(this.props.currentUser);
   }
 }

@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { Action } from 'redux';
-import { AppState } from '@shared/state';
-import { getSettlementOverviews } from './settlements.actions';
-import { SettlementOverview } from '@iou/core';
 import { withStyles, Button } from 'material-ui';
-import { OverviewCard } from './components/OverviewCard';
 import { StyleRulesCallback, Theme } from 'material-ui/styles';
 import * as Icons from 'material-ui-icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { NewTransactionDialog } from 'src/transactions';
 import { Loader } from '@shared/ui';
+import { User } from 'parse';
+import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
 
 type ClassNames = 'actionButton';
 // | 'content';
@@ -23,18 +20,23 @@ const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   }
 });
 
-interface Props extends WithStyles<ClassNames> {
+export interface OverviewProps {
   currentUser: any;
   loading: boolean;
-  overviews: SettlementOverview[];
-  getSettlementOverviews: () => Action;
+  friends: User[];
 }
+
+export interface OverviewDispatchProps {
+  getFriendsForUser: (user: User) => Action;
+}
+
+interface Props extends OverviewProps, OverviewDispatchProps, WithStyles<ClassNames> {}
 
 interface State {
   newTransactionDialogOpen: boolean;
 }
 
-class OverviewComponent extends React.Component<Props, State> {
+export class OverviewComponent extends React.Component<Props, State> {
   state: State = {
     newTransactionDialogOpen: false
   };
@@ -44,10 +46,11 @@ class OverviewComponent extends React.Component<Props, State> {
   }
 
   renderOverview() {
+    console.log(this.props);
     return (
       <div>
-        {this.props.overviews.map(overview => {
-          return <OverviewCard key={overview.user.id} overview={overview} />;
+        {this.props.friends.map(friend => {
+          return <OverviewCardContainer key={friend.id} friend={friend} />;
         })}
         <Button
           variant="fab"
@@ -63,7 +66,7 @@ class OverviewComponent extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.getSettlementOverviews();
+    this.props.getFriendsForUser(this.props.currentUser);
   }
 
   openNewTransactionDialog = () => {
@@ -75,14 +78,4 @@ class OverviewComponent extends React.Component<Props, State> {
   };
 }
 
-function mapStateToProps(state: AppState, prevProps: any) {
-  return {
-    currentUser: state.auth.currentUser,
-    loading: state.settlements.gettingSettlements,
-    overviews: state.settlements.overviews
-  };
-}
-
-export const Overview = withStyles(styles, { withTheme: true })(
-  connect(mapStateToProps, { getSettlementOverviews })(OverviewComponent)
-);
+export const Overview = withStyles(styles, { withTheme: true })(OverviewComponent);

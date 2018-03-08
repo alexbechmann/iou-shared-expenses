@@ -1,11 +1,11 @@
 import { SettlementsState } from './settlements.state';
 import { GETTING_SETTLEMENTS, GET_SETTLEMENTS } from './settlements.actions';
-import { SettlementOverview } from '@iou/core';
+import { Settlement } from '@iou/core';
 import { AnyAction } from 'redux';
 
 const defaultState: SettlementsState = {
   gettingSettlements: false,
-  overviews: []
+  allSettlements: []
 };
 
 export function settlementsReducer(state: SettlementsState = defaultState, action: AnyAction) {
@@ -17,7 +17,7 @@ export function settlementsReducer(state: SettlementsState = defaultState, actio
     }
     case GET_SETTLEMENTS: {
       const newState = Object.assign({}, state);
-      newState.overviews = action.payload as SettlementOverview[];
+      newState.allSettlements = action.payload as Settlement[];
       newState.gettingSettlements = false;
       return newState;
     }

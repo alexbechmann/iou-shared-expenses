@@ -28,6 +28,8 @@ export class SettlementService {
       );
       if (transactionsForCurrency.length > 0) {
         const settlement: Settlement = {
+          fromUserId,
+          toUserId,
           currency,
           amount: 0
         };

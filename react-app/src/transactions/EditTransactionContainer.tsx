@@ -9,7 +9,7 @@ import {
   TransactionFormData
 } from './EditTransaction';
 import { saveTransaction } from './transaction.actions';
-import { getFriends } from 'src/social';
+import { getFriendsForUser } from 'src/social';
 import { CurrencyType } from '@iou/core';
 
 const nullOrEmpty = (value: string) => !value || value.length < 1;
@@ -52,7 +52,7 @@ function mapStateToProps(state: AppState): Partial<EditTransactionProps & Inject
   };
 }
 
-const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction, getFriends };
+const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction, getFriendsForUser };
 
 export const EditTransactionContainer = combineContainers(EditTransaction, [
   component =>

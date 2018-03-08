@@ -1,6 +1,6 @@
-import { SettlementOverview } from '@iou/core';
+import { Settlement } from '@iou/core';
 
 export interface SettlementsState {
   gettingSettlements: boolean;
-  overviews: SettlementOverview[];
+  allSettlements: Settlement[];
 }

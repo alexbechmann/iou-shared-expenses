@@ -106,12 +106,12 @@ export function getFriendRequests(currentUserId: string): AnyAction {
   };
 }
 
-export function getFriends(currentUser: User): AnyAction {
+export function getFriendsForUser(user: User): AnyAction {
   store.dispatch({
     type: GETTING_FRIENDS
   });
 
-  const query = currentUser.relation('friends').query();
+  const query = user.relation('friends').query();
 
   return {
     type: GET_FRIENDS,

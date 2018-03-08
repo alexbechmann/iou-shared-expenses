@@ -1,15 +1,24 @@
 import * as React from 'react';
-import { SettlementOverview } from '@iou/core';
+import { Settlement } from '@iou/core';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import { Button } from 'material-ui';
-import { SettlementsTable } from './SettlementsTable';
+import { SettlementsTable } from '../components/SettlementsTable';
+import { User } from 'parse';
+import { Action } from 'redux';
 
-interface Props {
-  overview: SettlementOverview;
+export interface OverviewCardProps {
+  friend: User;
+  settlements: Settlement[];
 }
+
+export interface OverviewCardDispatchProps {
+  getSettlementsToUser: (toUserId: string) => Action;
+}
+
+interface Props extends OverviewCardProps, OverviewCardDispatchProps {}
 
 export class OverviewCard extends React.Component<Props> {
   render() {
@@ -22,10 +31,10 @@ export class OverviewCard extends React.Component<Props> {
               <MoreVertIcon />
             </IconButton>
           }
-          title={this.props.overview.user.id}
+          title={this.props.friend.id}
         />
         <CardContent>
-          <SettlementsTable settlements={this.props.overview.settlements} />
+          <SettlementsTable settlements={this.props.settlements} />
         </CardContent>
         <CardActions>
           <Button fullWidth={true} variant="raised" color="secondary">
@@ -34,5 +43,9 @@ export class OverviewCard extends React.Component<Props> {
         </CardActions>
       </Card>
     );
+  }
+
+  componentDidMount() {
+    this.props.getSettlementsToUser(this.props.friend.id);
   }
 }
