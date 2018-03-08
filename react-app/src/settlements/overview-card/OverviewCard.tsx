@@ -8,6 +8,7 @@ import { Button } from 'material-ui';
 import { SettlementsTable } from '../components/SettlementsTable';
 import { User } from 'parse';
 import { Action } from 'redux';
+import { withStyles, StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
 
 export interface OverviewCardProps {
   friend: User;
@@ -18,12 +19,20 @@ export interface OverviewCardDispatchProps {
   getSettlementsToUser: (toUserId: string) => Action;
 }
 
-interface Props extends OverviewCardProps, OverviewCardDispatchProps {}
+type ClassNames = 'card';
 
-export class OverviewCard extends React.Component<Props> {
+const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+  card: {
+    marginBottom: theme.spacing.unit * 2
+  }
+});
+
+interface Props extends OverviewCardProps, OverviewCardDispatchProps, WithStyles<ClassNames> {}
+
+export class OverviewCardComponent extends React.Component<Props> {
   render() {
     return (
-      <Card>
+      <Card className={this.props.classes.card}>
         <CardHeader
           avatar={<Avatar>R</Avatar>}
           action={
@@ -49,3 +58,5 @@ export class OverviewCard extends React.Component<Props> {
     this.props.getSettlementsToUser(this.props.friend.id);
   }
 }
+
+export const OverviewCard = withStyles(styles, { withTheme: true })(OverviewCardComponent);

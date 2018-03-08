@@ -19,4 +19,7 @@ function mapStateToProps(state: AppState, ownProps: OverviewContainerProps): Ove
 
 const mapDispatchToProps: OverviewCardDispatchProps = { getSettlementsToUser };
 
-export const OverviewCardContainer = connect(mapStateToProps, mapDispatchToProps)(OverviewCard);
+export const OverviewCardContainer: React.ComponentClass<OverviewContainerProps> = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(OverviewCard);
