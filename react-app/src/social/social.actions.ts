@@ -4,7 +4,13 @@ import { store } from '@shared/state';
 import { FriendRequest } from '@shared/schema';
 import { AnyAction } from 'redux';
 import { User } from 'parse';
-import { CustomUserProperties, nameof } from '@iou/core';
+import {
+  CustomUserProperties,
+  nameof,
+  CLOUD_FUNCTION_FIND_FRIENDS_WITH_FACEBOOK_IDS,
+  CLOUD_FUNCTION_SEND_FRIEND_REQUEST,
+  CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST
+} from '@iou/core';
 
 export const FIND_USERS = 'IOU/FIND_USERS';
 export const FOUND_USERS = 'IOU/FOUND_USERS';
@@ -34,7 +40,7 @@ export function acceptFriendRequest(userId: string): AnyAction {
 
   return {
     type: ACCEPTED_FRIEND_REQUEST,
-    payload: Parse.Cloud.run('acceptFriendRequest', params)
+    payload: Parse.Cloud.run(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, params)
   };
 }
 
@@ -74,7 +80,7 @@ export function sendFriendRequest(userId: string): AnyAction {
 
   return {
     type: SENT_FRIEND_REQUEST,
-    payload: parse.Cloud.run('sendFriendRequest', params),
+    payload: parse.Cloud.run(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, params),
     metadata: {
       id: userId
     }
@@ -147,7 +153,7 @@ export function findFriendsWithFacebook(currentUser: User): AnyAction {
     FB.api('/me/friends', response => {
       if (response && response.data) {
         const ids = response.data.map(friend => friend.id);
-        Parse.Cloud.run('findFriendsWithFacebookIds', { facebookIds: ids }).then(resolve);
+        Parse.Cloud.run(CLOUD_FUNCTION_FIND_FRIENDS_WITH_FACEBOOK_IDS, { facebookIds: ids }).then(resolve);
       }
       resolve();
     })

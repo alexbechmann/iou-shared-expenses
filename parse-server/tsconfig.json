@@ -6,7 +6,6 @@
     "outDir": "./cloud",
     "baseUrl": "./src",
     "paths": {
-      "@shared/*": ["./shared/*"]
     }
   },
   "exclude": [
