@@ -48,7 +48,8 @@ function mapStateToProps(state: AppState): Partial<EditTransactionProps & Inject
     currentUser: state.auth.currentUser!,
     currencies: state.currency.avaiableCurrencies,
     initialValues: initialFormValues,
-    formValues: state.form['editTransactionForm'] ? state.form['editTransactionForm'].values : {}
+    formValues: state.form['editTransactionForm'] ? state.form['editTransactionForm'].values : {},
+    saving: state.transactions.savingTransaction
   };
 }
 

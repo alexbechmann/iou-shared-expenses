@@ -2,7 +2,6 @@ import { SocialService } from './social/social.service';
 import { createUserPointer } from './shared/pointer.factory';
 import { SettlementService } from './settlements/settlement.service';
 import {
-  SettlementOverview,
   CLOUD_FUNCTION_SEND_FRIEND_REQUEST,
   CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST,
   CLOUD_FUNCTION_GET_SETTLEMENTS_BETWEEN_USERS,

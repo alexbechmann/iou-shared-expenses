@@ -20,6 +20,7 @@ export interface EditTransactionProps {
   currentUser: User;
   currencies: Currency[];
   formValues: Partial<TransactionFormData>;
+  saving: boolean;
 }
 
 export interface TransactionFormData {
@@ -52,6 +53,11 @@ export class EditTransaction extends React.Component<Props, State> {
   state: State = {
     lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId')
   };
+
+  constructor(props: Props) {
+    super(props);
+    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+  }
 
   render() {
     const { type, id } = this.props.match.params;
@@ -88,6 +94,7 @@ export class EditTransaction extends React.Component<Props, State> {
               type="text"
               placeholder="Title"
               label="Title"
+              disabled={this.props.saving}
             />
           </FormControl>
 
@@ -97,7 +104,7 @@ export class EditTransaction extends React.Component<Props, State> {
               name={nameof<TransactionFormData>('fromUserId')}
               component={ReduxFormMaterialFields.Select}
               placeholder="To user"
-              disabled={this.props.gettingFriends}
+              disabled={this.props.gettingFriends || this.props.saving}
               onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId') })}
             >
               {this.renderfriendOptions()}
@@ -110,7 +117,7 @@ export class EditTransaction extends React.Component<Props, State> {
               name={nameof<TransactionFormData>('toUserId')}
               component={ReduxFormMaterialFields.Select}
               placeholder="To user"
-              disabled={this.props.gettingFriends}
+              disabled={this.props.gettingFriends || this.props.saving}
               onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('toUserId') })}
             >
               {this.renderfriendOptions()}
@@ -123,6 +130,7 @@ export class EditTransaction extends React.Component<Props, State> {
               name={nameof<TransactionFormData>('currencyId')}
               component={ReduxFormMaterialFields.Select}
               placeholder="Currency"
+              disabled={this.props.saving}
             >
               {this.props.currencies.map(currency => {
                 return (
@@ -144,10 +152,10 @@ export class EditTransaction extends React.Component<Props, State> {
             />
           </FormControl>
 
-          <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
+          <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting || this.props.saving}>
             Save
           </Button>
-          <Button variant="raised" type="submit" disabled={pristine || submitting} onClick={reset}>
+          <Button variant="raised" type="submit" disabled={pristine || submitting || this.props.saving} onClick={reset}>
             Clear
           </Button>
         </form>
@@ -171,7 +179,7 @@ export class EditTransaction extends React.Component<Props, State> {
     Object.assign(transaction, transactionFormData);
     transaction.fromUser = createUserPointer(transactionFormData.fromUserId);
     transaction.toUser = createUserPointer(transactionFormData.toUserId);
-    console.log(transaction);
+    this.props.saveTransaction(transaction);
   }
 
   renderError() {
