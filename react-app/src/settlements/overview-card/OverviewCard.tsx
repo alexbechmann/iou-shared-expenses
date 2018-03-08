@@ -9,6 +9,7 @@ import { SettlementsTable } from '../components/SettlementsTable';
 import { User } from 'parse';
 import { Action } from 'redux';
 import { withStyles, StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
+import { Link } from 'react-router-dom';
 
 export interface OverviewCardProps {
   friend: User;
@@ -46,9 +47,11 @@ export class OverviewCardComponent extends React.Component<Props> {
           <SettlementsTable settlements={this.props.settlements} />
         </CardContent>
         <CardActions>
-          <Button fullWidth={true} variant="raised" color="secondary">
-            View Transactions
-          </Button>
+          <Link to={`/view-transactions/${this.props.friend.id}`}>
+            <Button fullWidth={true} variant="raised" color="secondary">
+              View Transactions
+            </Button>
+          </Link>
         </CardActions>
       </Card>
     );

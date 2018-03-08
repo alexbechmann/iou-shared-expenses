@@ -8,7 +8,7 @@ import { FindFriends, FriendRequests } from 'src/social';
 import { OverviewContainer } from 'src/settlements';
 import { Authorize } from 'src/auth';
 import { AppMenuContainer } from 'src/menu';
-import { EditTransactionContainer } from 'src/transactions';
+import { EditTransactionContainer, ViewTransactionsContainer } from 'src/transactions';
 import { RootGrid } from '@shared/ui';
 
 export interface AppProps {
@@ -42,6 +42,7 @@ export class App extends React.Component<Props> {
             <Route exact={true} path="/friends" component={FindFriends} />
             <Route exact={true} path="/friend-requests" component={FriendRequests} />
             <Route exact={true} path="/transactions/:type/:id?" component={EditTransactionContainer} />
+            <Route exact={true} path="/view-transactions/:toUserId" component={ViewTransactionsContainer} />
             <Route path="/" component={OverviewContainer} />
           </Switch>
         </RootGrid>

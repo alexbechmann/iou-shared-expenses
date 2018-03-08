@@ -46,7 +46,6 @@ export class OverviewComponent extends React.Component<Props, State> {
   }
 
   renderOverview() {
-    console.log(this.props);
     return (
       <div>
         {this.props.friends.map(friend => {

@@ -8,7 +8,7 @@ import {
   EditTransaction,
   TransactionFormData
 } from './EditTransaction';
-import { saveTransaction } from './transaction.actions';
+import { saveTransaction } from '../transaction.actions';
 import { getFriendsForUser } from 'src/social';
 import { CurrencyType } from '@iou/core';
 
