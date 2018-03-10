@@ -5,7 +5,6 @@ import { Button, CircularProgress, FormControl } from 'material-ui';
 import { RegisterModel } from './register.model';
 import { nameof } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
-import { required, email, length } from 'redux-form-validators';
 
 export interface RegisterProps {
   registerError?: string;
@@ -41,7 +40,6 @@ export class Register extends React.Component<Props> {
                 type="email"
                 placeholder="Email"
                 label="Email"
-                validate={[required(), email()]}
               />
             </FormControl>
 
@@ -52,7 +50,6 @@ export class Register extends React.Component<Props> {
                 type="text"
                 placeholder="Username"
                 label="Username"
-                validate={[required(), length({ min: 3 })]}
               />
             </FormControl>
 
@@ -63,7 +60,6 @@ export class Register extends React.Component<Props> {
                 type="password"
                 placeholder="Password"
                 label="Password"
-                validate={[required(), length({ min: 8 })]}
               />
             </FormControl>
           </div>
