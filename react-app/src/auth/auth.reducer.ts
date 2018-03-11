@@ -49,7 +49,7 @@ export function authReducer(state: AuthState = defaultState, action: AnyAction) 
     }
     case LOGOUT: {
       const newState: AuthState = Object.assign({}, state);
-      newState.currentUser = Parse.User.current();
+      newState.currentUser = undefined;
       return newState;
     }
     default: {

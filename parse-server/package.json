@@ -15,6 +15,7 @@
     "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "parse-server": "^2.7.2",
+    "underscore": "^1.8.3",
     "week": "^0.2.0"
   },
   "devDependencies": {

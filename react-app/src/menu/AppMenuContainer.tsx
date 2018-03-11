@@ -1,4 +1,4 @@
-import { AppState } from 'src/shared';
+import { AppState } from '@shared/state';
 import { connect } from 'react-redux';
 import { logout } from 'src/auth';
 import { AppMenu, AppMenuProps, AppMenuDispatchProps } from './AppMenu';

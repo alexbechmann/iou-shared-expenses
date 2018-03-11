@@ -1,10 +1,10 @@
-import { SettlementService } from 'settlements/settlement.service';
-import { SettlementOverview } from '@iou/core';
+import { SettlementService } from '../settlement.service';
+import { Settlement } from '@iou/core';
+import { UserService } from 'users/user.service';
 
-export async function getSettlements(req: Parse.Cloud.FunctionRequest, res: Parse.Cloud.FunctionResponse) {
-  const currentUser: Parse.User = req.user;
+export async function getSettlementsBetweenUsers(req: Parse.Cloud.FunctionRequest, res: Parse.Cloud.FunctionResponse) {
+  const params: { toUserId: string } = req.params;
   const settlementService = new SettlementService();
-  const settlements: SettlementOverview[] = await settlementService.getSettlementOverviewForUser(currentUser);
-
+  const settlements: Settlement[] = await settlementService.getSettlementsBetween(req.user.id, params.toUserId);
   res.success(settlements);
 }

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@iou/core": "file:../core",
+    "@types/fb": "0.0.23",
     "material-ui": "^1.0.0-beta.33",
     "material-ui-icons": "^1.0.0-beta.17",
     "parse": "^1.11.0",

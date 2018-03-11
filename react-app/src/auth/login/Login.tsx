@@ -1,9 +1,11 @@
 import * as React from 'react';
-import { Button } from 'material-ui';
+import { Button, FormControl } from 'material-ui';
 import { Action } from 'redux';
 import { InjectedFormProps, Field } from 'redux-form';
-import { TextField } from 'redux-form-material-ui';
-import { Loader } from '@shared/index';
+import { nameof } from '@iou/core';
+import { LoginModel } from './login.model';
+import { Loader } from '@shared/ui';
+import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 
 export interface LoginProps {
   loginError?: string;
@@ -12,17 +14,10 @@ export interface LoginProps {
 
 export interface LoginDispatchProps {
   loginWithFacebook: () => Action;
-  loginWithPassword: (username: string, password: string) => Action;
-}
-
-interface FormData {
-  username: string;
-  password: string;
+  loginWithPassword: (loginModel: LoginModel) => Action;
 }
 
 export interface Props extends InjectedFormProps, LoginDispatchProps, LoginProps {}
-
-const FullWidthTextField = props => <TextField {...props} fullWidth={true} />;
 
 export class Login extends React.Component<Props> {
   constructor(props: Props) {
@@ -43,19 +38,30 @@ export class Login extends React.Component<Props> {
         </Button>
 
         <form onSubmit={handleSubmit(this.handleOnSubmit)}>
-          <Field name="username" component={FullWidthTextField} type="text" placeholder="Username" label="Username" />
-          <Field
-            name="password"
-            component={FullWidthTextField}
-            type="password"
-            placeholder="Password"
-            label="Password"
-          />
+          <FormControl fullWidth={true}>
+            <Field
+              name={nameof<LoginModel>('username')}
+              component={ReduxFormMaterialFields.TextField}
+              type="text"
+              placeholder="Username"
+              label="Username"
+            />
+          </FormControl>
+
+          <FormControl fullWidth={true}>
+            <Field
+              name={nameof<LoginModel>('password')}
+              component={ReduxFormMaterialFields.TextField}
+              type="password"
+              placeholder="Password"
+              label="Password"
+            />
+          </FormControl>
 
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting}>
             Login
           </Button>
-          <Button variant="raised" color="secondary" type="submit" disabled={pristine || submitting} onClick={reset}>
+          <Button variant="raised" type="submit" disabled={pristine || submitting} onClick={reset}>
             Clear
           </Button>
         </form>
@@ -71,8 +77,7 @@ export class Login extends React.Component<Props> {
     return null;
   }
 
-  handleOnSubmit(formData: FormData) {
-    const { username, password } = formData;
-    this.props.loginWithPassword(username, password);
+  handleOnSubmit(loginModel: LoginModel) {
+    this.props.loginWithPassword(loginModel);
   }
 }

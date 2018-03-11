@@ -12,7 +12,10 @@
         },
         "**/*.d.ts": {
             "when": "$(basename).ts"
-        }
+        },
+        "core/lib/**": true,
+        "parse-server/lib/**": true,
+        "parse-server/cloud/**": true,
     },
     "editor.tabSize": 2
 }

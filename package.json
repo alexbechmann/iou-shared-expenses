@@ -15,10 +15,11 @@
     "start:core": "cd ./core && npm start",
     "start:parse-server": "cd ./parse-server && npm start",
     "start:react-app": "cd ./react-app && npm start",
-    "start": "npm-run-all -p start:core start:parse-server start:react-app docker-compose prettier:watch",
+    "start": "npm run build:core && npm-run-all -p start:core start:parse-server start:react-app docker-compose prettier:watch",
     "docker-compose": "docker-compose up",
     "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
-    "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\""
+    "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
+    "build:core": "cd ./core && npm run build"
   },
   "repository": {
     "type": "git",

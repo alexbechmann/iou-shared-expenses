@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { initParseSDK } from 'src/parse';
-import { AppState } from 'src/shared';
+import { AppState } from '@shared/state';
 import { AppProps, App, AppDispatchProps } from 'src/App';
 
 function mapStateToProps(state: AppState): AppProps {

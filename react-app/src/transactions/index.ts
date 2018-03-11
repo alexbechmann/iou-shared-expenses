@@ -1,2 +1,4 @@
-export { NewTransactionDialog } from './NewTransactionDialog';
-export { EditTransaction } from './EditTransaction';
+export { NewTransactionDialog } from './dialog/NewTransactionDialog';
+export { EditTransactionContainer } from './edit/EditTransactionContainer';
+export { ViewTransactionsContainer } from './view/ViewTransactionsContainer';
+export { transactionReducer } from './transaction.reducer';

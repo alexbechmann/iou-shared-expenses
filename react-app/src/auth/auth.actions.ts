@@ -1,9 +1,10 @@
-import { User } from 'parse';
 import * as Parse from 'parse';
-import { store } from '@shared/index';
+import { store } from '@shared/state';
 import { AnyAction } from 'redux';
 import { RegisterModel } from './register/register.model';
-
+import { LoginModel } from './login/login.model';
+import { enrichUserProfileWithFacebook, findFriendsWithFacebook } from 'src/social/social.actions';
+import { User } from 'parse';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
@@ -22,7 +23,8 @@ export function loginWithFacebook(): AnyAction {
         } else {
           console.log('User logged in through Facebook!');
         }
-        console.log(user.attributes);
+        store.dispatch(enrichUserProfileWithFacebook(user));
+        store.dispatch(findFriendsWithFacebook(user));
         resolve(user);
       },
       error: (user, error) => {
@@ -37,13 +39,13 @@ export function loginWithFacebook(): AnyAction {
   };
 }
 
-export function loginWithPassword(username: string, password: string): AnyAction {
+export function loginWithPassword(loginModel: LoginModel): AnyAction {
   store.dispatch({
     type: LOGGING_IN
   });
   return {
     type: LOGIN,
-    payload: Parse.User.logIn(username, password)
+    payload: Parse.User.logIn(loginModel.username, loginModel.password)
   };
 }
 

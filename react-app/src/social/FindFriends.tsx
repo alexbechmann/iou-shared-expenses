@@ -15,11 +15,12 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
-import { User } from 'parse';
 import * as Icons from 'material-ui-icons';
 import { Action } from 'redux';
-import { AppState, Loader } from '@shared/index';
+import { AppState } from '@shared/state';
 import { findUsers, setSearchText, sendFriendRequest } from 'src/social/social.actions';
+import { Loader } from '@shared/ui';
+import { User } from 'parse';
 
 interface Props {
   findUsers: (searchText: string) => Action;
@@ -110,7 +111,7 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   return {
     searchText: state.social.searchText,
     searchResults: state.social.searchResults,
-    loading: state.social.loading,
+    loading: state.social.findingUsers,
     sendingFriendRequests: state.social.sendingFriendRequests
   };
 }
