@@ -1,6 +1,7 @@
 import { Action } from 'redux';
 import { ParseState } from './parse.state';
 import { PARSE_INITIALIZED } from './parse.actions';
+import * as Parse from 'parse';
 
 const defaultState: ParseState = {
   initialized: false

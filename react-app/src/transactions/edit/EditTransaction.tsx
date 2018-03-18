@@ -179,7 +179,10 @@ export class EditTransaction extends React.Component<Props, State> {
     Object.assign(transaction, transactionFormData);
     transaction.fromUser = createUserPointer(transactionFormData.fromUserId);
     transaction.toUser = createUserPointer(transactionFormData.toUserId);
-    this.props.saveTransaction(transaction);
+    const promise = (this.props.saveTransaction(transaction) as any) as Promise<any>;
+    promise.then(t => {
+      console.log(t);
+    });
   }
 
   renderError() {
