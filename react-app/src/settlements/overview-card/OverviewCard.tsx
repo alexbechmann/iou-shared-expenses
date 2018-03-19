@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Settlement, userHelper } from '@iou/core';
+import { Settlement, userHelper, UserProperties } from '@iou/core';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
@@ -32,16 +32,17 @@ interface Props extends OverviewCardProps, OverviewCardDispatchProps, WithStyles
 
 export class OverviewCardComponent extends React.Component<Props> {
   render() {
+    const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend);
     return (
       <Card className={this.props.classes.card}>
         <CardHeader
-          avatar={<Avatar>R</Avatar>}
+          avatar={<Avatar>{userProperties.initials}</Avatar>}
           action={
             <IconButton>
               <MoreVertIcon />
             </IconButton>
           }
-          title={userHelper.getUserProperties(this.props.friend).displayName}
+          title={userProperties.displayName}
         />
         <CardContent>
           <SettlementsTable settlements={this.props.settlements} />

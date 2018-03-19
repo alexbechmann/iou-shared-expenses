@@ -180,7 +180,7 @@ export class EditTransaction extends React.Component<Props, State> {
     transaction.fromUser = createUserPointer(transactionFormData.fromUserId);
     transaction.toUser = createUserPointer(transactionFormData.toUserId);
     const promise = (this.props.saveTransaction(transaction) as any) as Promise<any>;
-    promise.then(t => {
+    promise.then(() => {
       this.props.history.push('/overview');
     });
   }
