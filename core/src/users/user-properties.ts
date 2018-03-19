@@ -1,4 +1,4 @@
-export interface CustomUserProperties {
+export interface UserProperties {
   facebookId: string;
   displayName: string;
 }

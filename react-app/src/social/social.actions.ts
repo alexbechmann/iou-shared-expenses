@@ -5,7 +5,7 @@ import { FriendRequest } from '@shared/schema';
 import { AnyAction } from 'redux';
 import { User } from 'parse';
 import {
-  CustomUserProperties,
+  UserProperties,
   nameof,
   CLOUD_FUNCTION_FIND_FRIENDS_WITH_FACEBOOK_IDS,
   CLOUD_FUNCTION_SEND_FRIEND_REQUEST,
@@ -132,8 +132,8 @@ export function enrichUserProfileWithFacebook(currentUser: User): AnyAction {
         fields: ['first_name', 'last_name']
       },
       (response: { first_name: string; last_name: string }) => {
-        currentUser.set(nameof<CustomUserProperties>('displayName'), `${response.first_name} ${response.last_name}`);
-        currentUser.set(nameof<CustomUserProperties>('facebookId'), currentUser.attributes.authData.facebook.id);
+        currentUser.set(nameof<UserProperties>('displayName'), `${response.first_name} ${response.last_name}`);
+        currentUser.set(nameof<UserProperties>('facebookId'), currentUser.attributes.authData.facebook.id);
         currentUser.save().then(resolve);
       }
     );

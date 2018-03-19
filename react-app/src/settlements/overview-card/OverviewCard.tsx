@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Settlement } from '@iou/core';
+import { Settlement, userHelper } from '@iou/core';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
@@ -41,7 +41,7 @@ export class OverviewCardComponent extends React.Component<Props> {
               <MoreVertIcon />
             </IconButton>
           }
-          title={this.props.friend.id}
+          title={userHelper.getUserProperties(this.props.friend).displayName}
         />
         <CardContent>
           <SettlementsTable settlements={this.props.settlements} />

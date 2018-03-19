@@ -13,7 +13,7 @@
         "**/*.d.ts": {
             "when": "$(basename).ts"
         },
-        "core/lib/**": true,
+        "core/lib/**": false,
         "parse-server/lib/**": true,
         "parse-server/cloud/**": true,
     },

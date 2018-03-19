@@ -4,7 +4,7 @@ import { Action } from 'redux';
 import { Transaction } from '@shared/schema';
 import { InjectedFormProps, Field } from 'redux-form';
 import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
-import { nameof, CurrencyType, Currency, TransactionType } from '@iou/core';
+import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse';
 import { User } from 'parse';
@@ -168,7 +168,7 @@ export class EditTransaction extends React.Component<Props, State> {
     return this.props.friends.concat([this.props.currentUser]).map(user => {
       return (
         <MenuItem key={user.id} value={user.id}>
-          {user.id}
+          {user.id === this.props.currentUser.id ? 'You' : userHelper.getUserProperties(user).displayName}
         </MenuItem>
       );
     });
@@ -182,6 +182,7 @@ export class EditTransaction extends React.Component<Props, State> {
     const promise = (this.props.saveTransaction(transaction) as any) as Promise<any>;
     promise.then(t => {
       console.log(t);
+      // this.context.router.history.push('/overview');
     });
   }
 
