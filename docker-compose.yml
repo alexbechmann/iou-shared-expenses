@@ -6,7 +6,8 @@ services:
       - 27017
     ports:
       - "27017:27017"
-
+    volumes:
+      - mongodata:/data/db
   parse-dashboard:
     restart: unless-stopped
     image: parseplatform/parse-dashboard
@@ -30,3 +31,6 @@ services:
       - "8081:8081"
     links:
       - mongo
+
+volumes:
+  mongodata:

@@ -19,7 +19,7 @@
     "docker-compose": "docker-compose up",
     "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
     "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
-    "build:core": "cd ./core && npm run build"
+    "build:core": "cd ./core && npm run build:dev"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/alexbechmann/iou-shared-expenses#readme",
   "devDependencies": {
+    "cross-env": "^5.1.4",
     "npm-run-all": "^4.1.2",
     "onchange": "^3.3.0",
     "prettier": "1.10.2",
