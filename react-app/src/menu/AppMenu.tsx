@@ -11,7 +11,7 @@ import {
   ListItemText,
   Badge
 } from 'material-ui';
-import * as Icons from 'material-ui-icons';
+import * as Icons from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';
 

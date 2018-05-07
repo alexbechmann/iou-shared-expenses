@@ -1,8 +1,10 @@
 import { getFriendsForUser } from 'src/social';
 import { connect } from 'react-redux';
 import { AppState } from '@shared/state';
-import { Overview } from './Overview';
+import { Overview, overviewStyles } from './Overview';
 import { OverviewProps, OverviewDispatchProps } from './Overview';
+import { withStyles } from 'material-ui';
+import { combineContainers } from '@shared/combine-containers';
 
 function mapStateToProps(state: AppState): OverviewProps {
   return {
@@ -14,4 +16,7 @@ function mapStateToProps(state: AppState): OverviewProps {
 
 const mapDispatchToProps: OverviewDispatchProps = { getFriendsForUser };
 
-export const OverviewContainer = connect(mapStateToProps, mapDispatchToProps)(Overview);
+export const OverviewContainer = combineContainers(Overview, [
+  c => withStyles(overviewStyles, { withTheme: true })(c),
+  c => connect(mapStateToProps, mapDispatchToProps)(c)
+]);

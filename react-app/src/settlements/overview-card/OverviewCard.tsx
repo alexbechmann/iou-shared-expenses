@@ -3,12 +3,12 @@ import { Settlement, userHelper, UserProperties } from '@iou/core';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Button } from 'material-ui';
 import { SettlementsTable } from '../components/SettlementsTable';
 import { User } from 'parse';
 import { Action } from 'redux';
-import { withStyles, StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
 import { Link } from 'react-router-dom';
 
 export interface OverviewCardProps {
@@ -22,7 +22,7 @@ export interface OverviewCardDispatchProps {
 
 type ClassNames = 'card';
 
-const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+export const overviewCardStyles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   card: {
     marginBottom: theme.spacing.unit * 2
   }
@@ -30,7 +30,7 @@ const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
 
 interface Props extends OverviewCardProps, OverviewCardDispatchProps, WithStyles<ClassNames> {}
 
-export class OverviewCardComponent extends React.Component<Props> {
+export class OverviewCard extends React.Component<Props> {
   render() {
     const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend);
     return (
@@ -62,5 +62,3 @@ export class OverviewCardComponent extends React.Component<Props> {
     this.props.getSettlementsToUser(this.props.friend.id);
   }
 }
-
-export const OverviewCard = withStyles(styles, { withTheme: true })(OverviewCardComponent);

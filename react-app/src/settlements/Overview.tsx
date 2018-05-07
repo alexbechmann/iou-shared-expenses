@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Action } from 'redux';
-import { withStyles, Button } from 'material-ui';
+import { Button } from 'material-ui';
 import { StyleRulesCallback, Theme } from 'material-ui/styles';
-import * as Icons from 'material-ui-icons';
+import * as Icons from '@material-ui/icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { NewTransactionDialog } from 'src/transactions';
 import { Loader } from '@shared/ui';
@@ -10,9 +10,8 @@ import { User } from 'parse';
 import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
 
 type ClassNames = 'actionButton';
-// | 'content';
 
-const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+export const overviewStyles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   actionButton: {
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
@@ -36,7 +35,7 @@ interface State {
   newTransactionDialogOpen: boolean;
 }
 
-export class OverviewComponent extends React.Component<Props, State> {
+export class Overview extends React.Component<Props, State> {
   state: State = {
     newTransactionDialogOpen: false
   };
@@ -76,5 +75,3 @@ export class OverviewComponent extends React.Component<Props, State> {
     this.setState({ newTransactionDialogOpen: false });
   };
 }
-
-export const Overview = withStyles(styles, { withTheme: true })(OverviewComponent);
