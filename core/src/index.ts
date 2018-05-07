@@ -11,6 +11,4 @@ export * from './constants';
 
 const userHelper = new UserHelper();
 
-export {
-  userHelper
-}
+export { userHelper };

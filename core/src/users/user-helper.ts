@@ -1,4 +1,4 @@
-import { UserProperties } from "./user-properties";
+import { UserProperties } from './user-properties';
 import { nameof } from '../shared/nameof';
 
 export class UserHelper {
@@ -7,7 +7,12 @@ export class UserHelper {
     return {
       displayName,
       facebookId: user.get(nameof<UserProperties>('facebookId')),
-      initials: displayName.split(' ').slice(0, 2).map((word: any) => word[0]).join('').toUpperCase()
-    }
+      initials: displayName
+        .split(' ')
+        .slice(0, 2)
+        .map((word: any) => word[0])
+        .join('')
+        .toUpperCase()
+    };
   }
 }

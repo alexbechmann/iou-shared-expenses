@@ -19,7 +19,7 @@
     "docker-compose": "docker-compose up",
     "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
     "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
-    "build:core": "cd ./core && npm run build:dev"
+    "build:core": "cd ./core && npm run build"
   },
   "repository": {
     "type": "git",
@@ -37,5 +37,6 @@
     "onchange": "^3.3.0",
     "prettier": "1.10.2",
     "remove-node-modules": "^1.7.2"
-  }
+  },
+  "private": true
 }

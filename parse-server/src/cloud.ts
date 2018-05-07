@@ -16,6 +16,7 @@ import {
   findFriendsWithFacebookIds
 } from './social/controllers/social.controller';
 import { getSettlementsBetweenUsers } from './settlements/controllers/settlement.controller';
+import './legacy/legacy-cloud-code.js';
 
 Parse.Cloud.define(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, sendFriendRequest);
 Parse.Cloud.define(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, acceptFriendRequest);
