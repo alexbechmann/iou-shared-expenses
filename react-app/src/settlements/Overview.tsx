@@ -11,6 +11,7 @@ import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
 import { connect } from 'react-redux';
 import { combineContainers } from 'combine-containers';
 import { getFriendsForUser } from 'src/social';
+import { AppState } from 'src/state';
 
 type ClassNames = 'actionButton';
 
