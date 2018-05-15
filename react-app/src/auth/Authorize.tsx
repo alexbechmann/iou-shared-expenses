@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Tabs, Tab, Paper } from 'material-ui';
-import { RegisterContainer } from './register/RegisterContainer';
-import { LoginContainer } from './login/LoginContainer';
-import { RootGrid } from '@shared/ui';
+import { Register } from './register/Register';
+import { Login } from './login/Login';
+import { RootGrid } from 'src/shared/ui';
 
 interface State {
   activeTab: number;
@@ -39,10 +39,10 @@ export class Authorize extends React.Component<Props, State> {
   renderForm() {
     switch (this.state.activeTab) {
       case 0: {
-        return <LoginContainer />;
+        return <Login />;
       }
       case 1: {
-        return <RegisterContainer />;
+        return <Register />;
       }
       default:
         break;

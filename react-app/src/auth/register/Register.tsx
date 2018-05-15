@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { InjectedFormProps, Field } from 'redux-form';
+import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { Action } from 'redux';
 import { Button, CircularProgress, FormControl } from 'material-ui';
 import { RegisterModel } from './register.model';
 import { nameof } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
+import { combineContainers } from 'combine-containers';
+import { register } from '../auth.actions';
+import { AppState } from 'src/state';
+import { connect } from 'react-redux';
 
 export interface RegisterProps {
   registerError?: string;
@@ -17,7 +21,7 @@ export interface RegisterDispatchProps {
 
 interface Props extends InjectedFormProps, RegisterProps, RegisterDispatchProps {}
 
-export class Register extends React.Component<Props> {
+export class RegisterComponent extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.register = this.register.bind(this);
@@ -88,3 +92,17 @@ export class Register extends React.Component<Props> {
     this.props.register(registerModel);
   }
 }
+
+function mapStateToProps(state: AppState): RegisterProps {
+  return {
+    registerError: state.auth.registerError,
+    registering: state.auth.registering
+  };
+}
+
+const mapDispatchToProps: RegisterDispatchProps = { register };
+
+export const Register = combineContainers(RegisterComponent, [
+  reduxForm({ form: 'authform', destroyOnUnmount: false }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);

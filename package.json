@@ -4,9 +4,9 @@
   "description": "IOU Shared expenses developer commands",
   "scripts": {
     "test": "prettier --config ./.prettierrc --list-different \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
-    "install:core": "cd ./core && npm ci",
-    "install:parse-server": "cd ./parse-server && npm ci",
-    "install:react-app": "cd ./react-app && npm ci",
+    "install:core": "cd ./core && npm install",
+    "install:parse-server": "cd ./parse-server && npm install",
+    "install:react-app": "cd ./react-app && npm install",
     "clean:core": "remove-node-modules ./react-app/node_modules/",
     "clean:parse-server": "remove-node-modules ./parse-server/node_modules/",
     "clean:react-app": "remove-node-modules ./react-app/node_modules/",

@@ -9,7 +9,10 @@ import { OverviewContainer } from 'src/settlements';
 import { Authorize } from 'src/auth';
 import { AppMenuContainer } from 'src/menu';
 import { EditTransactionContainer, ViewTransactionsContainer } from 'src/transactions';
-import { RootGrid } from '@shared/ui';
+import { RootGrid } from 'src/shared/ui';
+import { initParseSDK } from 'src/parse/parse.actions';
+import { connect } from 'react-redux';
+import { AppState } from 'src/state';
 
 export interface AppProps {
   currentUser: any;
@@ -22,7 +25,7 @@ export interface AppDispatchProps {
 
 interface Props extends AppProps, AppDispatchProps {}
 
-export class App extends React.Component<Props> {
+export class AppComponent extends React.Component<Props> {
   render() {
     return (
       <BrowserRouter>
@@ -66,3 +69,14 @@ export class App extends React.Component<Props> {
     }
   }
 }
+
+function mapStateToProps(state: AppState): AppProps {
+  return {
+    currentUser: state.auth.currentUser,
+    parseInitialized: state.parse.initialized
+  };
+}
+
+const mapDispatchToProps: AppDispatchProps = { initParseSDK };
+
+export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
