@@ -7,8 +7,11 @@ import { AppState } from 'src/state';
 import { connect } from 'react-redux';
 import { getTransactionsToUser } from 'src/transactions/state/transaction.actions';
 import { getFriendsForUser } from 'src/social/state/social.actions';
-import { List, ListItem, ListItemIcon, ListItemText, Paper } from 'material-ui';
+import { List, ListItem, ListItemIcon, ListItemText, Paper, ListSubheader } from 'material-ui';
 import * as Icons from '@material-ui/icons';
+import { SettlementsTable } from 'src/settlements/SettlementsTable';
+import { UserProperties, userHelper } from '@iou/core';
+import { Link } from 'react-router-dom';
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
@@ -38,13 +41,20 @@ export class ViewTransactions extends React.Component<Props> {
   }
 
   renderTransactions() {
+    const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend!);
     return (
       <div>
         <Paper>
           <List>
+            <ListSubheader>{userProperties.displayName}</ListSubheader>
+            <SettlementsTable friend={this.props.friend!} />
             {this.props.transactions.map(transaction => {
               return (
-                <ListItem key={transaction.id}>
+                <ListItem
+                  button={true}
+                  component={() => <Link to={`/view-transactions/${this.props.friend!.id}`} />}
+                  key={transaction.id}
+                >
                   <ListItemIcon>
                     <Icons.CreditCard />
                   </ListItemIcon>

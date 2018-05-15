@@ -4,21 +4,17 @@ import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { Button } from 'material-ui';
 import { SettlementsTable } from '../SettlementsTable';
 import { User } from 'parse';
-import { Action } from 'redux';
 import { StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
-import { Link } from 'react-router-dom';
+import { RouteButton } from 'src/shared/ui/RouteButton';
 
 export interface OverviewCardProps {
   friend: User;
   settlements: Settlement[];
 }
 
-export interface OverviewCardDispatchProps {
-  getSettlementsToUser: (toUserId: string) => Action;
-}
+export interface OverviewCardDispatchProps {}
 
 type ClassNames = 'card';
 
@@ -45,20 +41,19 @@ export class OverviewCard extends React.Component<Props> {
           title={userProperties.displayName}
         />
         <CardContent>
-          <SettlementsTable settlements={this.props.settlements} />
+          <SettlementsTable friend={this.props.friend} />
         </CardContent>
         <CardActions>
-          <Link style={{ width: '100%' }} to={`/view-transactions/${this.props.friend.id}`}>
-            <Button fullWidth={true} variant="raised" color="secondary">
-              View Transactions
-            </Button>
-          </Link>
+          <RouteButton
+            fullWidth={true}
+            variant="raised"
+            color="secondary"
+            to={`/view-transactions/${this.props.friend.id}`}
+          >
+            View Transactions
+          </RouteButton>
         </CardActions>
       </Card>
     );
-  }
-
-  componentDidMount() {
-    this.props.getSettlementsToUser(this.props.friend.id);
   }
 }
