@@ -14,6 +14,10 @@ import {
 import * as Icons from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';
+import { AppState } from 'src/state';
+import { User } from 'parse';
+import { logout } from 'src/auth';
+import { connect } from 'react-redux';
 
 export interface AppMenuProps {
   isLoggedIn: boolean;
@@ -30,7 +34,7 @@ interface State {
   showDrawer: boolean;
 }
 
-export class AppMenu extends React.Component<Props, State> {
+export class AppMenuComponent extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -109,3 +113,15 @@ export class AppMenu extends React.Component<Props, State> {
     this.toggleMenu();
   }
 }
+
+
+function mapStateToProps(state: AppState): AppMenuProps {
+  return {
+    isLoggedIn: state.auth.currentUser instanceof User,
+    friendRequestsCount: state.social.friendRequests.length
+  };
+}
+
+const mapDispatchToProps: AppMenuDispatchProps = { logout };
+
+export const AppMenu = connect(mapStateToProps, mapDispatchToProps)(AppMenuComponent);

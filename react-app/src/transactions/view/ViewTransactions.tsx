@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { Transaction } from '@shared/schema';
+import { Transaction } from 'src/shared/schema';
 import { RouteComponentProps } from 'react-router';
 import { User } from 'parse';
-import { Loader } from '@shared/ui';
+import { Loader } from 'src/shared/ui';
 import { AnyAction } from 'redux';
+import { AppState } from 'src/state';
+import { getTransactionsToUser } from 'src/transactions/transaction.actions';
+import { getFriendsForUser } from 'src/social';
+import { connect } from 'react-redux';
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
@@ -58,3 +62,24 @@ export class ViewTransactions extends React.Component<Props> {
     }
   }
 }
+
+function mapStateToProps(
+  state: AppState,
+  ownProps: ViewTransactionsProps & RouteComponentProps<ViewTransactionsRouteParameters>
+): ViewTransactionsProps {
+  return {
+    transactions: state.transactions.allTransactions.filter(
+      transaction =>
+        transaction.fromUser.objectId === state.auth.currentUser!.id &&
+        transaction.toUser.objectId === ownProps.match.params.toUserId
+    ),
+    currentUser: state.auth.currentUser!,
+    friend: state.social.friends.find(user => user.id === ownProps.match.params.toUserId),
+    gettingTransactions: state.transactions.gettingTransactions,
+    gettingFriends: state.social.gettingFriends
+  };
+}
+
+const mapDispatchToProps: ViewTransactionsDispatchProps = { getTransactionsToUser, getFriendsForUser };
+
+export const ViewTransactionsContainer = connect(mapStateToProps, mapDispatchToProps)(ViewTransactions);

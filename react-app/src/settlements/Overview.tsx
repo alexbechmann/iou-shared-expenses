@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { Action } from 'redux';
 import { Button } from 'material-ui';
-import { StyleRulesCallback, Theme } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import * as Icons from '@material-ui/icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { NewTransactionDialog } from 'src/transactions';
-import { Loader } from '@shared/ui';
+import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
 import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
+import { connect } from 'react-redux';
+import { combineContainers } from 'combine-containers';
+import { getFriendsForUser } from 'src/social';
 
 type ClassNames = 'actionButton';
 
@@ -35,7 +38,7 @@ interface State {
   newTransactionDialogOpen: boolean;
 }
 
-export class Overview extends React.Component<Props, State> {
+export class OverviewComponent extends React.Component<Props, State> {
   state: State = {
     newTransactionDialogOpen: false
   };
@@ -75,3 +78,18 @@ export class Overview extends React.Component<Props, State> {
     this.setState({ newTransactionDialogOpen: false });
   };
 }
+
+function mapStateToProps(state: AppState): OverviewProps {
+  return {
+    currentUser: state.auth.currentUser,
+    loading: state.social.gettingFriends,
+    friends: state.social.friends
+  };
+}
+
+const mapDispatchToProps: OverviewDispatchProps = { getFriendsForUser };
+
+export const Overview = combineContainers(OverviewComponent, [
+  withStyles(overviewStyles, { withTheme: true }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);

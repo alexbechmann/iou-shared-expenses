@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Action } from 'redux';
-import { Transaction } from '@shared/schema';
-import { InjectedFormProps, Field } from 'redux-form';
+import { Transaction } from 'src/shared/schema';
+import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
 import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse';
 import { User } from 'parse';
+import { AppState } from 'src/state';
+import { saveTransaction } from 'src/transactions/transaction.actions';
+import { getFriendsForUser } from 'src/social';
+import { combineContainers } from 'combine-containers';
+import { connect } from 'react-redux';
 
 interface RouteParameters {
   id: number;
@@ -49,7 +54,7 @@ interface State {
   lastTouchedUserSelect: string;
 }
 
-export class EditTransaction extends React.Component<Props, State> {
+export class EditTransactionComponent extends React.Component<Props, State> {
   state: State = {
     lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId')
   };
@@ -193,3 +198,55 @@ export class EditTransaction extends React.Component<Props, State> {
     this.props.getFriendsForUser(this.props.currentUser);
   }
 }
+
+const nullOrEmpty = (value: string) => !value || value.length < 1;
+
+const validate = (values: TransactionFormData) => {
+  const errors: FormErrors<TransactionFormData> = {};
+  if (nullOrEmpty(values.title)) {
+    errors.title = 'Required';
+  }
+  if (!(values.amount > 0)) {
+    errors.amount = 'Amount must be greater than zero';
+  }
+  // Known console error: https://github.com/erikras/redux-form-material-ui/issues/216
+  if (nullOrEmpty(values.fromUserId)) {
+    errors.fromUserId = 'Required';
+  }
+  if (nullOrEmpty(values.toUserId)) {
+    errors.fromUserId = 'Required';
+  }
+  if (!nullOrEmpty(values.fromUserId) && !nullOrEmpty(values.toUserId) && values.fromUserId === values.toUserId) {
+    errors.fromUserId = 'Cannot be equal to To user';
+    errors.toUserId = 'Cannot be equal to From user';
+  }
+  return errors;
+};
+
+function mapStateToProps(state: AppState): Partial<EditTransactionProps & InjectedFormProps<TransactionFormData>> {
+  const initialFormValues: Partial<TransactionFormData> = {
+    title: '',
+    currencyId: CurrencyType.GBP,
+    fromUserId: state.auth.currentUser!.id
+  };
+  return {
+    friends: state.social.friends,
+    gettingFriends: state.social.gettingFriends,
+    currentUser: state.auth.currentUser!,
+    currencies: state.currency.avaiableCurrencies,
+    initialValues: initialFormValues,
+    formValues: state.form['editTransactionForm'] ? state.form['editTransactionForm'].values : {},
+    saving: state.transactions.savingTransaction
+  };
+}
+
+const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction, getFriendsForUser };
+
+export const EditTransactionContainer = combineContainers(EditTransactionComponent, [
+  reduxForm({
+      form: 'editTransactionForm',
+      destroyOnUnmount: true,
+      validate: validate
+    }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);
