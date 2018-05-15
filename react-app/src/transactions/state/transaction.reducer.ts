@@ -37,7 +37,7 @@ export function transactionReducer(state: TransactionState = defaultState, actio
       newState.gettingTransactions = false;
       if (action.payload) {
         const receivedTransactions = action.payload as Transaction[];
-        newState.allTransactions = receivedTransactions
+        newState.allTransactions = newState.allTransactions
           .filter(
             transaction =>
               receivedTransactions.some(receivedTransaction => receivedTransaction.id === transaction.id) === false

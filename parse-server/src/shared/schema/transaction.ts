@@ -1,22 +1,33 @@
 import { TransactionType } from '@iou/core';
 
 export class Transaction extends Parse.Object {
+  fromUser: Parse.Pointer | Parse.User;
+  toUser: Parse.Pointer | Parse.User;
+
   constructor() {
     super('Transaction');
   }
 
-  get fromUser(): Parse.Pointer {
+  getFromUserPointer(): Parse.Pointer {
     return this.get('fromUser');
   }
-  set fromUser(value: Parse.Pointer) {
+  setFromUserPointer(value: Parse.Pointer) {
     this.set('fromUser', value);
   }
 
-  get toUser(): Parse.Pointer {
+  getFromUser(): Parse.User {
+    return this.get('fromUser');
+  }
+
+  geToUserPointer(): Parse.Pointer {
     return this.get('toUser');
   }
-  set toUser(value: Parse.Pointer) {
+  setToUserPointer(value: Parse.Pointer) {
     this.set('toUser', value);
+  }
+
+  getToUser(): Parse.User {
+    return this.get('toUser');
   }
 
   get isSecure(): boolean {

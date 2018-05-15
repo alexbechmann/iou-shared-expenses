@@ -17,7 +17,14 @@ export function settlementsReducer(state: SettlementsState = defaultState, actio
     }
     case GET_SETTLEMENTS: {
       const newState = Object.assign({}, state);
-      newState.allSettlements = action.payload as Settlement[];
+      const receivedSettlements = action.payload as Settlement[];
+      newState.allSettlements = newState.allSettlements
+        .filter(
+          transaction =>
+            receivedSettlements.some(receivedSettlement => receivedSettlement.toUserId === transaction.toUserId) ===
+            false
+        )
+        .concat(receivedSettlements);
       newState.gettingSettlements = false;
       return newState;
     }

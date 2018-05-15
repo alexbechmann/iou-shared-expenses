@@ -45,7 +45,7 @@ export class OverviewComponent extends React.Component<Props, State> {
   };
 
   render() {
-    return this.props.loading ? <Loader /> : this.renderOverview();
+    return this.props.loading && this.props.friends.length === 0 ? <Loader /> : this.renderOverview();
   }
 
   renderOverview() {

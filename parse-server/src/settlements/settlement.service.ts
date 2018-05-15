@@ -24,7 +24,7 @@ export class SettlementService {
 
     for (let currency of this.currencyService.getAllCurrencies()) {
       const transactionsForCurrency: Transaction[] = allTransactions.filter(
-        transaction => transaction.currencyId === currency.id
+        transaction => transaction.get('currencyId') === currency.id
       );
       if (transactionsForCurrency.length > 0) {
         const settlement: Settlement = {
@@ -34,12 +34,17 @@ export class SettlementService {
           amount: 0
         };
         for (let transaction of transactionsForCurrency) {
-          settlement.amount += transaction.amount;
+          settlement.amount += parseInt(transaction.get('amount'));
         }
         settlements.push(settlement);
       }
     }
 
-    return settlements;
+    return settlements.map(settlement => {
+      return {
+        ...settlement,
+        amount: parseInt(settlement.amount.toFixed(2))
+      };
+    });
   }
 }
