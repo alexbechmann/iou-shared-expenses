@@ -3,11 +3,11 @@ import { Button, FormControl } from 'material-ui';
 import { Action } from 'redux';
 import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { nameof } from '@iou/core';
-import { LoginModel } from './login.model';
+import { LoginModel } from './models/login.model';
 import { Loader } from 'src/shared/ui';
 import { combineContainers } from 'combine-containers';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
-import { loginWithFacebook, loginWithPassword } from '../auth.actions';
+import { loginWithFacebook, loginWithPassword } from '../state/auth.actions';
 import { connect } from 'react-redux';
 import { AppState } from 'src/state';
 

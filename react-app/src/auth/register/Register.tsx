@@ -2,11 +2,11 @@ import * as React from 'react';
 import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { Action } from 'redux';
 import { Button, CircularProgress, FormControl } from 'material-ui';
-import { RegisterModel } from './register.model';
+import { RegisterModel } from './models/register.model';
 import { nameof } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { combineContainers } from 'combine-containers';
-import { register } from '../auth.actions';
+import { register } from '../state/auth.actions';
 import { AppState } from 'src/state';
 import { connect } from 'react-redux';
 

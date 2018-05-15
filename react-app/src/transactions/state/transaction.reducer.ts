@@ -1,7 +1,7 @@
 import { TransactionState } from './transaction.state';
 import { AnyAction } from 'redux';
 import { SAVING_TRANSACTION, SAVED_TRANSACTION, GETTING_TRANSACTIONS, GOT_TRANSACTIONS } from './transaction.actions';
-import { Transaction } from '@shared/schema';
+import { Transaction } from 'src/shared/schema';
 
 const defaultState: TransactionState = {
   savingTransaction: false,
@@ -37,7 +37,7 @@ export function transactionReducer(state: TransactionState = defaultState, actio
       newState.gettingTransactions = false;
       if (action.payload) {
         const receivedTransactions = action.payload as Transaction[];
-        newState.allTransactions
+        newState.allTransactions = receivedTransactions
           .filter(
             transaction =>
               receivedTransactions.some(receivedTransaction => receivedTransaction.id === transaction.id) === false

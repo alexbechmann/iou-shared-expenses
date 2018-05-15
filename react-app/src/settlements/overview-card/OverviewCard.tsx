@@ -5,7 +5,7 @@ import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Button } from 'material-ui';
-import { SettlementsTable } from '../components/SettlementsTable';
+import { SettlementsTable } from '../SettlementsTable';
 import { User } from 'parse';
 import { Action } from 'redux';
 import { StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';

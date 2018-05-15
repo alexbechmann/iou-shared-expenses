@@ -17,9 +17,9 @@ import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
-import { AppState } from '@shared/state';
-import { findUsers, setSearchText, sendFriendRequest } from 'src/social/social.actions';
-import { Loader } from '@shared/ui';
+import { AppState } from 'src/state';
+import { findUsers, setSearchText, sendFriendRequest } from 'src/social/state/social.actions';
+import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
 
 interface Props {

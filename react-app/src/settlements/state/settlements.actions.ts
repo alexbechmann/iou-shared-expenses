@@ -1,6 +1,6 @@
 import * as Parse from 'parse';
 import { Settlement, CLOUD_FUNCTION_GET_SETTLEMENTS_BETWEEN_USERS } from '@iou/core';
-import { store } from '@shared/state';
+import { store } from 'src/state';
 import { AnyAction } from 'redux';
 
 export const GET_SETTLEMENTS = 'IOU/GET_SETTLEMENTS';

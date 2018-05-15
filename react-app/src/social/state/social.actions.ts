@@ -1,7 +1,7 @@
 import * as Parse from 'parse';
 let parse = require('parse');
-import { store } from '@shared/state';
-import { FriendRequest } from '@shared/schema';
+import { store } from 'src/state';
+import { FriendRequest } from 'src/shared/schema';
 import { AnyAction } from 'redux';
 import { User } from 'parse';
 import {

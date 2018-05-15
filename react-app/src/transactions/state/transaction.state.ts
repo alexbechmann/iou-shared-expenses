@@ -1,4 +1,4 @@
-import { Transaction } from '@shared/schema';
+import { Transaction } from 'src/shared/schema';
 
 export interface TransactionState {
   savingTransaction: boolean;

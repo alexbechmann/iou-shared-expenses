@@ -5,13 +5,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
-import { AppState } from '@shared/state';
+import { AppState } from 'src/state';
 import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from 'material-ui';
 import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
-import { acceptFriendRequest, getFriendRequests } from 'src/social';
-import { FriendRequest } from '@shared/schema';
-import { Loader } from '@shared/ui';
+import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';
+import { FriendRequest } from 'src/shared/schema';
+import { Loader } from 'src/shared/ui';
 
 interface Props {
   acceptingFriendRequests: string[];
@@ -35,7 +35,6 @@ export class FriendRequestsComponent extends React.Component<Props> {
     if (this.props.loading) {
       return <Loader />;
     } else if (this.props.friendRequests) {
-      console.log(this.props.friendRequests);
       return (
         <List>
           {this.props.friendRequests.map((friendRequest: FriendRequest) => (

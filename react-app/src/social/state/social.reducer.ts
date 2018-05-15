@@ -9,8 +9,8 @@ import {
   GET_FRIEND_REQUESTS,
   GETTING_FRIEND_REQUESTS
 } from 'src/social/state/social.actions';
-import { FriendRequest } from 'src/shared/schema/friend-request';
-import { GETTING_FRIENDS, GET_FRIENDS } from './state/social.actions';
+import { FriendRequest } from 'src/shared/schema';
+import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
 import { User } from 'parse';
 import * as Parse from 'parse';
 import { SocialState } from 'src/social/state/social.state';

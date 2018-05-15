@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import { Action } from 'redux';
 import { AppState } from 'src/state';
 import { User } from 'parse';
-import { logout } from 'src/auth';
+import { logout } from 'src/auth/state/auth.actions';
 import { connect } from 'react-redux';
 
 export interface AppMenuProps {
@@ -113,7 +113,6 @@ export class AppMenuComponent extends React.Component<Props, State> {
     this.toggleMenu();
   }
 }
-
 
 function mapStateToProps(state: AppState): AppMenuProps {
   return {

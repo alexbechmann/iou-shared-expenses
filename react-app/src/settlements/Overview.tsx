@@ -4,14 +4,14 @@ import { Button } from 'material-ui';
 import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
 import * as Icons from '@material-ui/icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
-import { NewTransactionDialog } from 'src/transactions';
 import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
 import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
 import { connect } from 'react-redux';
 import { combineContainers } from 'combine-containers';
-import { getFriendsForUser } from 'src/social';
+import { getFriendsForUser } from 'src/social/state/social.actions';
 import { AppState } from 'src/state';
+import { NewTransactionDialog } from 'src/transactions/dialog/NewTransactionDialog';
 
 type ClassNames = 'actionButton';
 

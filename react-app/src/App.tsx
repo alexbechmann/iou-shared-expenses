@@ -4,15 +4,17 @@ import 'typeface-roboto';
 import { LinearProgress } from 'material-ui';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Action } from 'redux';
-import { FindFriends, FriendRequests } from 'src/social';
-import { OverviewContainer } from 'src/settlements';
-import { Authorize } from 'src/auth';
-import { AppMenuContainer } from 'src/menu';
-import { EditTransactionContainer, ViewTransactionsContainer } from 'src/transactions';
 import { RootGrid } from 'src/shared/ui';
-import { initParseSDK } from 'src/parse/parse.actions';
 import { connect } from 'react-redux';
 import { AppState } from 'src/state';
+import { AppMenu } from 'src/menu/AppMenu';
+import { FindFriends } from 'src/social/FindFriends';
+import { FriendRequests } from 'src/social/FriendRequests';
+import { ViewTransactionsContainer } from 'src/transactions/view/ViewTransactions';
+import { Overview } from 'src/settlements/Overview';
+import { EditTransaction } from './transactions/edit/EditTransaction';
+import { Authorize } from 'src/auth/Authorize';
+import { initParseSDK } from 'src/parse/state/parse.actions';
 
 export interface AppProps {
   currentUser: any;
@@ -30,7 +32,7 @@ export class AppComponent extends React.Component<Props> {
     return (
       <BrowserRouter>
         <div>
-          <AppMenuContainer />
+          <AppMenu />
           {this.renderApp()}
         </div>
       </BrowserRouter>
@@ -44,9 +46,9 @@ export class AppComponent extends React.Component<Props> {
           <Switch>
             <Route exact={true} path="/friends" component={FindFriends} />
             <Route exact={true} path="/friend-requests" component={FriendRequests} />
-            <Route exact={true} path="/transactions/:type/:id?" component={EditTransactionContainer} />
+            <Route exact={true} path="/transactions/:type/:id?" component={EditTransaction} />
             <Route exact={true} path="/view-transactions/:toUserId" component={ViewTransactionsContainer} />
-            <Route path="/" component={OverviewContainer} />
+            <Route path="/" component={Overview} />
           </Switch>
         </RootGrid>
       );

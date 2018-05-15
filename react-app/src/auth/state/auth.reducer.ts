@@ -1,8 +1,8 @@
 import { User } from 'parse';
 import * as Parse from 'parse';
-import { PARSE_INITIALIZED } from 'src/parse';
+import { PARSE_INITIALIZED } from 'src/parse/state/parse.actions';
 import { LOGIN, LOGOUT, REGISTERED, LOGGING_IN, REGISTERING } from './auth.actions';
-import { AuthState } from 'src/auth';
+import { AuthState } from 'src/auth/state/auth.state';
 import { AnyAction } from 'redux';
 
 const defaultState: AuthState = {

@@ -1,9 +1,9 @@
-import { Transaction } from '@shared/schema';
+import { Transaction } from 'src/shared/schema';
 import { AnyAction } from 'redux';
-import { store } from '@shared/state';
+import { store } from 'src/state';
 import { nameof } from '@iou/core';
-import { createUserPointer } from '../parse';
 import * as Parse from 'parse';
+import { createUserPointer } from 'src/parse/create-user-pointer';
 
 export const SAVING_TRANSACTION = 'IOU/SAVING_TRANSACTION';
 export const SAVED_TRANSACTION = 'IOU/SAVED_TRANSACTION';
@@ -25,15 +25,15 @@ export function getTransactionsToUser(currentUserId: string, toUserId: string, e
     type: GETTING_TRANSACTIONS
   });
 
-  const query1 = new Parse.Query<Transaction>(Transaction);
+  const query1 = new Parse.Query(Transaction);
   query1.equalTo(nameof<Transaction>('fromUser'), createUserPointer(currentUserId));
   query1.equalTo(nameof<Transaction>('toUser'), createUserPointer(toUserId));
-  query1.notContainedIn(nameof<Transaction>('id'), excludeIds);
+  // query1.notContainedIn(nameof<Transaction>('id'), excludeIds);
 
-  const query2 = new Parse.Query<Transaction>(Transaction);
+  const query2 = new Parse.Query(Transaction);
   query2.equalTo(nameof<Transaction>('toUser'), createUserPointer(currentUserId));
   query2.equalTo(nameof<Transaction>('fromUser'), createUserPointer(toUserId));
-  query2.notContainedIn(nameof<Transaction>('id'), excludeIds);
+  // query2.notContainedIn(nameof<Transaction>('id'), excludeIds);
 
   const query = Parse.Query.or(query1, query2);
 

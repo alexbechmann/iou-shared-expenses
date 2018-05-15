@@ -3,19 +3,20 @@ import { Transaction } from 'src/shared/schema';
 import { RouteComponentProps } from 'react-router';
 import { User } from 'parse';
 import { Loader } from 'src/shared/ui';
-import { AnyAction } from 'redux';
 import { AppState } from 'src/state';
-import { getTransactionsToUser } from 'src/transactions/transaction.actions';
-import { getFriendsForUser } from 'src/social';
 import { connect } from 'react-redux';
+import { getTransactionsToUser } from 'src/transactions/state/transaction.actions';
+import { getFriendsForUser } from 'src/social/state/social.actions';
+import { List, ListItem, ListItemIcon, ListItemText, Paper } from 'material-ui';
+import * as Icons from '@material-ui/icons';
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
 }
 
 export interface ViewTransactionsDispatchProps {
-  getTransactionsToUser: (currentUserId: string, toUserId: string, excludeIds: string[]) => AnyAction;
-  getFriendsForUser: (user: User) => AnyAction;
+  getTransactionsToUser: (currentUserId: string, toUserId: string, excludeIds: string[]) => any;
+  getFriendsForUser: (user: User) => any;
 }
 
 export interface ViewTransactionsProps {
@@ -39,10 +40,20 @@ export class ViewTransactions extends React.Component<Props> {
   renderTransactions() {
     return (
       <div>
-        {this.props.transactions.length}
-        {this.props.transactions.map(transaction => {
-          return <p key={transaction.id}>{transaction.title}</p>;
-        })}
+        <Paper>
+          <List>
+            {this.props.transactions.map(transaction => {
+              return (
+                <ListItem key={transaction.id}>
+                  <ListItemIcon>
+                    <Icons.CreditCard />
+                  </ListItemIcon>
+                  <ListItemText>{transaction.title}</ListItemText>
+                </ListItem>
+              );
+            })}
+          </List>
+        </Paper>
       </div>
     );
   }
@@ -55,10 +66,12 @@ export class ViewTransactions extends React.Component<Props> {
     if (props.friend) {
       props.getTransactionsToUser(this.props.currentUser.id, props.friend.id, []);
     } else {
-      const promise = (props.getFriendsForUser(props.currentUser) as any) as Promise<any>;
-      promise.then(() => {
-        props.getTransactionsToUser(this.props.currentUser.id, props.friend!.id, []);
-      });
+      props
+        .getFriendsForUser(props.currentUser)
+        .then(() => {
+          this.props.getTransactionsToUser(this.props.currentUser.id, this.props.friend!.id, []);
+        })
+        .catch(console.log);
     }
   }
 }
@@ -70,8 +83,10 @@ function mapStateToProps(
   return {
     transactions: state.transactions.allTransactions.filter(
       transaction =>
-        transaction.fromUser.objectId === state.auth.currentUser!.id &&
-        transaction.toUser.objectId === ownProps.match.params.toUserId
+        (transaction.getFromUser().id === state.auth.currentUser!.id &&
+          transaction.getToUser().id === ownProps.match.params.toUserId) ||
+        (transaction.getToUser().id === state.auth.currentUser!.id &&
+          transaction.getFromUser().id === ownProps.match.params.toUserId)
     ),
     currentUser: state.auth.currentUser!,
     friend: state.social.friends.find(user => user.id === ownProps.match.params.toUserId),

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { OverviewCard, OverviewCardProps, OverviewCardDispatchProps, overviewCardStyles } from './OverviewCard';
 import { User } from 'parse';
-import { AppState } from '@shared/state';
-import { getSettlementsToUser } from '../settlements.actions';
-import { combineContainers } from '@shared/combine-containers';
+import { AppState } from 'src/state';
+import { getSettlementsToUser } from '../state/settlements.actions';
 import { withStyles } from 'material-ui';
+import { combineContainers } from 'combine-containers';
 
 export interface OverviewContainerProps {
   friend: User;
@@ -21,7 +21,7 @@ function mapStateToProps(state: AppState, ownProps: OverviewContainerProps): Ove
 
 const mapDispatchToProps: OverviewCardDispatchProps = { getSettlementsToUser };
 
-export const OverviewCardContainer: React.ComponentClass<OverviewContainerProps> = combineContainers(OverviewCard, [
-  c => connect(mapStateToProps, mapDispatchToProps)(c),
-  c => withStyles(overviewCardStyles, { withTheme: true })(c)
+export const OverviewCardContainer = combineContainers(OverviewCard, [
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(overviewCardStyles, { withTheme: true })
 ]);
