@@ -6,15 +6,21 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SettlementsTable } from '../SettlementsTable';
 import { User } from 'parse';
-import { StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, WithStyles, withStyles } from 'material-ui/styles';
 import { RouteButton } from 'src/shared/ui/RouteButton';
+import { getSettlementsToUser } from 'src/settlements/state/settlements.actions';
+import { AppState } from 'src/state';
+import { combineContainers } from 'combine-containers';
+import { connect } from 'react-redux';
 
-export interface OverviewCardProps {
+export interface ConnectProps {
   friend: User;
   settlements: Settlement[];
 }
 
-export interface OverviewCardDispatchProps {}
+export interface DispatchProps {
+  getSettlementsToUser: (toUserId: string) => any
+}
 
 type ClassNames = 'card';
 
@@ -24,9 +30,9 @@ export const overviewCardStyles: StyleRulesCallback<ClassNames> = (theme: Theme)
   }
 });
 
-interface Props extends OverviewCardProps, OverviewCardDispatchProps, WithStyles<ClassNames> {}
+interface Props extends ConnectProps, DispatchProps, WithStyles<ClassNames> {}
 
-export class OverviewCard extends React.Component<Props> {
+export class OverviewCardComponent extends React.Component<Props> {
   render() {
     const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend);
     return (
@@ -57,3 +63,23 @@ export class OverviewCard extends React.Component<Props> {
     );
   }
 }
+
+export interface OverviewCardProps {
+  friend: User;
+}
+
+function mapStateToProps(state: AppState, ownProps: OverviewCardProps): ConnectProps {
+  return {
+    friend: ownProps.friend,
+    settlements: state.settlements.allSettlements.filter(
+      settlement => settlement.fromUserId === state.auth.currentUser!.id && settlement.toUserId === ownProps.friend.id
+    )
+  };
+}
+
+const mapDispatchToProps: DispatchProps = { getSettlementsToUser };
+
+export const OverviewCard = combineContainers(OverviewCardComponent, [
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(overviewCardStyles, { withTheme: true })
+]);

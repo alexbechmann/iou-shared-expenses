@@ -6,7 +6,7 @@ import * as Icons from '@material-ui/icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
 import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
-import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
+import { OverviewCard } from './overview-card/OverviewCard';
 import { connect } from 'react-redux';
 import { combineContainers } from 'combine-containers';
 import { getFriendsForUser } from 'src/social/state/social.actions';
@@ -52,7 +52,7 @@ export class OverviewComponent extends React.Component<Props, State> {
     return (
       <div>
         {this.props.friends.map(friend => {
-          return <OverviewCardContainer key={friend.id} friend={friend} />;
+          return <OverviewCard key={friend.id} friend={friend} />;
         })}
         <Button
           variant="fab"
