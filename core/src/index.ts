@@ -13,4 +13,9 @@ export * from './constants';
 
 const userHelper = new UserHelper();
 
-export { userHelper };
+function initCoreParse(parseConfig: any) {
+  Parse.initialize(parseConfig.applicationId, parseConfig.javaScriptKey);
+  Parse.serverURL = parseConfig.serverUrl;
+}
+
+export { userHelper, initCoreParse };
