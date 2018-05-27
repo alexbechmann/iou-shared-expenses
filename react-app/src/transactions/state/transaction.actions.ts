@@ -1,4 +1,4 @@
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 import { AnyAction } from 'redux';
 import { store } from 'src/state';
 import { nameof } from '@iou/core';

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Transaction } from 'src/shared/schema';
 import { RouteComponentProps } from 'react-router';
 import { User } from 'parse';
 import { Loader } from 'src/shared/ui';
@@ -10,7 +9,7 @@ import { getFriendsForUser } from 'src/social/state/social.actions';
 import { List, ListItem, ListItemIcon, ListItemText, Paper, ListSubheader } from 'material-ui';
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
-import { UserProperties, userHelper } from '@iou/core';
+import { UserProperties, userHelper, Transaction } from '@iou/core';
 import { Link } from 'react-router-dom';
 
 export interface ViewTransactionsRouteParameters {

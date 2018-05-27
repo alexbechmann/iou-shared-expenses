@@ -1,7 +1,7 @@
 import { SocialService } from '../social.service';
 import { UserService } from '../../users/user.service';
 import { User } from 'parse';
-import { FriendRequest } from '../../shared/schema';
+import { FriendRequest } from '@iou/core';
 import { createUserPointer } from '../../shared/pointer.factory';
 
 export function sendFriendRequest(req: Parse.Cloud.FunctionRequest, res: Parse.Cloud.FunctionResponse) {

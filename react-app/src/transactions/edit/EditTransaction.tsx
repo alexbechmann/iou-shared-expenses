@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
 import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';

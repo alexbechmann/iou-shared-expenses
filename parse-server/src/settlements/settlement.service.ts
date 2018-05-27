@@ -1,8 +1,7 @@
 import { SocialService } from '../social/social.service';
 import { User } from 'parse';
 import { createUserPointer } from '../shared/pointer.factory';
-import { Settlement, Currency, CurrencyType } from '@iou/core';
-import { Transaction } from '../shared/schema';
+import { Settlement, Currency, CurrencyType, Transaction } from '@iou/core';
 import { CurrencyService } from '../currencies/currency.service';
 import { TransactionService } from '../transactions/transaction.service';
 
