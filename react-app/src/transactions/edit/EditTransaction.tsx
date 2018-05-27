@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
 import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
@@ -29,7 +29,7 @@ export interface EditTransactionProps {
 
 export interface TransactionFormData {
   title: string;
-  amount: number;
+  amount: string;
   fromUserId: string;
   toUserId: string;
   currencyId: CurrencyType;
@@ -214,6 +214,8 @@ class EditTransactionComponent extends React.Component<Props, State> {
 
   handleOnSubmit(transactionFormData: TransactionFormData) {
     const transaction = new Transaction();
+    Object.assign(transaction, transactionFormData);
+    transaction.amount = parseInt(transactionFormData.amount, 10);
     transaction.setFromUserPointer(createUserPointer(transactionFormData.fromUserId));
     transaction.setToUserPointer(createUserPointer(transactionFormData.toUserId));
     this.props.saveTransaction(transaction).then(() => {
@@ -239,7 +241,7 @@ const validate = (values: TransactionFormData) => {
   if (nullOrEmpty(values.title)) {
     errors.title = 'Required';
   }
-  if (!(values.amount > 0)) {
+  if (!(parseInt(values.amount, 10) > 0)) {
     errors.amount = 'Amount must be greater than zero';
   }
   // Known console error: https://github.com/erikras/redux-form-material-ui/issues/216

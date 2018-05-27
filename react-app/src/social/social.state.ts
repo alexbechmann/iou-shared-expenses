@@ -1,5 +1,5 @@
-import { FriendRequest } from 'src/shared/schema/friend-request';
 import { User } from 'parse';
+import { FriendRequest } from '@iou/core';
 
 export interface SocialState {
   searchText: string;

@@ -9,7 +9,7 @@ import {
   GET_FRIEND_REQUESTS,
   GETTING_FRIEND_REQUESTS
 } from 'src/social/state/social.actions';
-import { FriendRequest } from 'src/shared/schema';
+import { FriendRequest } from '@iou/core';
 import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
 import { User } from 'parse';
 import * as Parse from 'parse';
@@ -80,7 +80,7 @@ export function socialReducer(state: SocialState = defaultState, action: any) {
       if (action.payload && !(action.payload instanceof Parse.Error)) {
         const newState: SocialState = Object.assign({}, state);
         newState.acceptingFriendRequests = state.acceptingFriendRequests.filter(r => r !== action.metadata.id);
-        newState.friendRequests = state.friendRequests.filter(r => r.toUser.objectId !== action.metadata.id);
+        newState.friendRequests = state.friendRequests.filter(r => r.getToUser().id !== action.metadata.id);
         return newState;
       } else {
         return state;

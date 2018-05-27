@@ -1,4 +1,4 @@
-import { FriendRequest } from 'src/shared/schema';
+import { FriendRequest } from '@iou/core';
 import { User } from 'parse';
 
 export interface SocialState {

@@ -1,4 +1,4 @@
-import { TransactionType } from '@iou/core';
+import { TransactionType } from '../shared/transaction-type';
 
 export class Transaction extends Parse.Object {
   fromUser: Parse.Pointer | Parse.User;
@@ -19,7 +19,7 @@ export class Transaction extends Parse.Object {
     return this.get('fromUser');
   }
 
-  geToUserPointer(): Parse.Pointer {
+  getToUserPointer(): Parse.Pointer {
     return this.get('toUser');
   }
   setToUserPointer(value: Parse.Pointer) {

@@ -10,7 +10,7 @@ import { AppState } from 'src/state';
 import { AppMenu } from 'src/menu/AppMenu';
 import { FindFriends } from 'src/social/FindFriends';
 import { FriendRequests } from 'src/social/FriendRequests';
-import { ViewTransactionsContainer } from 'src/transactions/view/ViewTransactions';
+import { ViewTransactions } from 'src/transactions/view/ViewTransactions';
 import { Overview } from 'src/settlements/Overview';
 import { EditTransaction } from './transactions/edit/EditTransaction';
 import { Authorize } from 'src/auth/Authorize';
@@ -46,8 +46,8 @@ export class AppComponent extends React.Component<Props> {
           <Switch>
             <Route exact={true} path="/friends" component={FindFriends} />
             <Route exact={true} path="/friend-requests" component={FriendRequests} />
-            <Route exact={true} path="/transactions/:id?/:type?" component={EditTransaction} />
-            <Route exact={true} path="/view-transactions/:toUserId" component={ViewTransactionsContainer} />
+            <Route exact={true} path="/transactions/:type/:id?" component={EditTransaction} />
+            <Route exact={true} path="/view-transactions/:toUserId" component={ViewTransactions} />
             <Route path="/" component={Overview} />
           </Switch>
         </RootGrid>

@@ -1,7 +1,7 @@
 import { TransactionState } from './transaction.state';
 import { AnyAction } from 'redux';
 import { SAVING_TRANSACTION, SAVED_TRANSACTION, GETTING_TRANSACTIONS, GOT_TRANSACTIONS } from './transaction.actions';
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 
 const defaultState: TransactionState = {
   savingTransaction: false,

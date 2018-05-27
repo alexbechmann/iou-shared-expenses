@@ -1,6 +1,6 @@
 import { createUserPointer } from '../shared/pointer.factory';
 import { Pointer, User } from 'parse';
-import { FriendRequest } from '../shared/schema';
+import { FriendRequest } from '@iou/core';
 
 export class SocialService {
   async insertFriendRequestIfNeeded(currentUserId: string, toUserId: string): Promise<void> {
@@ -9,8 +9,8 @@ export class SocialService {
     var exists = await this.friendRequestExists(currentUser, toUser);
     if (exists === false) {
       var friendRequest = new FriendRequest();
-      friendRequest.fromUser = currentUser;
-      friendRequest.toUser = toUser;
+      friendRequest.setFromUserPointer(currentUser);
+      friendRequest.setToUserPointer(toUser);
       await friendRequest.save();
     }
   }

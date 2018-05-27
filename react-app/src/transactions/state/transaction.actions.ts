@@ -1,4 +1,4 @@
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 import { AnyAction } from 'redux';
 import { store } from 'src/state';
 import { nameof } from '@iou/core';
@@ -36,6 +36,8 @@ export function getTransactionsToUser(currentUserId: string, toUserId: string, e
   // query2.notContainedIn(nameof<Transaction>('id'), excludeIds);
 
   const query = Parse.Query.or(query1, query2);
+
+  query.include([nameof<Transaction>('toUser'), nameof<Transaction>('fromUser')]);
 
   return {
     type: GOT_TRANSACTIONS,

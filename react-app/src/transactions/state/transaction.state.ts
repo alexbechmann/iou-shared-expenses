@@ -1,4 +1,4 @@
-import { Transaction } from 'src/shared/schema';
+import { Transaction } from '@iou/core';
 
 export interface TransactionState {
   savingTransaction: boolean;

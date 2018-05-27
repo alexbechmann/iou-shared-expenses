@@ -1,4 +1,4 @@
-import { Transaction } from '../shared/schema';
+import { Transaction } from '@iou/core';
 import { createUserPointer } from '../shared/pointer.factory';
 import { nameof } from '@iou/core';
 
