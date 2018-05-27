@@ -28,18 +28,6 @@ export function initParseSDK(): Action {
     version: 'v2.3' // point to the latest Facebook Graph API version
   });
 
-  const transaction = new Transaction();
-  transaction.amount = 5;
-  transaction
-    .save()
-    .fail(console.log)
-    .then(o => console.log(o));
-
-  Parse.Object.saveAll([transaction]).then(console.log);
-
-  const fr = new FriendRequest();
-  fr.save();
-
   return {
     type: PARSE_INITIALIZED
   };
