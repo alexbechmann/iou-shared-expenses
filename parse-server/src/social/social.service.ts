@@ -9,8 +9,8 @@ export class SocialService {
     var exists = await this.friendRequestExists(currentUser, toUser);
     if (exists === false) {
       var friendRequest = new FriendRequest();
-      friendRequest.fromUser = currentUser;
-      friendRequest.toUser = toUser;
+      friendRequest.setFromUserPointer(currentUser);
+      friendRequest.setToUserPointer(toUser);
       await friendRequest.save();
     }
   }

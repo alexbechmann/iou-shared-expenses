@@ -9,11 +9,11 @@ import {
   GET_FRIEND_REQUESTS,
   GETTING_FRIEND_REQUESTS
 } from 'src/social/state/social.actions';
-import { FriendRequest } from 'src/shared/schema/friend-request';
 import { GETTING_FRIENDS, GET_FRIENDS } from './state/social.actions';
 import { User } from 'parse';
 import * as Parse from 'parse';
 import { SocialState } from 'src/social/state/social.state';
+import { FriendRequest } from '@iou/core';
 
 const defaultState: SocialState = {
   searchText: 'alexbechmann',
@@ -80,7 +80,7 @@ export function socialReducer(state: SocialState = defaultState, action: any) {
       if (action.payload && !(action.payload instanceof Parse.Error)) {
         const newState: SocialState = Object.assign({}, state);
         newState.acceptingFriendRequests = state.acceptingFriendRequests.filter(r => r !== action.metadata.id);
-        newState.friendRequests = state.friendRequests.filter(r => r.toUser.objectId !== action.metadata.id);
+        newState.friendRequests = state.friendRequests.filter(r => r.getFromUser().id !== action.metadata.id);
         return newState;
       } else {
         return state;

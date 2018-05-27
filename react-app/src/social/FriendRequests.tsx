@@ -10,7 +10,7 @@ import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryActi
 import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';
-import { FriendRequest } from 'src/shared/schema';
+import { FriendRequest } from '@iou/core';
 import { Loader } from 'src/shared/ui';
 
 interface Props {
@@ -38,18 +38,20 @@ export class FriendRequestsComponent extends React.Component<Props> {
       return (
         <List>
           {this.props.friendRequests.map((friendRequest: FriendRequest) => (
-            <ListItem button={true} key={friendRequest.fromUser.id}>
+            <ListItem button={true} key={friendRequest.getFromUser().id}>
               <ListItemIcon>
                 <Avatar alt="Remy Sharp" src="https://picsum.photos/100/100" />
               </ListItemIcon>
-              <ListItemText primary={friendRequest.fromUser.id} />
+              <ListItemText primary={friendRequest.getFromUser().id} />
               <ListItemSecondaryAction>
                 <IconButton
                   aria-label={'Add Friend'}
                   color="secondary"
-                  onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}
+                  onClick={() => this.props.acceptFriendRequest(friendRequest.getFromUser().id)}
                 >
-                  {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.id) ? <Icons.AddCircle /> : null}
+                  {this.props.acceptingFriendRequests.indexOf(friendRequest.getFromUser().id) ? (
+                    <Icons.AddCircle />
+                  ) : null}
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

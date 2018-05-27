@@ -1,6 +1,6 @@
 import * as Parse from 'parse';
 import { Action } from 'redux';
-import { FriendRequest } from 'src/shared/schema';
+import { FriendRequest } from '@iou/core';
 import { Transaction } from '@iou/core';
 let parse = require('parse');
 
