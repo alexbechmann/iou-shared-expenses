@@ -64,3 +64,4 @@ typings/
 **/*.tgz
 
 dist/
+src/**/*.js
