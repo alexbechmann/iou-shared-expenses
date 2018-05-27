@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { User } from 'parse';
 import { Loader } from 'src/shared/ui';
 import { AppState } from 'src/state';
@@ -10,18 +10,18 @@ import { List, ListItem, ListItemIcon, ListItemText, Paper, ListSubheader } from
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
 import { UserProperties, userHelper, Transaction } from '@iou/core';
-import { Link } from 'react-router-dom';
+import { combineContainers } from 'combine-containers';
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
 }
 
-export interface ViewTransactionsDispatchProps {
+export interface ViewTransactionsComponentDispatchProps {
   getTransactionsToUser: (currentUserId: string, toUserId: string, excludeIds: string[]) => any;
   getFriendsForUser: (user: User) => any;
 }
 
-export interface ViewTransactionsProps {
+export interface ViewTransactionsComponentProps {
   transactions: Transaction[];
   currentUser: User;
   friend?: User;
@@ -30,11 +30,11 @@ export interface ViewTransactionsProps {
 }
 
 interface Props
-  extends ViewTransactionsProps,
-    ViewTransactionsDispatchProps,
-    RouteComponentProps<ViewTransactionsRouteParameters> {}
+  extends ViewTransactionsComponentProps,
+  ViewTransactionsComponentDispatchProps,
+  RouteComponentProps<ViewTransactionsRouteParameters> { }
 
-export class ViewTransactions extends React.Component<Props> {
+export class ViewTransactionsComponent extends React.Component<Props> {
   render() {
     return this.props.friend ? this.renderTransactions() : <Loader />;
   }
@@ -51,7 +51,8 @@ export class ViewTransactions extends React.Component<Props> {
               return (
                 <ListItem
                   button={true}
-                  component={() => <Link to={`/view-transactions/${this.props.friend!.id}`} />}
+                  onClick={() => this.props.history.push(`/view-transactions/${transaction.id}`)}
+                  // component={() => <Link to={`/view-transactions/${this.props.friend!.id}`} />}
                   key={transaction.id}
                 >
                   <ListItemIcon>
@@ -59,6 +60,7 @@ export class ViewTransactions extends React.Component<Props> {
                   </ListItemIcon>
                   <ListItemText>{transaction.title}</ListItemText>
                 </ListItem>
+
               );
             })}
           </List>
@@ -87,8 +89,8 @@ export class ViewTransactions extends React.Component<Props> {
 
 function mapStateToProps(
   state: AppState,
-  ownProps: ViewTransactionsProps & RouteComponentProps<ViewTransactionsRouteParameters>
-): ViewTransactionsProps {
+  ownProps: ViewTransactionsComponentProps & RouteComponentProps<ViewTransactionsRouteParameters>
+): ViewTransactionsComponentProps {
   return {
     transactions: state.transactions.allTransactions.filter(
       transaction =>
@@ -104,6 +106,9 @@ function mapStateToProps(
   };
 }
 
-const mapDispatchToProps: ViewTransactionsDispatchProps = { getTransactionsToUser, getFriendsForUser };
+const mapDispatchToProps: ViewTransactionsComponentDispatchProps = { getTransactionsToUser, getFriendsForUser };
 
-export const ViewTransactionsContainer = connect(mapStateToProps, mapDispatchToProps)(ViewTransactions);
+export const ViewTransactions = combineContainers(ViewTransactionsComponent, [
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+]);

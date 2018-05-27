@@ -37,6 +37,8 @@ export function getTransactionsToUser(currentUserId: string, toUserId: string, e
 
   const query = Parse.Query.or(query1, query2);
 
+  query.include([nameof<Transaction>('toUser'), nameof<Transaction>('fromUser')]);
+
   return {
     type: GOT_TRANSACTIONS,
     payload: query.find()

@@ -16,7 +16,7 @@ export class FriendRequest extends Parse.Object {
     return this.get('fromUser');
   }
 
-  geToUserPointer(): Parse.Pointer {
+  getToUserPointer(): Parse.Pointer {
     return this.get('toUser');
   }
   setToUserPointer(value: Parse.Pointer) {
