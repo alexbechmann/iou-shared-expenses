@@ -19,7 +19,7 @@ export interface ConnectProps {
 }
 
 export interface DispatchProps {
-  getSettlementsToUser: (toUserId: string) => any
+  getSettlementsToUser: (toUserId: string) => any;
 }
 
 type ClassNames = 'card';
