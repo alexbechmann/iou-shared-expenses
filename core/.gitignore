@@ -60,6 +60,7 @@ typings/
 # Project 
 
 **/*.d.ts
-**/*.js
 **/*.js.map
 **/*.tgz
+
+dist/
