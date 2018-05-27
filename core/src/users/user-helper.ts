@@ -16,3 +16,5 @@ export class UserHelper {
     };
   }
 }
+
+export const userHelper = new UserHelper();

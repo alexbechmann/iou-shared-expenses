@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { FriendRequest } from '@iou/core';
-import { Transaction, initCoreParse } from '@iou/core';
+import { Transaction, initParse } from '@iou/core';
 
 export const PARSE_INITIALIZED = 'IOU/PARSE_INITIALIZED';
 
@@ -13,9 +13,7 @@ export function initParseSDK(): Action {
   const facebookConfig = {
     appId: process.env.REACT_APP_FACEBOOK_CONFIG_APP_ID as string
   };
-  Parse.initialize(parseConfig.applicationId, parseConfig.javaScriptKey);
-  Parse.serverURL = parseConfig.serverUrl;
-  initCoreParse(parseConfig);
+  initParse(Parse, parseConfig);
 
   Parse.Object.registerSubclass('Transaction', Transaction);
   Parse.Object.registerSubclass('FriendRequest', FriendRequest);
