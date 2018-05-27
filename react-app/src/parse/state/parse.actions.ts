@@ -1,8 +1,6 @@
-import * as Parse from 'parse';
 import { Action } from 'redux';
 import { FriendRequest } from '@iou/core';
 import { Transaction } from '@iou/core';
-let parse = require('parse');
 
 export const PARSE_INITIALIZED = 'IOU/PARSE_INITIALIZED';
 
@@ -16,7 +14,7 @@ export function initParseSDK(): Action {
     appId: process.env.REACT_APP_FACEBOOK_CONFIG_APP_ID as string
   };
   Parse.initialize(parseConfig.applicationId, parseConfig.javaScriptKey);
-  parse.serverURL = parseConfig.serverUrl;
+  Parse.serverURL = parseConfig.serverUrl;
 
   Parse.Object.registerSubclass('Transaction', Transaction);
   Parse.Object.registerSubclass('FriendRequest', FriendRequest);
@@ -29,6 +27,18 @@ export function initParseSDK(): Action {
     xfbml: true, // initialize Facebook social plugins on the page
     version: 'v2.3' // point to the latest Facebook Graph API version
   });
+
+  const transaction = new Transaction();
+  transaction.amount = 5;
+  transaction
+    .save()
+    .fail(console.log)
+    .then(o => console.log(o));
+
+  Parse.Object.saveAll([transaction]).then(console.log);
+
+  const fr = new FriendRequest();
+  fr.save();
 
   return {
     type: PARSE_INITIALIZED
