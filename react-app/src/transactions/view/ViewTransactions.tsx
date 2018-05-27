@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Transaction } from 'src/shared/schema';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, withRouter } from 'react-router';
 import { User } from 'parse';
 import { Loader } from 'src/shared/ui';
 import { AppState } from 'src/state';
@@ -11,7 +11,7 @@ import { List, ListItem, ListItemIcon, ListItemText, Paper, ListSubheader } from
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
 import { UserProperties, userHelper } from '@iou/core';
-import { Link } from 'react-router-dom';
+import { combineContainers } from 'combine-containers';
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
@@ -52,8 +52,8 @@ export class ViewTransactions extends React.Component<Props> {
               return (
                 <ListItem
                   button={true}
-                  component={() => <Link to={`/view-transactions/${this.props.friend!.id}`} />}
                   key={transaction.id}
+                  onClick={() => this.props.history.push(`/transactions/${transaction.id}`)}
                 >
                   <ListItemIcon>
                     <Icons.CreditCard />
@@ -107,4 +107,7 @@ function mapStateToProps(
 
 const mapDispatchToProps: ViewTransactionsDispatchProps = { getTransactionsToUser, getFriendsForUser };
 
-export const ViewTransactionsContainer = connect(mapStateToProps, mapDispatchToProps)(ViewTransactions);
+export const ViewTransactionsContainer = combineContainers(ViewTransactions, [
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+]);

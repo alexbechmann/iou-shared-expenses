@@ -19,12 +19,12 @@ export interface ConnectProps {
 }
 
 export interface DispatchProps {
-  getSettlementsToUser: (toUserId: string) => any
+  getSettlementsToUser: (toUserId: string) => any;
 }
 
 type ClassNames = 'card';
 
-export const overviewCardStyles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+export const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   card: {
     marginBottom: theme.spacing.unit * 2
   }
@@ -81,5 +81,5 @@ const mapDispatchToProps: DispatchProps = { getSettlementsToUser };
 
 export const OverviewCard = combineContainers(OverviewCardComponent, [
   connect(mapStateToProps, mapDispatchToProps),
-  withStyles(overviewCardStyles, { withTheme: true })
+  withStyles(styles)
 ]);

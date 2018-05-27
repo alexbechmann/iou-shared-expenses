@@ -11,6 +11,7 @@ import Dialog, {
 import { WithWidthProps } from 'material-ui/utils/withWidth';
 import { List, ListItem, ListItemIcon, ListItemText, Icon } from 'material-ui';
 import { Link } from 'react-router-dom';
+import { TransactionType } from '@iou/core';
 
 interface Props {
   handleClose: () => void;
@@ -32,19 +33,25 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
           <DialogContent>
             <DialogContentText>Choose a transaction type to get started.</DialogContentText>
             <List component="nav">
-              <ListItem button={true} component={props => <Link to="/transactions/iou/new" {...props} />}>
+              <ListItem
+                button={true}
+                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`} {...props} />}
+              >
                 <ListItemIcon>
                   <Icon>note</Icon>
                 </ListItemIcon>
                 <ListItemText primary="I Owe You" />
               </ListItem>
-              <ListItem button={true} component={props => <Link to="/transactions/purchase/new" {...props} />}>
+              <ListItem button={true} component={props => <Link to="#" {...props} />}>
                 <ListItemIcon>
                   <Icon>receipt</Icon>
                 </ListItemIcon>
                 <ListItemText primary="Purchase" />
               </ListItem>
-              <ListItem button={true} component={props => <Link to="/transactions/payment/new" {...props} />}>
+              <ListItem
+                button={true}
+                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`} {...props} />}
+              >
                 <ListItemIcon>
                   <Icon>payment</Icon>
                 </ListItemIcon>
@@ -53,7 +60,7 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
             </List>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.handleClose} color="primary" autoFocus={true}>
+            <Button onClick={this.props.handleClose} color="primary">
               Cancel
             </Button>
           </DialogActions>

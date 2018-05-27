@@ -42,3 +42,10 @@ export function getTransactionsToUser(currentUserId: string, toUserId: string, e
     payload: query.find()
   };
 }
+
+// export function getTransaction(id: string) : AnyAction {
+//   return {
+//     type: GOT_TRANSACTIONS,
+//     payload: query
+//   }
+// }
