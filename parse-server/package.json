@@ -5,6 +5,7 @@
   "scripts": {
     "start": "npm run build:dev && npm-run-all -p build:watch start:dev",
     "start:dev": "nodemon ./parse-dev-server.js",
+    "build": "npm run build:prod",
     "build:prod": "cross-env NODE_ENV=production webpack",
     "build:dev": "cross-env NODE_ENV=development webpack",
     "build:watch": "cross-env NODE_ENV=development webpack -w"
