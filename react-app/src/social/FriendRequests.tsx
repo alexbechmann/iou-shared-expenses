@@ -5,13 +5,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
-import { AppState } from '@shared/state';
+import { AppState } from 'src/state';
 import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from 'material-ui';
-import * as Icons from 'material-ui-icons';
+import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
-import { acceptFriendRequest, getFriendRequests } from 'src/social';
-import { FriendRequest } from '@shared/schema';
-import { Loader } from '@shared/ui';
+import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';
+import { FriendRequest } from '@iou/core';
+import { Loader } from 'src/shared/ui';
 
 interface Props {
   acceptingFriendRequests: string[];
@@ -35,22 +35,23 @@ export class FriendRequestsComponent extends React.Component<Props> {
     if (this.props.loading) {
       return <Loader />;
     } else if (this.props.friendRequests) {
-      console.log(this.props.friendRequests);
       return (
         <List>
           {this.props.friendRequests.map((friendRequest: FriendRequest) => (
-            <ListItem button={true} key={friendRequest.fromUser.id}>
+            <ListItem button={true} key={friendRequest.getFromUser().id}>
               <ListItemIcon>
                 <Avatar alt="Remy Sharp" src="https://picsum.photos/100/100" />
               </ListItemIcon>
-              <ListItemText primary={friendRequest.fromUser.id} />
+              <ListItemText primary={friendRequest.getFromUser().id} />
               <ListItemSecondaryAction>
                 <IconButton
                   aria-label={'Add Friend'}
                   color="secondary"
-                  onClick={() => this.props.acceptFriendRequest(friendRequest.fromUser.id)}
+                  onClick={() => this.props.acceptFriendRequest(friendRequest.getFromUser().id)}
                 >
-                  {this.props.acceptingFriendRequests.indexOf(friendRequest.fromUser.id) ? <Icons.AddCircle /> : null}
+                  {this.props.acceptingFriendRequests.indexOf(friendRequest.getFromUser().id) ? (
+                    <Icons.AddCircle />
+                  ) : null}
                 </IconButton>
               </ListItemSecondaryAction>
             </ListItem>

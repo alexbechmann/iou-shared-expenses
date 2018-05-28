@@ -11,7 +11,7 @@
     "clean:parse-server": "remove-node-modules ./parse-server/node_modules/",
     "clean:react-app": "remove-node-modules ./react-app/node_modules/",
     "clean": "npm-run-all -p clean:core clean:parse-server clean:react-app",
-    "postinstall": "npm-run-all -p install:core install:parse-server install:react-app",
+    "postinstall": "npm-run-all install:core install:parse-server install:react-app",
     "start:core": "cd ./core && npm start",
     "start:parse-server": "cd ./parse-server && npm start",
     "start:react-app": "cd ./react-app && npm start",
@@ -32,9 +32,11 @@
   },
   "homepage": "https://github.com/alexbechmann/iou-shared-expenses#readme",
   "devDependencies": {
+    "cross-env": "^5.1.4",
     "npm-run-all": "^4.1.2",
     "onchange": "^3.3.0",
     "prettier": "1.10.2",
     "remove-node-modules": "^1.7.2"
-  }
+  },
+  "private": true
 }

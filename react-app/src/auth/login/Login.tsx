@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Button, FormControl } from 'material-ui';
 import { Action } from 'redux';
-import { InjectedFormProps, Field } from 'redux-form';
+import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { nameof } from '@iou/core';
-import { LoginModel } from './login.model';
-import { Loader } from '@shared/ui';
+import { LoginModel } from './models/login.model';
+import { Loader } from 'src/shared/ui';
+import { combineContainers } from 'combine-containers';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
+import { loginWithFacebook, loginWithPassword } from '../state/auth.actions';
+import { connect } from 'react-redux';
+import { AppState } from 'src/state';
 
 export interface LoginProps {
   loginError?: string;
@@ -19,7 +23,7 @@ export interface LoginDispatchProps {
 
 export interface Props extends InjectedFormProps, LoginDispatchProps, LoginProps {}
 
-export class Login extends React.Component<Props> {
+export class LoginComponent extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
@@ -81,3 +85,17 @@ export class Login extends React.Component<Props> {
     this.props.loginWithPassword(loginModel);
   }
 }
+
+function mapStateToProps(state: AppState): LoginProps {
+  return {
+    loginError: state.auth.loginError,
+    loggingIn: state.auth.loggingIn
+  };
+}
+
+const mapDispatchToProps: LoginDispatchProps = { loginWithFacebook, loginWithPassword };
+
+export const Login = combineContainers(LoginComponent, [
+  reduxForm({ form: 'authform', destroyOnUnmount: false }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);

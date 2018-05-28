@@ -1,16 +1,20 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Action } from 'redux';
-import { Transaction } from '@shared/schema';
-import { InjectedFormProps, Field } from 'redux-form';
-import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
-import { nameof, CurrencyType, Currency, TransactionType } from '@iou/core';
+import { Transaction } from '@iou/core';
+import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
+import { Button, MenuItem, FormControl, InputLabel, Typography, CircularProgress } from 'material-ui';
+import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
-import { createUserPointer } from 'src/parse';
+import { createUserPointer } from 'src/parse/create-user-pointer';
 import { User } from 'parse';
+import { AppState } from 'src/state';
+import { combineContainers } from 'combine-containers';
+import { connect } from 'react-redux';
+import { saveTransaction, getTransactionAndSetEditFormValues } from 'src/transactions/state/transaction.actions';
+import { getFriendsForUser } from 'src/social/state/social.actions';
 
 interface RouteParameters {
-  id: number;
+  id: string;
   type: string;
 }
 
@@ -21,11 +25,14 @@ export interface EditTransactionProps {
   currencies: Currency[];
   formValues: Partial<TransactionFormData>;
   saving: boolean;
+  loadingEditTransaction: boolean;
+  transactionReadyForEdit: boolean;
 }
 
 export interface TransactionFormData {
+  id: string;
   title: string;
-  amount: number;
+  amount: string;
   fromUserId: string;
   toUserId: string;
   currencyId: CurrencyType;
@@ -35,8 +42,9 @@ export interface TransactionFormData {
 }
 
 export interface EditTransactionDispatchProps {
-  saveTransaction: (transaction: Transaction) => Action;
-  getFriendsForUser: (user: User) => Action;
+  saveTransaction: (transaction: Transaction) => any;
+  getFriendsForUser: (user: User) => any;
+  getTransactionAndSetEditFormValues: (id: string, formName: string) => any;
 }
 
 interface Props
@@ -49,7 +57,7 @@ interface State {
   lastTouchedUserSelect: string;
 }
 
-export class EditTransaction extends React.Component<Props, State> {
+class EditTransactionComponent extends React.Component<Props, State> {
   state: State = {
     lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId')
   };
@@ -66,9 +74,16 @@ export class EditTransaction extends React.Component<Props, State> {
         <Typography variant="headline" gutterBottom={true}>
           {id} {type}
         </Typography>
-        {this.renderForm()}
+        {!this.props.loadingEditTransaction ? this.renderForm() : <CircularProgress />}
       </span>
     );
+  }
+
+  componentDidMount() {
+    this.props.getFriendsForUser(this.props.currentUser);
+    if (this.props.match.params.id) {
+      this.props.getTransactionAndSetEditFormValues(this.props.match.params.id, this.props.form);
+    }
   }
 
   componentDidUpdate() {
@@ -97,8 +112,7 @@ export class EditTransaction extends React.Component<Props, State> {
               disabled={this.props.saving}
             />
           </FormControl>
-
-          <FormControl fullWidth={true}>
+          <FormControl fullWidth>
             <InputLabel>From user</InputLabel>
             <Field
               name={nameof<TransactionFormData>('fromUserId')}
@@ -107,10 +121,29 @@ export class EditTransaction extends React.Component<Props, State> {
               disabled={this.props.gettingFriends || this.props.saving}
               onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId') })}
             >
-              {this.renderfriendOptions()}
+              {this.renderFriendOptions()}
             </Field>
           </FormControl>
-
+          <br />
+          <br />
+          {(() => {
+            let value = ``;
+            switch (this.props.formValues.transactionType) {
+              case TransactionType.IOU: {
+                value = 'owe';
+                break;
+              }
+              case TransactionType.Payment: {
+                value = 'paid';
+                break;
+              }
+              default: {
+                break;
+              }
+            }
+            return <Typography variant="body1">{value}</Typography>;
+          })()}
+          <br />
           <FormControl fullWidth={true}>
             <InputLabel>To user</InputLabel>
             <Field
@@ -120,10 +153,9 @@ export class EditTransaction extends React.Component<Props, State> {
               disabled={this.props.gettingFriends || this.props.saving}
               onChange={() => this.setState({ lastTouchedUserSelect: nameof<TransactionFormData>('toUserId') })}
             >
-              {this.renderfriendOptions()}
+              {this.renderFriendOptions()}
             </Field>
           </FormControl>
-
           <FormControl fullWidth={true}>
             <InputLabel>Currency</InputLabel>
             <Field
@@ -141,7 +173,25 @@ export class EditTransaction extends React.Component<Props, State> {
               })}
             </Field>
           </FormControl>
-
+          <FormControl fullWidth={true}>
+            <InputLabel>Transaction type</InputLabel>
+            <Field
+              name={nameof<TransactionFormData>('transactionType')}
+              component={ReduxFormMaterialFields.Select}
+              placeholder="Transaction type"
+              disabled={this.props.saving}
+            >
+              {Object.keys(TransactionType)
+                .filter(key => !isNaN(Number(TransactionType[key])))
+                .map(transactionType => {
+                  return (
+                    <MenuItem key={transactionType} value={TransactionType[transactionType]}>
+                      {transactionType}
+                    </MenuItem>
+                  );
+                })}
+            </Field>
+          </FormControl>
           <FormControl fullWidth={true}>
             <Field
               name={nameof<TransactionFormData>('amount')}
@@ -151,7 +201,6 @@ export class EditTransaction extends React.Component<Props, State> {
               label="Amount"
             />
           </FormControl>
-
           <Button variant="raised" color="primary" type="submit" disabled={pristine || submitting || this.props.saving}>
             Save
           </Button>
@@ -164,11 +213,11 @@ export class EditTransaction extends React.Component<Props, State> {
     );
   }
 
-  renderfriendOptions() {
+  renderFriendOptions() {
     return this.props.friends.concat([this.props.currentUser]).map(user => {
       return (
         <MenuItem key={user.id} value={user.id}>
-          {user.id}
+          {user.id === this.props.currentUser.id ? 'You' : userHelper.getUserProperties(user).displayName}
         </MenuItem>
       );
     });
@@ -177,16 +226,78 @@ export class EditTransaction extends React.Component<Props, State> {
   handleOnSubmit(transactionFormData: TransactionFormData) {
     const transaction = new Transaction();
     Object.assign(transaction, transactionFormData);
-    transaction.fromUser = createUserPointer(transactionFormData.fromUserId);
-    transaction.toUser = createUserPointer(transactionFormData.toUserId);
-    this.props.saveTransaction(transaction);
+    transaction.amount = parseInt(transactionFormData.amount, 10);
+    transaction.setFromUserPointer(createUserPointer(transactionFormData.fromUserId));
+    transaction.setToUserPointer(createUserPointer(transactionFormData.toUserId));
+    this.props.saveTransaction(transaction).then(() => {
+      this.props.history.push('/overview');
+    });
   }
 
   renderError() {
     return <span />;
   }
-
-  componentDidMount() {
-    this.props.getFriendsForUser(this.props.currentUser);
-  }
 }
+
+const nullOrEmpty = (value: string) => !value || value.length < 1;
+
+const formName = 'editTransactionForm';
+
+const validate = (values: TransactionFormData) => {
+  const errors: FormErrors<TransactionFormData> = {};
+  if (nullOrEmpty(values.title)) {
+    errors.title = 'Required';
+  }
+  if (!(parseInt(values.amount, 10) > 0)) {
+    errors.amount = 'Amount must be greater than zero';
+  }
+  // Known console error: https://github.com/erikras/redux-form-material-ui/issues/216
+  if (nullOrEmpty(values.fromUserId)) {
+    errors.fromUserId = 'Required';
+  }
+  if (nullOrEmpty(values.toUserId)) {
+    errors.fromUserId = 'Required';
+  }
+  if (!nullOrEmpty(values.fromUserId) && !nullOrEmpty(values.toUserId) && values.fromUserId === values.toUserId) {
+    errors.fromUserId = 'Cannot be equal to To user';
+    errors.toUserId = 'Cannot be equal to From user';
+  }
+  return errors;
+};
+
+function mapStateToProps(
+  state: AppState,
+  ownProps: RouteComponentProps<RouteParameters>
+): Partial<EditTransactionProps & InjectedFormProps<TransactionFormData>> {
+  const initialFormValues: Partial<TransactionFormData> = {
+    title: '',
+    currencyId: CurrencyType.GBP,
+    fromUserId: state.auth.currentUser!.id,
+    transactionType: (ownProps.match.params.type && parseInt(ownProps.match.params.type, 10)) || TransactionType.IOU
+  };
+  return {
+    friends: state.social.friends,
+    gettingFriends: state.social.gettingFriends,
+    currentUser: state.auth.currentUser!,
+    currencies: state.currency.avaiableCurrencies,
+    initialValues: initialFormValues,
+    formValues: state.form[formName] ? state.form[formName].values : {},
+    saving: state.transactions.savingTransaction,
+    loadingEditTransaction: state.transactions.loadingEditTransaction
+  };
+}
+
+const mapDispatchToProps: EditTransactionDispatchProps = {
+  saveTransaction,
+  getFriendsForUser,
+  getTransactionAndSetEditFormValues
+};
+
+export const EditTransaction = combineContainers(EditTransactionComponent, [
+  reduxForm({
+    form: formName,
+    destroyOnUnmount: true,
+    validate: validate
+  }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);

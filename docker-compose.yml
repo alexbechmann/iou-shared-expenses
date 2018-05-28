@@ -6,7 +6,8 @@ services:
       - 27017
     ports:
       - "27017:27017"
-
+    volumes:
+      - mongodata:/data/db
   parse-dashboard:
     restart: unless-stopped
     image: parseplatform/parse-dashboard
@@ -22,6 +23,9 @@ services:
       - PARSE_DASHBOARD_ALLOW_INSECURE_HTTP=1
     ports:
       - "4040:4040"
+    links:
+      - mongo
+
 
   dashboard:
     restart: unless-stopped
@@ -30,3 +34,6 @@ services:
       - "8081:8081"
     links:
       - mongo
+
+volumes:
+  mongodata:

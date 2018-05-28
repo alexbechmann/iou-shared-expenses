@@ -1,65 +1,85 @@
 import * as React from 'react';
-import { Settlement } from '@iou/core';
+import { Settlement, userHelper, UserProperties } from '@iou/core';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui-icons/MoreVert';
-import { Button } from 'material-ui';
-import { SettlementsTable } from '../components/SettlementsTable';
+import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { SettlementsTable } from '../SettlementsTable';
 import { User } from 'parse';
-import { Action } from 'redux';
-import { withStyles, StyleRulesCallback, Theme, WithStyles } from 'material-ui/styles';
-import { Link } from 'react-router-dom';
+import { StyleRulesCallback, Theme, WithStyles, withStyles } from 'material-ui/styles';
+import { RouteButton } from 'src/shared/ui/RouteButton';
+import { getSettlementsToUser } from 'src/settlements/state/settlements.actions';
+import { AppState } from 'src/state';
+import { combineContainers } from 'combine-containers';
+import { connect } from 'react-redux';
 
-export interface OverviewCardProps {
+export interface ConnectProps {
   friend: User;
   settlements: Settlement[];
 }
 
-export interface OverviewCardDispatchProps {
-  getSettlementsToUser: (toUserId: string) => Action;
+export interface DispatchProps {
+  getSettlementsToUser: (toUserId: string) => any;
 }
 
 type ClassNames = 'card';
 
-const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+export const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   card: {
     marginBottom: theme.spacing.unit * 2
   }
 });
 
-interface Props extends OverviewCardProps, OverviewCardDispatchProps, WithStyles<ClassNames> {}
+interface Props extends ConnectProps, DispatchProps, WithStyles<ClassNames> {}
 
 export class OverviewCardComponent extends React.Component<Props> {
   render() {
+    const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend);
     return (
       <Card className={this.props.classes.card}>
         <CardHeader
-          avatar={<Avatar>R</Avatar>}
+          avatar={<Avatar>{userProperties.initials}</Avatar>}
           action={
             <IconButton>
               <MoreVertIcon />
             </IconButton>
           }
-          title={this.props.friend.id}
+          title={userProperties.displayName}
         />
         <CardContent>
-          <SettlementsTable settlements={this.props.settlements} />
+          <SettlementsTable friend={this.props.friend} />
         </CardContent>
         <CardActions>
-          <Link style={{ width: '100%' }} to={`/view-transactions/${this.props.friend.id}`}>
-            <Button fullWidth={true} variant="raised" color="secondary">
-              View Transactions
-            </Button>
-          </Link>
+          <RouteButton
+            fullWidth={true}
+            variant="raised"
+            color="secondary"
+            to={`/view-transactions/${this.props.friend.id}`}
+          >
+            View Transactions
+          </RouteButton>
         </CardActions>
       </Card>
     );
   }
-
-  componentDidMount() {
-    this.props.getSettlementsToUser(this.props.friend.id);
-  }
 }
 
-export const OverviewCard = withStyles(styles, { withTheme: true })(OverviewCardComponent);
+export interface OverviewCardProps {
+  friend: User;
+}
+
+function mapStateToProps(state: AppState, ownProps: OverviewCardProps): ConnectProps {
+  return {
+    friend: ownProps.friend,
+    settlements: state.settlements.allSettlements.filter(
+      settlement => settlement.fromUserId === state.auth.currentUser!.id && settlement.toUserId === ownProps.friend.id
+    )
+  };
+}
+
+const mapDispatchToProps: DispatchProps = { getSettlementsToUser };
+
+export const OverviewCard = combineContainers(OverviewCardComponent, [
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles)
+]);

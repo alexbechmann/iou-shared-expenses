@@ -1,8 +1,7 @@
 import { SocialService } from '../social/social.service';
 import { User } from 'parse';
 import { createUserPointer } from '../shared/pointer.factory';
-import { Settlement, Currency, CurrencyType } from '@iou/core';
-import { Transaction } from '../shared/schema';
+import { Settlement, Currency, CurrencyType, Transaction } from '@iou/core';
 import { CurrencyService } from '../currencies/currency.service';
 import { TransactionService } from '../transactions/transaction.service';
 
@@ -24,7 +23,7 @@ export class SettlementService {
 
     for (let currency of this.currencyService.getAllCurrencies()) {
       const transactionsForCurrency: Transaction[] = allTransactions.filter(
-        transaction => transaction.currencyId === currency.id
+        transaction => transaction.get('currencyId') === currency.id
       );
       if (transactionsForCurrency.length > 0) {
         const settlement: Settlement = {
@@ -34,12 +33,17 @@ export class SettlementService {
           amount: 0
         };
         for (let transaction of transactionsForCurrency) {
-          settlement.amount += transaction.amount;
+          settlement.amount += parseInt(transaction.get('amount'));
         }
         settlements.push(settlement);
       }
     }
 
-    return settlements;
+    return settlements.map(settlement => {
+      return {
+        ...settlement,
+        amount: parseInt(settlement.amount.toFixed(2))
+      };
+    });
   }
 }

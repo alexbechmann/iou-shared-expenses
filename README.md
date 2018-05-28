@@ -8,6 +8,8 @@
 
 Core classes that can be reused.
 
+"Parse" is a global namespace auto-initialised in parse-cloud-code and added as global var in react-app
+
 ## Parse server
 
 Contains cloud code.

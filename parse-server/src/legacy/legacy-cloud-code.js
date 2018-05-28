@@ -1,4 +1,6 @@
 var _ = require('underscore');
+console.log('Using legacy cloud code');
+
 function formatAsGBP(amount){
 
     return "£" + amount.toFixed(2);

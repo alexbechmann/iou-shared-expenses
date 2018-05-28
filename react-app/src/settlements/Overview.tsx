@@ -1,18 +1,21 @@
 import * as React from 'react';
 import { Action } from 'redux';
-import { withStyles, Button } from 'material-ui';
-import { StyleRulesCallback, Theme } from 'material-ui/styles';
-import * as Icons from 'material-ui-icons';
+import { Button } from 'material-ui';
+import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
+import * as Icons from '@material-ui/icons';
 import { WithStyles } from 'material-ui/styles/withStyles';
-import { NewTransactionDialog } from 'src/transactions';
-import { Loader } from '@shared/ui';
+import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
-import { OverviewCardContainer } from './overview-card/OverviewCardContainer';
+import { OverviewCard } from './overview-card/OverviewCard';
+import { connect } from 'react-redux';
+import { combineContainers } from 'combine-containers';
+import { getFriendsForUser } from 'src/social/state/social.actions';
+import { AppState } from 'src/state';
+import { NewTransactionDialog } from 'src/transactions/dialog/NewTransactionDialog';
 
 type ClassNames = 'actionButton';
-// | 'content';
 
-const styles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
+export const overviewStyles: StyleRulesCallback<ClassNames> = (theme: Theme) => ({
   actionButton: {
     position: 'absolute',
     bottom: theme.spacing.unit * 2,
@@ -42,14 +45,14 @@ export class OverviewComponent extends React.Component<Props, State> {
   };
 
   render() {
-    return this.props.loading ? <Loader /> : this.renderOverview();
+    return this.props.loading && this.props.friends.length === 0 ? <Loader /> : this.renderOverview();
   }
 
   renderOverview() {
     return (
       <div>
         {this.props.friends.map(friend => {
-          return <OverviewCardContainer key={friend.id} friend={friend} />;
+          return <OverviewCard key={friend.id} friend={friend} />;
         })}
         <Button
           variant="fab"
@@ -77,4 +80,17 @@ export class OverviewComponent extends React.Component<Props, State> {
   };
 }
 
-export const Overview = withStyles(styles, { withTheme: true })(OverviewComponent);
+function mapStateToProps(state: AppState): OverviewProps {
+  return {
+    currentUser: state.auth.currentUser,
+    loading: state.social.gettingFriends,
+    friends: state.social.friends
+  };
+}
+
+const mapDispatchToProps: OverviewDispatchProps = { getFriendsForUser };
+
+export const Overview = combineContainers(OverviewComponent, [
+  withStyles(overviewStyles, { withTheme: true }),
+  connect(mapStateToProps, mapDispatchToProps)
+]);
