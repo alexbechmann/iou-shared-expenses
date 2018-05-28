@@ -46,7 +46,7 @@ export class AppComponent extends React.Component<Props> {
           <Switch>
             <Route exact={true} path="/friends" component={FindFriends} />
             <Route exact={true} path="/friend-requests" component={FriendRequests} />
-            <Route exact={true} path="/transactions/:type/:id?" component={EditTransaction} />
+            <Route exact={true} path="/transactions/:id?/:new?/:type?" component={EditTransaction} />
             <Route exact={true} path="/view-transactions/:toUserId" component={ViewTransactions} />
             <Route path="/" component={Overview} />
           </Switch>

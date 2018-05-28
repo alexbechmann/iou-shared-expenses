@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { User } from 'parse';
 import { Loader } from 'src/shared/ui';
@@ -6,11 +6,29 @@ import { AppState } from 'src/state';
 import { connect } from 'react-redux';
 import { getTransactionsToUser } from 'src/transactions/state/transaction.actions';
 import { getFriendsForUser } from 'src/social/state/social.actions';
-import { List, ListItem, ListItemIcon, ListItemText, Paper, ListSubheader } from 'material-ui';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+  ListSubheader,
+  StyleRulesCallback,
+  WithStyles,
+  withStyles
+} from 'material-ui';
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
 import { UserProperties, userHelper, Transaction } from '@iou/core';
 import { combineContainers } from 'combine-containers';
+
+type StyleClassNames = 'icon';
+
+const styles: StyleRulesCallback<StyleClassNames> = theme => ({
+  icon: {
+    color: theme.palette.secondary.main
+  }
+});
 
 export interface ViewTransactionsRouteParameters {
   toUserId: string;
@@ -31,8 +49,9 @@ export interface ViewTransactionsComponentProps {
 
 interface Props
   extends ViewTransactionsComponentProps,
-  ViewTransactionsComponentDispatchProps,
-  RouteComponentProps<ViewTransactionsRouteParameters> { }
+    ViewTransactionsComponentDispatchProps,
+    RouteComponentProps<ViewTransactionsRouteParameters>,
+    WithStyles<StyleClassNames> {}
 
 export class ViewTransactionsComponent extends React.Component<Props> {
   render() {
@@ -40,6 +59,7 @@ export class ViewTransactionsComponent extends React.Component<Props> {
   }
 
   renderTransactions() {
+    const { classes } = this.props;
     const userProperties: UserProperties = userHelper.getUserProperties(this.props.friend!);
     return (
       <div>
@@ -54,12 +74,14 @@ export class ViewTransactionsComponent extends React.Component<Props> {
                   key={transaction.id}
                   onClick={() => this.props.history.push(`/transactions/${transaction.id}`)}
                 >
-                  <ListItemIcon>
+                  <ListItemIcon className={classes.icon}>
                     <Icons.CreditCard />
                   </ListItemIcon>
-                  <ListItemText>{transaction.title}</ListItemText>
+                  <ListItemText
+                    primary={transaction.title}
+                    secondary={`${transaction.transactionType} ${transaction.amount}`}
+                  />
                 </ListItem>
-
               );
             })}
           </List>
@@ -109,5 +131,6 @@ const mapDispatchToProps: ViewTransactionsComponentDispatchProps = { getTransact
 
 export const ViewTransactions = combineContainers(ViewTransactionsComponent, [
   connect(mapStateToProps, mapDispatchToProps),
-  withRouter
+  withRouter,
+  withStyles(styles)
 ]);

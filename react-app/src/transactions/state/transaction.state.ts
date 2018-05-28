@@ -5,4 +5,5 @@ export interface TransactionState {
   transactionError: string;
   gettingTransactions: boolean;
   allTransactions: Transaction[];
+  loadingEditTransaction: boolean;
 }

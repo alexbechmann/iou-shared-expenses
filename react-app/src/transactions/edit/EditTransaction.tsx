@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Transaction } from '@iou/core';
 import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
-import { Button, MenuItem, FormControl, InputLabel, Typography } from 'material-ui';
+import { Button, MenuItem, FormControl, InputLabel, Typography, CircularProgress } from 'material-ui';
 import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse/create-user-pointer';
@@ -10,11 +10,11 @@ import { User } from 'parse';
 import { AppState } from 'src/state';
 import { combineContainers } from 'combine-containers';
 import { connect } from 'react-redux';
-import { saveTransaction } from 'src/transactions/state/transaction.actions';
+import { saveTransaction, getTransactionAndSetEditFormValues } from 'src/transactions/state/transaction.actions';
 import { getFriendsForUser } from 'src/social/state/social.actions';
 
 interface RouteParameters {
-  id: number;
+  id: string;
   type: string;
 }
 
@@ -25,9 +25,12 @@ export interface EditTransactionProps {
   currencies: Currency[];
   formValues: Partial<TransactionFormData>;
   saving: boolean;
+  loadingEditTransaction: boolean;
+  transactionReadyForEdit: boolean;
 }
 
 export interface TransactionFormData {
+  id: string;
   title: string;
   amount: string;
   fromUserId: string;
@@ -41,6 +44,7 @@ export interface TransactionFormData {
 export interface EditTransactionDispatchProps {
   saveTransaction: (transaction: Transaction) => any;
   getFriendsForUser: (user: User) => any;
+  getTransactionAndSetEditFormValues: (id: string, formName: string) => any;
 }
 
 interface Props
@@ -70,9 +74,16 @@ class EditTransactionComponent extends React.Component<Props, State> {
         <Typography variant="headline" gutterBottom={true}>
           {id} {type}
         </Typography>
-        {this.renderForm()}
+        {!this.props.loadingEditTransaction ? this.renderForm() : <CircularProgress />}
       </span>
     );
+  }
+
+  componentDidMount() {
+    this.props.getFriendsForUser(this.props.currentUser);
+    if (this.props.match.params.id) {
+      this.props.getTransactionAndSetEditFormValues(this.props.match.params.id, this.props.form);
+    }
   }
 
   componentDidUpdate() {
@@ -101,7 +112,7 @@ class EditTransactionComponent extends React.Component<Props, State> {
               disabled={this.props.saving}
             />
           </FormControl>
-          <FormControl fullWidth={true}>
+          <FormControl fullWidth>
             <InputLabel>From user</InputLabel>
             <Field
               name={nameof<TransactionFormData>('fromUserId')}
@@ -226,10 +237,6 @@ class EditTransactionComponent extends React.Component<Props, State> {
   renderError() {
     return <span />;
   }
-
-  componentDidMount() {
-    this.props.getFriendsForUser(this.props.currentUser);
-  }
 }
 
 const nullOrEmpty = (value: string) => !value || value.length < 1;
@@ -275,11 +282,16 @@ function mapStateToProps(
     currencies: state.currency.avaiableCurrencies,
     initialValues: initialFormValues,
     formValues: state.form[formName] ? state.form[formName].values : {},
-    saving: state.transactions.savingTransaction
+    saving: state.transactions.savingTransaction,
+    loadingEditTransaction: state.transactions.loadingEditTransaction
   };
 }
 
-const mapDispatchToProps: EditTransactionDispatchProps = { saveTransaction, getFriendsForUser };
+const mapDispatchToProps: EditTransactionDispatchProps = {
+  saveTransaction,
+  getFriendsForUser,
+  getTransactionAndSetEditFormValues
+};
 
 export const EditTransaction = combineContainers(EditTransactionComponent, [
   reduxForm({
