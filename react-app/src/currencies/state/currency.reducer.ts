@@ -1,6 +1,6 @@
 import { CurrencyState } from './currency.state';
 import { CurrencyType } from '@iou/core';
-import { AnyAction } from 'redux';
+import { AppAction } from 'src/state/app-action';
 
 const defaultState: CurrencyState = {
   avaiableCurrencies: [
@@ -23,7 +23,7 @@ const defaultState: CurrencyState = {
   ]
 };
 
-export function currencyReducer(state: CurrencyState = defaultState, action: AnyAction) {
+export function currencyReducer(state: CurrencyState = defaultState, action: AppAction) {
   switch (action.type) {
     default: {
       return state;

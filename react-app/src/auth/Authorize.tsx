@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Tabs, Tab, Paper } from 'material-ui';
+import { Tabs, Tab, Paper } from '@material-ui/core';
 import { Register } from './register/Register';
 import { Login } from './login/Login';
 import { RootGrid } from 'src/shared/ui';

@@ -1,9 +1,9 @@
-import { Action } from 'redux';
 import { Transaction, initParse, FriendRequest } from '@iou/core';
+import { createStandardAction } from 'typesafe-actions';
 
 export const PARSE_INITIALIZED = 'IOU/PARSE_INITIALIZED';
 
-export function initParseSDK(): Action {
+export function initParseSDK() {
   const parseConfig = {
     applicationId: process.env.REACT_APP_PARSE_CONFIG_APP_ID as string,
     javaScriptKey: process.env.REACT_APP_PARSE_CONFIG_JAVASCRIPT_KEY as string,
@@ -25,7 +25,5 @@ export function initParseSDK(): Action {
     version: 'v2.3' // point to the latest Facebook Graph API version
   });
 
-  return {
-    type: PARSE_INITIALIZED
-  };
+  return createStandardAction(PARSE_INITIALIZED);
 }

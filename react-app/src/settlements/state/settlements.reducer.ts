@@ -1,32 +1,34 @@
 import { SettlementsState } from './settlements.state';
 import { GETTING_SETTLEMENTS, GET_SETTLEMENTS } from './settlements.actions';
 import { Settlement } from '@iou/core';
-import { AnyAction } from 'redux';
+import { AppAction } from 'src/state/app-action';
 
 const defaultState: SettlementsState = {
   gettingSettlements: false,
   allSettlements: []
 };
 
-export function settlementsReducer(state: SettlementsState = defaultState, action: AnyAction) {
+export function settlementsReducer(state: SettlementsState = defaultState, action: AppAction): SettlementsState {
   switch (action.type) {
     case GETTING_SETTLEMENTS: {
-      const newState = Object.assign({}, state);
-      newState.gettingSettlements = true;
-      return newState;
+      return {
+        ...state,
+        gettingSettlements: true
+      };
     }
     case GET_SETTLEMENTS: {
-      const newState = Object.assign({}, state);
-      const receivedSettlements = action.payload as Settlement[];
-      newState.allSettlements = newState.allSettlements
-        .filter(
-          transaction =>
-            receivedSettlements.some(receivedSettlement => receivedSettlement.toUserId === transaction.toUserId) ===
-            false
-        )
-        .concat(receivedSettlements);
-      newState.gettingSettlements = false;
-      return newState;
+      const receivedSettlements: Settlement[] = action.payload;
+      return {
+        ...state,
+        allSettlements: state.allSettlements
+          .filter(
+            transaction =>
+              receivedSettlements.some(receivedSettlement => receivedSettlement.toUserId === transaction.toUserId) ===
+              false
+          )
+          .concat(receivedSettlements),
+        gettingSettlements: false
+      };
     }
     default: {
       return state;

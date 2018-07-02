@@ -16,7 +16,7 @@ import {
   StyleRulesCallback,
   WithStyles,
   withStyles
-} from 'material-ui';
+} from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
 import { UserProperties, userHelper, Transaction } from '@iou/core';

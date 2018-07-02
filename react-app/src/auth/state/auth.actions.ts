@@ -1,17 +1,17 @@
 import * as Parse from 'parse';
 import { store } from 'src/state';
-import { AnyAction } from 'redux';
 import { enrichUserProfileWithFacebook, findFriendsWithFacebook } from 'src/social/state/social.actions';
 import { User } from 'parse';
 import { LoginModel } from 'src/auth/login/models/login.model';
 import { RegisterModel } from 'src/auth/register/models/register.model';
+import { promiseAction } from '../../state/promise-action';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
 export const REGISTERING = 'IOU/REGISTERING';
 export const REGISTERED = 'IOU/REGISTERED';
 
-export function loginWithFacebook(): AnyAction {
+export function loginWithFacebook() {
   store.dispatch({
     type: LOGGING_IN
   });
@@ -33,38 +33,26 @@ export function loginWithFacebook(): AnyAction {
       }
     });
   });
-  return {
-    type: LOGIN,
-    payload: payload
-  };
+  return promiseAction(LOGIN, payload);
 }
 
-export function loginWithPassword(loginModel: LoginModel): AnyAction {
+export function loginWithPassword(loginModel: LoginModel) {
   store.dispatch({
     type: LOGGING_IN
   });
-  return {
-    type: LOGIN,
-    payload: Parse.User.logIn(loginModel.username, loginModel.password)
-  };
+  return promiseAction(LOGIN, Parse.User.logIn(loginModel.username, loginModel.password));
 }
 
-export function logout(): AnyAction {
-  return {
-    type: LOGOUT,
-    payload: Parse.User.logOut()
-  };
+export function logout() {
+  return promiseAction(LOGOUT, Parse.User.logOut());
 }
 
-export function register(registerModel: RegisterModel): AnyAction {
+export function register(registerModel: RegisterModel) {
   store.dispatch({
     type: REGISTERING
   });
 
-  return {
-    type: REGISTERED,
-    payload: Parse.User.signUp(registerModel.username, registerModel.password, {
-      email: registerModel.email
-    })
-  };
+  return promiseAction(REGISTERED, Parse.User.signUp(registerModel.username, registerModel.password, {
+    email: registerModel.email
+  }));
 }

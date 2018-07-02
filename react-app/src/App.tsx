@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './styles/main.css';
 import 'typeface-roboto';
-import { LinearProgress } from 'material-ui';
+import { LinearProgress } from '@material-ui/core';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Action } from 'redux';
 import { RootGrid } from 'src/shared/ui';

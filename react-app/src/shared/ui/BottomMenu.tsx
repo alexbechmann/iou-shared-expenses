@@ -1,9 +1,9 @@
 import * as React from 'react';
-import BottomNavigation, { BottomNavigationAction } from 'material-ui/BottomNavigation';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-import Paper from 'material-ui/Paper';
+import Paper from '@material-ui/core/Paper';
+import { BottomNavigation, BottomNavigationAction } from '@material-ui/core';
 
 interface State {
   value: number;

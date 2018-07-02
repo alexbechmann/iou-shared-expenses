@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, FormControl } from 'material-ui';
+import { Button, FormControl } from '@material-ui/core';
 import { Action } from 'redux';
 import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { nameof } from '@iou/core';

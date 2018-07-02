@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { InjectedFormProps, Field, reduxForm } from 'redux-form';
 import { Action } from 'redux';
-import { Button, CircularProgress, FormControl } from 'material-ui';
+import { Button, CircularProgress, FormControl } from '@material-ui/core';
 import { RegisterModel } from './models/register.model';
 import { nameof } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';

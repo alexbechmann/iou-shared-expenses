@@ -1,17 +1,10 @@
 import * as React from 'react';
-import Button from 'material-ui/Button';
-import Dialog, {
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  withMobileDialog,
-  DialogProps
-} from 'material-ui/Dialog';
-import { WithWidthProps } from 'material-ui/utils/withWidth';
-import { List, ListItem, ListItemIcon, ListItemText, Icon } from 'material-ui';
+import Button from '@material-ui/core/Button';
+import { List, ListItem, ListItemIcon, ListItemText, Icon, DialogTitle, DialogContentText, DialogContent, DialogActions, withMobileDialog, Dialog } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { TransactionType } from '@iou/core';
+import { DialogProps } from '@material-ui/core/Dialog';
+import { WithWidthProps } from '@material-ui/core/withWidth';
 
 interface Props {
   handleClose: () => void;

@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Settlement, userHelper, UserProperties } from '@iou/core';
-import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
-import IconButton from 'material-ui/IconButton';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { SettlementsTable } from '../SettlementsTable';
 import { User } from 'parse';
-import { StyleRulesCallback, Theme, WithStyles, withStyles } from 'material-ui/styles';
+import { StyleRulesCallback, Theme, WithStyles, withStyles } from '@material-ui/core/styles';
 import { RouteButton } from 'src/shared/ui/RouteButton';
 import { getSettlementsToUser } from 'src/settlements/state/settlements.actions';
 import { AppState } from 'src/state';
 import { combineContainers } from 'combine-containers';
 import { connect } from 'react-redux';
+import { Card, CardContent, CardActions, CardHeader } from '@material-ui/core';
 
 export interface ConnectProps {
   friend: User;

@@ -10,7 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Badge
-} from 'material-ui';
+} from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { Action } from 'redux';

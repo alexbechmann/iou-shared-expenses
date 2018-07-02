@@ -3,7 +3,7 @@ import * as Parse from 'parse';
 import { PARSE_INITIALIZED } from 'src/parse/state/parse.actions';
 import { LOGIN, LOGOUT, REGISTERED, LOGGING_IN, REGISTERING } from './auth.actions';
 import { AuthState } from 'src/auth/state/auth.state';
-import { AnyAction } from 'redux';
+import { AppAction } from 'src/state/app-action';
 
 const defaultState: AuthState = {
   loginError: '',
@@ -12,45 +12,58 @@ const defaultState: AuthState = {
   registering: false
 };
 
-export function authReducer(state: AuthState = defaultState, action: AnyAction) {
+export function authReducer(state: AuthState = defaultState, action: AppAction): AuthState {
   switch (action.type) {
     case PARSE_INITIALIZED: {
-      const newState: AuthState = Object.assign({}, state);
-      newState.currentUser = Parse.User.current();
-      return newState;
+      return {
+       ...state,
+       currentUser:Parse.User.current()
+      };
     }
     case LOGGING_IN: {
-      const newState: AuthState = Object.assign({}, state);
-      newState.loggingIn = true;
-      return newState;
+      return {
+       ...state ,
+       loggingIn:true
+      };
     }
     case REGISTERING: {
-      const newState: AuthState = Object.assign({}, state);
-      newState.registering = true;
-      return newState;
+      return {
+       ...state ,
+       registering: true
+      };
     }
     case LOGIN:
     case REGISTERED: {
       if (action.payload instanceof User) {
-        const newState: AuthState = Object.assign({}, state);
-        newState.currentUser = action.payload as User;
-        return newState;
+        return {
+         ...state ,
+         currentUser: action.payload
+        };
       } else {
-        const newState: AuthState = Object.assign({}, state);
+        const error = action.payload as Parse.Error;
         if (action.type === LOGIN) {
-          newState.loginError = action.payload.message;
-          newState.loggingIn = false;
+         return {
+           ...state,
+           loginError: error.message,
+           loggingIn: false
+         }
         } else if (action.type === REGISTERED) {
-          newState.registerError = action.payload.message;
-          newState.registering = false;
+          return {
+            ...state,
+            registerError: error.message,
+            registering: false
+          }
         }
-        return newState;
+        return {
+         ...state 
+        };
       }
     }
     case LOGOUT: {
-      const newState: AuthState = Object.assign({}, state);
-      newState.currentUser = undefined;
-      return newState;
+      return {
+       ...state ,
+       currentUser: undefined
+      };
     }
     default: {
       return state;

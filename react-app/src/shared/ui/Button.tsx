@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { CircularProgress, Button as MaterialUIButton } from 'material-ui';
-import { ButtonProps } from 'material-ui/Button';
+import { CircularProgress, Button as MaterialUIButton } from '@material-ui/core';
+import { ButtonProps } from '@material-ui/core/Button';
 
 interface Props extends ButtonProps {
   loading: boolean;

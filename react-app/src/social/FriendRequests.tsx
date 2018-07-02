@@ -6,7 +6,7 @@ import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
 import { AppState } from 'src/state';
-import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from 'material-ui';
+import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';

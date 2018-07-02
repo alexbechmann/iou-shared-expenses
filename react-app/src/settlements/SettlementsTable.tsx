@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Settlement } from '@iou/core';
-import { Table, TableBody, TableCell } from 'material-ui';
-import TableRow from 'material-ui/Table/TableRow';
+import { Table, TableBody, TableCell, TableRow } from '@material-ui/core';
 import { User } from 'parse';
 import { AppState } from 'src/state';
 import { getSettlementsToUser } from 'src/settlements/state/settlements.actions';

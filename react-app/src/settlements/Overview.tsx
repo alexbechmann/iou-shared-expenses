@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { Action } from 'redux';
-import { Button } from 'material-ui';
-import { StyleRulesCallback, Theme, withStyles } from 'material-ui/styles';
-import * as Icons from '@material-ui/icons';
-import { WithStyles } from 'material-ui/styles/withStyles';
+import { Button, WithStyles, withStyles, StyleRulesCallback, Theme } from '@material-ui/core';
+import * as Icons from '@material-ui/icons'; 
 import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
 import { OverviewCard } from './overview-card/OverviewCard';

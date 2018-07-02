@@ -8,7 +8,7 @@ import {
   ListItemIcon,
   IconButton,
   Avatar
-} from 'material-ui';
+} from '@material-ui/core';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';

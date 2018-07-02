@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Transaction } from '@iou/core';
 import { InjectedFormProps, Field, FormErrors, reduxForm } from 'redux-form';
-import { Button, MenuItem, FormControl, InputLabel, Typography, CircularProgress } from 'material-ui';
+import { Button, MenuItem, FormControl, InputLabel, Typography, CircularProgress } from '@material-ui/core';
 import { nameof, CurrencyType, Currency, TransactionType, userHelper } from '@iou/core';
 import * as ReduxFormMaterialFields from 'redux-form-material-ui';
 import { createUserPointer } from 'src/parse/create-user-pointer';
