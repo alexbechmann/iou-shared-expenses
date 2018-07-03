@@ -5,16 +5,17 @@ import { User } from 'parse';
 import { LoginModel } from 'src/auth/login/models/login.model';
 import { RegisterModel } from 'src/auth/register/models/register.model';
 import { promiseAction } from '../../state/promise-action';
+import { createStandardAction } from 'typesafe-actions';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
 export const LOGOUT = 'IOU/LOGOUT';
 export const REGISTERING = 'IOU/REGISTERING';
 export const REGISTERED = 'IOU/REGISTERED';
 
+export const loggingIn = createStandardAction(LOGGING_IN)();
+
 export function loginWithFacebook() {
-  store.dispatch({
-    type: LOGGING_IN
-  });
+  store.dispatch(loggingIn());
   const payload = new Promise<User>((resolve, reject) => {
     Parse.FacebookUtils.logIn(null, {
       success: (user: User) => {
@@ -37,9 +38,7 @@ export function loginWithFacebook() {
 }
 
 export function loginWithPassword(loginModel: LoginModel) {
-  store.dispatch({
-    type: LOGGING_IN
-  });
+  store.dispatch(loggingIn());
   return promiseAction(LOGIN, Parse.User.logIn(loginModel.username, loginModel.password));
 }
 
@@ -47,10 +46,10 @@ export function logout() {
   return promiseAction(LOGOUT, Parse.User.logOut());
 }
 
+export const registering = createStandardAction(REGISTERING)();
+
 export function register(registerModel: RegisterModel) {
-  store.dispatch({
-    type: REGISTERING
-  });
+  store.dispatch(registering());
 
   return promiseAction(REGISTERED, Parse.User.signUp(registerModel.username, registerModel.password, {
     email: registerModel.email

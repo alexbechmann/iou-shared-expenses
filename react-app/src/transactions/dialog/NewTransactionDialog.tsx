@@ -28,14 +28,14 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
             <List component="nav">
               <ListItem
                 button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`} {...props} />}
+                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`} >{props.children}</Link>}
               >
                 <ListItemIcon>
                   <Icon>note</Icon>
                 </ListItemIcon>
                 <ListItemText primary="I Owe You" />
               </ListItem>
-              <ListItem button={true} component={props => <Link to="#" {...props} />}>
+              <ListItem button={true} component={props => <Link to="#" >{props.children}</Link>}>
                 <ListItemIcon>
                   <Icon>receipt</Icon>
                 </ListItemIcon>
@@ -43,7 +43,7 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
               </ListItem>
               <ListItem
                 button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`} {...props} />}
+                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`} >{props.children}</Link>}
               >
                 <ListItemIcon>
                   <Icon>payment</Icon>

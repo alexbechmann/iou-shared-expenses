@@ -9,8 +9,6 @@ const defaultState: AuthState = {
   loginError: '',
   registerError: '',
   loggingIn: false,
-
-
   registering: false
 };
 
@@ -48,13 +46,13 @@ export function authReducer(state: AuthState = defaultState, action: AppAction):
            ...state,
            loginError: error.message,
            loggingIn: false
-         }
+         };
         } else if (action.type === REGISTERED) {
           return {
             ...state,
             registerError: error.message,
             registering: false
-          }
+          };
         }
         return {
          ...state 

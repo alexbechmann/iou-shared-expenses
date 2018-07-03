@@ -1,5 +1,5 @@
 import { Transaction, initParse, FriendRequest } from '@iou/core';
-import { createStandardAction } from 'typesafe-actions';
+import { action } from 'typesafe-actions';
 
 export const PARSE_INITIALIZED = 'IOU/PARSE_INITIALIZED';
 
@@ -25,5 +25,5 @@ export function initParseSDK() {
     version: 'v2.3' // point to the latest Facebook Graph API version
   });
 
-  return createStandardAction(PARSE_INITIALIZED);
+  return action(PARSE_INITIALIZED);
 }
