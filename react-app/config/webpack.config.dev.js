@@ -151,7 +151,7 @@ module.exports = {
                   // disable type checker - we will use it in fork plugin
                   transpileOnly: true,
                 },
-              },
+              }
             ],
           },
           // "postcss" loader applies autoprefixer to our CSS.

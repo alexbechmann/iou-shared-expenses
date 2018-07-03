@@ -9,6 +9,8 @@ const defaultState: AuthState = {
   loginError: '',
   registerError: '',
   loggingIn: false,
+
+
   registering: false
 };
 
@@ -17,21 +19,21 @@ export function authReducer(state: AuthState = defaultState, action: AppAction):
     case PARSE_INITIALIZED: {
       return {
        ...state,
-       currentUser:Parse.User.current()
+       currentUser: Parse.User.current()
       };
     }
     case LOGGING_IN: {
       return {
-       ...state ,
-       loggingIn:true
+       ...state,
+       loggingIn: true
       };
     }
     case REGISTERING: {
       return {
-       ...state ,
+       ...state,
        registering: true
       };
-    }
+    } 
     case LOGIN:
     case REGISTERED: {
       if (action.payload instanceof User) {

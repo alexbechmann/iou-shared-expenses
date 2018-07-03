@@ -17,6 +17,12 @@ module.exports = {
   module: {
     rules: [
       { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.(tsx|ts)?$/,
+        loader: 'prettier-loader',
+        enforce: 'pre',
+        exclude: /node_modules/,
+      }
     ]
   },
   resolve: {

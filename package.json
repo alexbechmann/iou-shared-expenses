@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "IOU Shared expenses developer commands",
   "scripts": {
-    "test": "prettier --config ./.prettierrc --list-different \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
+    "test": "",
     "install:core": "cd ./core && npm install",
     "install:parse-server": "cd ./parse-server && npm install",
     "install:react-app": "cd ./react-app && npm install",
@@ -15,10 +15,8 @@
     "start:core": "cd ./core && npm start",
     "start:parse-server": "cd ./parse-server && npm start",
     "start:react-app": "cd ./react-app && npm start",
-    "start": "npm run build:core && npm-run-all -p start:core start:parse-server start:react-app docker-compose prettier:watch",
+    "start": "npm run build:core && npm-run-all -p start:core start:parse-server start:react-app docker-compose",
     "docker-compose": "docker-compose up",
-    "prettier:watch": "onchange \"**/*.ts*\" \"**/*.md*\" \"**/*.css*\" -- prettier --write {{changed}}",
-    "prettier": "prettier --config ./.prettierrc --write  \"{core,parse-server,react-app}/**/*.{ts*,md,css}\"",
     "build:core": "cd ./core && npm run build"
   },
   "repository": {
@@ -35,7 +33,6 @@
     "cross-env": "^5.1.4",
     "npm-run-all": "^4.1.2",
     "onchange": "^3.3.0",
-    "prettier": "1.10.2",
     "remove-node-modules": "^1.7.2"
   },
   "private": true,

@@ -19,6 +19,8 @@
   "typings": "./dist/index.d.ts",
   "devDependencies": {
     "@types/parse": "2.4.4",
+    "prettier": "^1.13.7",
+    "prettier-loader": "^2.1.1",
     "rimraf": "^2.6.2",
     "ts-loader": "^4.3.0",
     "typescript": "^2.7.2",
