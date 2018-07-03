@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: whitesmoke;
+  overflow-x: hidden;
+}
+
+.root.container {
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+}
