@@ -1,6 +1,18 @@
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import { List, ListItem, ListItemIcon, ListItemText, Icon, DialogTitle, DialogContentText, DialogContent, DialogActions, withMobileDialog, Dialog } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Icon,
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+  DialogActions,
+  withMobileDialog,
+  Dialog
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { TransactionType } from '@iou/core';
 import { DialogProps } from '@material-ui/core/Dialog';
@@ -28,14 +40,14 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
             <List component="nav">
               <ListItem
                 button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`} >{props.children}</Link>}
+                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`}>{props.children}</Link>}
               >
                 <ListItemIcon>
                   <Icon>note</Icon>
                 </ListItemIcon>
                 <ListItemText primary="I Owe You" />
               </ListItem>
-              <ListItem button={true} component={props => <Link to="#" >{props.children}</Link>}>
+              <ListItem button={true} component={props => <Link to="#">{props.children}</Link>}>
                 <ListItemIcon>
                   <Icon>receipt</Icon>
                 </ListItemIcon>
@@ -43,7 +55,7 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
               </ListItem>
               <ListItem
                 button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`} >{props.children}</Link>}
+                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`}>{props.children}</Link>}
               >
                 <ListItemIcon>
                   <Icon>payment</Icon>

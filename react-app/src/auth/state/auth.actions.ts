@@ -51,7 +51,10 @@ export const registering = createStandardAction(REGISTERING)();
 export function register(registerModel: RegisterModel) {
   store.dispatch(registering());
 
-  return promiseAction(REGISTERED, Parse.User.signUp(registerModel.username, registerModel.password, {
-    email: registerModel.email
-  }));
+  return promiseAction(
+    REGISTERED,
+    Parse.User.signUp(registerModel.username, registerModel.password, {
+      email: registerModel.email
+    })
+  );
 }

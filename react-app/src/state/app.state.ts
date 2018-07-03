@@ -15,4 +15,3 @@ export interface AppState {
   form: FormStateMap;
   transactions: TransactionState;
 }
-   

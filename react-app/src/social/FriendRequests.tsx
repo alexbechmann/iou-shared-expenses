@@ -6,7 +6,15 @@ import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import { User } from 'parse';
 import { AppState } from 'src/state';
-import { List, ListItem, Avatar, ListItemText, IconButton, ListItemSecondaryAction, ListItemIcon } from '@material-ui/core';
+import {
+  List,
+  ListItem,
+  Avatar,
+  ListItemText,
+  IconButton,
+  ListItemSecondaryAction,
+  ListItemIcon
+} from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
 import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';
@@ -73,6 +81,7 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FriendRequests = connect(mapStateToProps, { acceptFriendRequest, getFriendRequests })(
-  FriendRequestsComponent
-);
+export const FriendRequests = connect(
+  mapStateToProps,
+  { acceptFriendRequest, getFriendRequests }
+)(FriendRequestsComponent);

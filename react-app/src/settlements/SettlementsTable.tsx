@@ -54,4 +54,7 @@ function mapStateToProps(state: AppState, ownProps: SettlementsTableProps): Sett
 
 const mapDispatchToProps: SettlementsTableDispatchProps = { getSettlementsToUser };
 
-export const SettlementsTable = connect(mapStateToProps, mapDispatchToProps)(SettlementsTableComponent);
+export const SettlementsTable = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SettlementsTableComponent);

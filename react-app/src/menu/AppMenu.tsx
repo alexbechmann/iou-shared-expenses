@@ -123,4 +123,7 @@ function mapStateToProps(state: AppState): AppMenuProps {
 
 const mapDispatchToProps: AppMenuDispatchProps = { logout };
 
-export const AppMenu = connect(mapStateToProps, mapDispatchToProps)(AppMenuComponent);
+export const AppMenu = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppMenuComponent);

@@ -116,8 +116,11 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FindFriends = connect(mapStateToProps, {
-  findUsers,
-  setSearchText,
-  sendFriendRequest
-})(FindFriendsComponent);
+export const FindFriends = connect(
+  mapStateToProps,
+  {
+    findUsers,
+    setSearchText,
+    sendFriendRequest
+  }
+)(FindFriendsComponent);

@@ -299,5 +299,8 @@ export const EditTransaction = combineContainers(EditTransactionComponent, [
     destroyOnUnmount: true,
     validate: validate
   }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 ]);

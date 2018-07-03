@@ -16,37 +16,37 @@ export function authReducer(state: AuthState = defaultState, action: AppAction):
   switch (action.type) {
     case PARSE_INITIALIZED: {
       return {
-       ...state,
-       currentUser: Parse.User.current()
+        ...state,
+        currentUser: Parse.User.current()
       };
     }
     case LOGGING_IN: {
       return {
-       ...state,
-       loggingIn: true
+        ...state,
+        loggingIn: true
       };
     }
     case REGISTERING: {
       return {
-       ...state,
-       registering: true
+        ...state,
+        registering: true
       };
-    } 
+    }
     case LOGIN:
     case REGISTERED: {
       if (action.payload instanceof User) {
         return {
-         ...state ,
-         currentUser: action.payload
+          ...state,
+          currentUser: action.payload
         };
       } else {
         const error = action.payload as Parse.Error;
         if (action.type === LOGIN) {
-         return {
-           ...state,
-           loginError: error.message,
-           loggingIn: false
-         };
+          return {
+            ...state,
+            loginError: error.message,
+            loggingIn: false
+          };
         } else if (action.type === REGISTERED) {
           return {
             ...state,
@@ -55,14 +55,14 @@ export function authReducer(state: AuthState = defaultState, action: AppAction):
           };
         }
         return {
-         ...state 
+          ...state
         };
       }
     }
     case LOGOUT: {
       return {
-       ...state ,
-       currentUser: undefined
+        ...state,
+        currentUser: undefined
       };
     }
     default: {

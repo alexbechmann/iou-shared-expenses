@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Action } from 'redux';
 import { Button, WithStyles, withStyles, StyleRulesCallback, Theme } from '@material-ui/core';
-import * as Icons from '@material-ui/icons'; 
+import * as Icons from '@material-ui/icons';
 import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
 import { OverviewCard } from './overview-card/OverviewCard';
@@ -90,5 +90,8 @@ const mapDispatchToProps: OverviewDispatchProps = { getFriendsForUser };
 
 export const Overview = combineContainers(OverviewComponent, [
   withStyles(overviewStyles, { withTheme: true }),
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 ]);

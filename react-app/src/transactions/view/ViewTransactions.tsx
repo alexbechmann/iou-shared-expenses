@@ -130,7 +130,10 @@ function mapStateToProps(
 const mapDispatchToProps: ViewTransactionsComponentDispatchProps = { getTransactionsToUser, getFriendsForUser };
 
 export const ViewTransactions = combineContainers(ViewTransactionsComponent, [
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  ),
   withRouter,
   withStyles(styles)
 ]);

@@ -81,4 +81,7 @@ function mapStateToProps(state: AppState): AppProps {
 
 const mapDispatchToProps: AppDispatchProps = { initParseSDK };
 
-export const App = connect(mapStateToProps, mapDispatchToProps)(AppComponent);
+export const App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AppComponent);
