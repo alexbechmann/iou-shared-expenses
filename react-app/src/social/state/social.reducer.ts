@@ -1,6 +1,6 @@
 import {
   SET_SEARCH_TEXT,
-  FIND_USERS,
+  FINDING_USERS,
   FOUND_USERS,
   SENDING_FRIEND_REQUEST,
   SENT_FRIEND_REQUEST,
@@ -14,6 +14,7 @@ import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
 import { User } from 'parse';
 import * as Parse from 'parse';
 import { SocialState } from 'src/social/state/social.state';
+import { AppAction } from 'src/state/app-action';
 
 const defaultState: SocialState = {
   searchText: 'alexbechmann',
@@ -27,14 +28,14 @@ const defaultState: SocialState = {
   gettingFriends: false
 };
 
-export function socialReducer(state: SocialState = defaultState, action: any) {
+export function socialReducer(state: SocialState = defaultState, action: AppAction) {
   switch (action.type) {
     case SET_SEARCH_TEXT: {
       const newState: SocialState = Object.assign({}, state);
       newState.searchText = action.payload as string;
       return newState;
     }
-    case FIND_USERS: {
+    case FINDING_USERS: {
       const newState: SocialState = Object.assign({}, state);
       newState.findingUsers = true;
       return newState;

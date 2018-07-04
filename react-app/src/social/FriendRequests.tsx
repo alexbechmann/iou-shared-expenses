@@ -16,17 +16,15 @@ import {
   ListItemIcon
 } from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
-import { Action } from 'redux';
 import { acceptFriendRequest, getFriendRequests } from 'src/social/state/social.actions';
 import { FriendRequest } from '@iou/core';
 import { Loader } from 'src/shared/ui';
+import { ConnectedReduxProps } from 'src/state/connected-redux-props';
 
-interface Props {
+interface Props extends ConnectedReduxProps {
   acceptingFriendRequests: string[];
   friendRequests: FriendRequest[];
   loading: boolean;
-  acceptFriendRequest: (userId: string) => Action;
-  getFriendRequests: (currentUserId: string) => Action;
   currentUser: User;
 }
 
@@ -36,8 +34,10 @@ export class FriendRequestsComponent extends React.Component<Props> {
   }
 
   componentWillMount() {
-    this.props.getFriendRequests(this.props.currentUser.id);
+    this.props.dispatch(getFriendRequests(this.props.currentUser.id));
   }
+
+  acceptFriendRequest = (userId: string) => () => this.props.dispatch(acceptFriendRequest(userId));
 
   renderResults() {
     if (this.props.loading) {
@@ -55,7 +55,7 @@ export class FriendRequestsComponent extends React.Component<Props> {
                 <IconButton
                   aria-label={'Add Friend'}
                   color="secondary"
-                  onClick={() => this.props.acceptFriendRequest(friendRequest.getFromUser().id)}
+                  onClick={this.acceptFriendRequest(friendRequest.getFromUser().id)}
                 >
                   {this.props.acceptingFriendRequests.indexOf(friendRequest.getFromUser().id) ? (
                     <Icons.AddCircle />

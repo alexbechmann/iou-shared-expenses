@@ -16,16 +16,13 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import { connect } from 'react-redux';
 import * as Icons from '@material-ui/icons';
-import { Action } from 'redux';
 import { AppState } from 'src/state';
 import { findUsers, setSearchText, sendFriendRequest } from 'src/social/state/social.actions';
 import { Loader } from 'src/shared/ui';
 import { User } from 'parse';
+import { ConnectedReduxProps } from '../state/connected-redux-props';
 
-interface Props {
-  findUsers: (searchText: string) => Action;
-  setSearchText: (searchText: string) => Action;
-  sendFriendRequest: (user: string) => Action;
+interface Props extends ConnectedReduxProps {
   searchText: string;
   searchResults: User[];
   loading: boolean;
@@ -57,6 +54,8 @@ export class FindFriendsComponent extends React.Component<Props> {
     );
   }
 
+  sendFriendRequest = (userId: string) => () => this.props.dispatch(sendFriendRequest(userId));
+
   renderResults() {
     if (this.props.searchResults && !this.props.loading) {
       return (
@@ -68,11 +67,7 @@ export class FindFriendsComponent extends React.Component<Props> {
               </ListItemIcon>
               <ListItemText primary={user.id} />
               <ListItemSecondaryAction>
-                <IconButton
-                  aria-label={'Add Friend'}
-                  color="secondary"
-                  onClick={() => this.props.sendFriendRequest(user.id)}
-                >
+                <IconButton aria-label={'Add Friend'} color="secondary" onClick={this.sendFriendRequest(user.id)}>
                   {this.props.sendingFriendRequests.indexOf(user.id) ? <Icons.AddCircle /> : null}
                 </IconButton>
               </ListItemSecondaryAction>
@@ -91,7 +86,7 @@ export class FindFriendsComponent extends React.Component<Props> {
 
   handleSearchBoxInput(e: any) {
     this.search$.next(e.target.value);
-    this.props.setSearchText(e.target.value);
+    this.props.dispatch(setSearchText(e.target.value));
   }
 
   componentDidMount() {
@@ -100,7 +95,7 @@ export class FindFriendsComponent extends React.Component<Props> {
       .debounceTime(400)
       .distinctUntilChanged()
       .subscribe(searchText => {
-        this.props.findUsers(searchText);
+        this.props.dispatch(findUsers(searchText));
       });
 
     this.search$.next(this.props.searchText);
@@ -116,11 +111,4 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FindFriends = connect(
-  mapStateToProps,
-  {
-    findUsers,
-    setSearchText,
-    sendFriendRequest
-  }
-)(FindFriendsComponent);
+export const FindFriends = connect(mapStateToProps)(FindFriendsComponent);

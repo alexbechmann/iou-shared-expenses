@@ -3,6 +3,7 @@ import { Tabs, Tab, Paper } from '@material-ui/core';
 import { Register } from './register/Register';
 import { Login } from './login/Login';
 import { RootGrid } from 'src/shared/ui';
+import { ChangeEvent } from 'react';
 
 interface State {
   activeTab: number;
@@ -51,7 +52,7 @@ export class Authorize extends React.Component<Props, State> {
     return null;
   }
 
-  handleTabChange = (event, value) => {
+  handleTabChange = (event: ChangeEvent<{}>, value: number) => {
     this.setState({
       activeTab: value
     });

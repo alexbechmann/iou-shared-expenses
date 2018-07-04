@@ -1,8 +1,6 @@
 import * as Parse from 'parse';
-let parse = require('parse');
 import { store } from 'src/state';
 import { FriendRequest } from '@iou/core';
-import { AnyAction } from 'redux';
 import { User } from 'parse';
 import {
   UserProperties,
@@ -11,8 +9,10 @@ import {
   CLOUD_FUNCTION_SEND_FRIEND_REQUEST,
   CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST
 } from '@iou/core';
+import { createStandardAction, action } from 'typesafe-actions';
+import { promiseAction } from 'src/state/promise-action';
 
-export const FIND_USERS = 'IOU/FIND_USERS';
+export const FINDING_USERS = 'IOU/FINDING_USERS';
 export const FOUND_USERS = 'IOU/FOUND_USERS';
 export const SET_SEARCH_TEXT = 'IOU/SET_SEARCH_TEXT';
 export const SENDING_FRIEND_REQUEST = 'IOU/SENDING_FRIEND_REQUEST';
@@ -28,71 +28,54 @@ export const ENRICHED_PROFILE_FACEBOOK = 'IOU/ENRICHED_PROFILE_FACEBOOK';
 export const FINDING_FRIENDS_FACEBOOK = 'IOU/FINDING_FRIENDS_FACEBOOK';
 export const FOUND_FRIENDS_FACEBOOK = 'IOU/FOUND_FRIENDS_FACEBOOK';
 
-export function acceptFriendRequest(userId: string): AnyAction {
-  store.dispatch({
-    type: ACCEPTING_FRIEND_REQUEST,
-    payload: userId
-  });
+export const acceptingFriendRequest = createStandardAction(ACCEPTING_FRIEND_REQUEST)();
+
+export function acceptFriendRequest(userId: string) {
+  store.dispatch(acceptingFriendRequest());
 
   const params = {
     toUserId: userId
   };
 
-  return {
-    type: ACCEPTED_FRIEND_REQUEST,
-    payload: Parse.Cloud.run(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, params)
-  };
+  return promiseAction(ACCEPTED_FRIEND_REQUEST, Parse.Cloud.run(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, params));
 }
 
-export function setSearchText(searchText: string): AnyAction {
-  return {
-    type: SET_SEARCH_TEXT,
-    payload: searchText
-  };
-}
+export const setSearchText = createStandardAction(SET_SEARCH_TEXT)<string>();
 
-export function findUsers(searchText: string): AnyAction {
-  var usernameQuery = new Parse.Query(User);
+export const findingUsers = createStandardAction(FINDING_USERS)();
+
+export function findUsers(searchText: string) {
+  const usernameQuery = new Parse.Query(User);
   usernameQuery.contains('username', searchText);
 
-  var emailQuery = new Parse.Query(User);
+  const emailQuery = new Parse.Query(User);
   emailQuery.contains('email', searchText);
 
-  store.dispatch({
-    type: FIND_USERS
-  });
+  store.dispatch(findingUsers());
 
-  return {
-    type: FOUND_USERS,
-    payload: Parse.Query.or(usernameQuery, emailQuery).find()
-  };
+  return promiseAction(FOUND_USERS, Parse.Query.or(usernameQuery, emailQuery).find());
 }
 
-export function sendFriendRequest(userId: string): AnyAction {
-  store.dispatch({
-    type: SENDING_FRIEND_REQUEST,
-    payload: userId
-  });
+export const sendingFriendRequest = (userId: string) => action(SENDING_FRIEND_REQUEST);
+
+export function sendFriendRequest(userId: string) {
+  store.dispatch(sendingFriendRequest(userId));
 
   const params = {
     toUserId: userId
   };
 
-  return {
-    type: SENT_FRIEND_REQUEST,
-    payload: parse.Cloud.run(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, params),
-    metadata: {
-      id: userId
-    }
-  };
+  return promiseAction(SENT_FRIEND_REQUEST, Parse.Cloud.run(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, params), {
+    id: userId
+  });
 }
 
-export function getFriendRequests(currentUserId: string): AnyAction {
-  store.dispatch({
-    type: GETTING_FRIEND_REQUESTS
-  });
+export const gettingFriendRequests = createStandardAction(GETTING_FRIEND_REQUESTS)();
 
-  var query = new Parse.Query(FriendRequest);
+export function getFriendRequests(currentUserId: string) {
+  store.dispatch(gettingFriendRequests());
+
+  const query = new Parse.Query(FriendRequest);
   query.equalTo('toUser', {
     __type: 'Pointer',
     className: '_User',
@@ -100,29 +83,23 @@ export function getFriendRequests(currentUserId: string): AnyAction {
   });
   query.include('fromUser');
 
-  return {
-    type: GET_FRIEND_REQUESTS,
-    payload: query.find()
-  };
+  return promiseAction(GET_FRIEND_REQUESTS, query.find());
 }
 
-export function getFriendsForUser(user: User): AnyAction {
-  store.dispatch({
-    type: GETTING_FRIENDS
-  });
+export const gettingFriends = createStandardAction(GETTING_FRIENDS)();
+
+export function getFriendsForUser(user: User) {
+  store.dispatch(gettingFriends());
 
   const query = user.relation('friends').query();
 
-  return {
-    type: GET_FRIENDS,
-    payload: query.find()
-  };
+  return promiseAction(GET_FRIENDS, query.find());
 }
 
-export function enrichUserProfileWithFacebook(currentUser: User): AnyAction {
-  store.dispatch({
-    type: ENRICHING_PROFILE_FACEBOOK
-  });
+export const enrichingProfileDataWithFacebook = createStandardAction(ENRICHING_PROFILE_FACEBOOK)();
+
+export function enrichUserProfileWithFacebook(currentUser: User) {
+  store.dispatch(enrichingProfileDataWithFacebook());
   const accessToken = currentUser.attributes.authData.access_token;
   const payload = new Promise<any>((resolve, reject) => {
     FB.api(
@@ -139,16 +116,13 @@ export function enrichUserProfileWithFacebook(currentUser: User): AnyAction {
     );
   });
 
-  return {
-    type: ENRICHED_PROFILE_FACEBOOK,
-    payload: payload
-  };
+  return promiseAction(ENRICHED_PROFILE_FACEBOOK, payload);
 }
 
-export function findFriendsWithFacebook(currentUser: User): AnyAction {
-  store.dispatch({
-    type: FINDING_FRIENDS_FACEBOOK
-  });
+export const findingFriendsWithFacebook = createStandardAction(FINDING_FRIENDS_FACEBOOK)();
+
+export function findFriendsWithFacebook(currentUser: User) {
+  store.dispatch(findingFriendsWithFacebook());
   const payload = new Promise<any>((resolve, reject) =>
     FB.api('/me/friends', response => {
       if (response && response.data) {
@@ -158,8 +132,5 @@ export function findFriendsWithFacebook(currentUser: User): AnyAction {
       resolve();
     })
   );
-  return {
-    type: FOUND_FRIENDS_FACEBOOK,
-    payload
-  };
+  return promiseAction(FOUND_FRIENDS_FACEBOOK, payload);
 }

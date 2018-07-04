@@ -14,7 +14,7 @@ export function getSettlementsToUser(toUserId: string) {
 
   const payload: Promise<Settlement[]> = new Promise((resolve, reject) => {
     Parse.Cloud.run(CLOUD_FUNCTION_GET_SETTLEMENTS_BETWEEN_USERS, {
-      toUserId: toUserId
+      toUserId
     }).then(result => {
       resolve(result);
     });
