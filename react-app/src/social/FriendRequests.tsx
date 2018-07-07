@@ -81,7 +81,4 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FriendRequests = connect(
-  mapStateToProps,
-  { acceptFriendRequest, getFriendRequests }
-)(FriendRequestsComponent);
+export const FriendRequests = connect(mapStateToProps)(FriendRequestsComponent);
