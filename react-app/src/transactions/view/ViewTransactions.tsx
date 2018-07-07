@@ -129,11 +129,11 @@ function mapStateToProps(
 
 const mapDispatchToProps: ViewTransactionsComponentDispatchProps = { getTransactionsToUser, getFriendsForUser };
 
-export const ViewTransactions = combineContainers(ViewTransactionsComponent, [
+export const ViewTransactions = combineContainers(
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   withRouter,
   withStyles(styles)
-]);
+)(ViewTransactionsComponent);

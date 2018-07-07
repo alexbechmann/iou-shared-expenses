@@ -102,10 +102,10 @@ function mapStateToProps(state: AppState): RegisterProps {
 
 const mapDispatchToProps: RegisterDispatchProps = { register };
 
-export const Register = combineContainers(RegisterComponent, [
+export const Register = combineContainers(
   reduxForm({ form: 'authform', destroyOnUnmount: false }),
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-]);
+)(RegisterComponent);

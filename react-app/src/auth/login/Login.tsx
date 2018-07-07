@@ -95,10 +95,10 @@ function mapStateToProps(state: AppState): LoginProps {
 
 const mapDispatchToProps: LoginDispatchProps = { loginWithFacebook, loginWithPassword };
 
-export const Login = combineContainers(LoginComponent, [
+export const Login = combineContainers(
   reduxForm({ form: 'authform', destroyOnUnmount: false }),
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-]);
+)(LoginComponent);

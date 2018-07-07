@@ -88,10 +88,10 @@ function mapStateToProps(state: AppState): OverviewProps {
 
 const mapDispatchToProps: OverviewDispatchProps = { getFriendsForUser };
 
-export const Overview = combineContainers(OverviewComponent, [
+export const Overview = combineContainers(
   withStyles(overviewStyles, { withTheme: true }),
   connect(
     mapStateToProps,
     mapDispatchToProps
   )
-]);
+)(OverviewComponent);

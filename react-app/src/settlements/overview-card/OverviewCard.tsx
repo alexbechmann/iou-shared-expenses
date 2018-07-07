@@ -79,10 +79,10 @@ function mapStateToProps(state: AppState, ownProps: OverviewCardProps): ConnectP
 
 const mapDispatchToProps: DispatchProps = { getSettlementsToUser };
 
-export const OverviewCard = combineContainers(OverviewCardComponent, [
+export const OverviewCard = combineContainers(
   connect(
     mapStateToProps,
     mapDispatchToProps
   ),
   withStyles(styles)
-]);
+)(OverviewCardComponent);

@@ -293,7 +293,7 @@ const mapDispatchToProps: EditTransactionDispatchProps = {
   getTransactionAndSetEditFormValues
 };
 
-export const EditTransaction = combineContainers(EditTransactionComponent, [
+export const EditTransaction = combineContainers(
   reduxForm({
     form: formName,
     destroyOnUnmount: true,
@@ -303,4 +303,4 @@ export const EditTransaction = combineContainers(EditTransactionComponent, [
     mapStateToProps,
     mapDispatchToProps
   )
-]);
+)(EditTransactionComponent);
