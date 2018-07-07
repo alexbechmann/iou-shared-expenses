@@ -18,12 +18,14 @@ import { TransactionType } from '@iou/core';
 import { DialogProps } from '@material-ui/core/Dialog';
 import { WithWidthProps } from '@material-ui/core/withWidth';
 
-interface Props {
+interface NewTransactionDialogProps {
   handleClose: () => void;
   open: boolean;
 }
 
-class NewTransactionDialogComponent extends React.Component<Props & DialogProps & WithWidthProps> {
+interface Props extends NewTransactionDialogProps, DialogProps, WithWidthProps {}
+
+class NewTransactionDialog extends React.Component<Props> {
   render() {
     const { fullScreen } = this.props;
     return (
@@ -38,25 +40,19 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
           <DialogContent>
             <DialogContentText>Choose a transaction type to get started.</DialogContentText>
             <List component="nav">
-              <ListItem
-                button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.IOU}`}>{props.children}</Link>}
-              >
+              <ListItem button={true} component={this.linkComponent(`/transactions/new/${TransactionType.IOU}`)}>
                 <ListItemIcon>
                   <Icon>note</Icon>
                 </ListItemIcon>
                 <ListItemText primary="I Owe You" />
               </ListItem>
-              <ListItem button={true} component={props => <Link to="#">{props.children}</Link>}>
+              <ListItem button={true} component={this.linkComponent('#')}>
                 <ListItemIcon>
                   <Icon>receipt</Icon>
                 </ListItemIcon>
                 <ListItemText primary="Purchase" />
               </ListItem>
-              <ListItem
-                button={true}
-                component={props => <Link to={`/transactions/new/${TransactionType.Payment}`}>{props.children}</Link>}
-              >
+              <ListItem button={true} component={this.linkComponent(`/transactions/new/${TransactionType.Payment}`)}>
                 <ListItemIcon>
                   <Icon>payment</Icon>
                 </ListItemIcon>
@@ -73,6 +69,10 @@ class NewTransactionDialogComponent extends React.Component<Props & DialogProps 
       </div>
     );
   }
+
+  linkComponent(to: string) {
+    return (props: any) => <Link to={to}>{props.children}</Link>;
+  }
 }
 
-export const NewTransactionDialog = withMobileDialog<Props>()(NewTransactionDialogComponent);
+export default withMobileDialog<Props>()(NewTransactionDialog) as React.ComponentType<NewTransactionDialogProps>;

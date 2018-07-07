@@ -29,7 +29,7 @@ interface Props extends ConnectedReduxProps {
   sendingFriendRequests: string[];
 }
 
-export class FindFriendsComponent extends React.Component<Props> {
+class FindFriendsComponent extends React.Component<Props> {
   private search$: Subject<string> = new Subject<string>();
 
   constructor(props: Props) {

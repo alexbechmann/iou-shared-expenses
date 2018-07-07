@@ -10,7 +10,7 @@ import {
   CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST
 } from '@iou/core';
 import { createStandardAction, action } from 'typesafe-actions';
-import { promiseAction } from 'src/state/promise-action';
+import { promiseAction, parsePromiseAction } from 'src/state/promise-action';
 
 export const FINDING_USERS = 'IOU/FINDING_USERS';
 export const FOUND_USERS = 'IOU/FOUND_USERS';
@@ -28,16 +28,18 @@ export const ENRICHED_PROFILE_FACEBOOK = 'IOU/ENRICHED_PROFILE_FACEBOOK';
 export const FINDING_FRIENDS_FACEBOOK = 'IOU/FINDING_FRIENDS_FACEBOOK';
 export const FOUND_FRIENDS_FACEBOOK = 'IOU/FOUND_FRIENDS_FACEBOOK';
 
-export const acceptingFriendRequest = createStandardAction(ACCEPTING_FRIEND_REQUEST)();
+export const acceptingFriendRequest = (userId: string) => action(ACCEPTING_FRIEND_REQUEST, userId);
 
 export function acceptFriendRequest(userId: string) {
-  store.dispatch(acceptingFriendRequest());
+  store.dispatch(acceptingFriendRequest(userId));
 
   const params = {
     toUserId: userId
   };
 
-  return promiseAction(ACCEPTED_FRIEND_REQUEST, Parse.Cloud.run(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, params));
+  const payload: Parse.Promise<void> = Parse.Cloud.run(CLOUD_FUNCTION_ACCEPT_FRIEND_REQUEST, params);
+
+  return parsePromiseAction(ACCEPTED_FRIEND_REQUEST, payload, params);
 }
 
 export const setSearchText = createStandardAction(SET_SEARCH_TEXT)<string>();
@@ -53,10 +55,10 @@ export function findUsers(searchText: string) {
 
   store.dispatch(findingUsers());
 
-  return promiseAction(FOUND_USERS, Parse.Query.or(usernameQuery, emailQuery).find());
+  return parsePromiseAction(FOUND_USERS, Parse.Query.or(usernameQuery, emailQuery).find());
 }
 
-export const sendingFriendRequest = (userId: string) => action(SENDING_FRIEND_REQUEST);
+export const sendingFriendRequest = (userId: string) => action(SENDING_FRIEND_REQUEST, userId);
 
 export function sendFriendRequest(userId: string) {
   store.dispatch(sendingFriendRequest(userId));
@@ -65,7 +67,7 @@ export function sendFriendRequest(userId: string) {
     toUserId: userId
   };
 
-  return promiseAction(SENT_FRIEND_REQUEST, Parse.Cloud.run(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, params), {
+  return parsePromiseAction(SENT_FRIEND_REQUEST, Parse.Cloud.run(CLOUD_FUNCTION_SEND_FRIEND_REQUEST, params), {
     id: userId
   });
 }
@@ -83,7 +85,7 @@ export function getFriendRequests(currentUserId: string) {
   });
   query.include('fromUser');
 
-  return promiseAction(GET_FRIEND_REQUESTS, query.find());
+  return parsePromiseAction(GET_FRIEND_REQUESTS, query.find());
 }
 
 export const gettingFriends = createStandardAction(GETTING_FRIENDS)();
@@ -93,7 +95,7 @@ export function getFriendsForUser(user: User) {
 
   const query = user.relation('friends').query();
 
-  return promiseAction(GET_FRIENDS, query.find());
+  return parsePromiseAction(GET_FRIENDS, query.find());
 }
 
 export const enrichingProfileDataWithFacebook = createStandardAction(ENRICHING_PROFILE_FACEBOOK)();
@@ -128,8 +130,9 @@ export function findFriendsWithFacebook(currentUser: User) {
       if (response && response.data) {
         const ids = response.data.map(friend => friend.id);
         Parse.Cloud.run(CLOUD_FUNCTION_FIND_FRIENDS_WITH_FACEBOOK_IDS, { facebookIds: ids }).then(resolve);
+      } else {
+        resolve();
       }
-      resolve();
     })
   );
   return promiseAction(FOUND_FRIENDS_FACEBOOK, payload);

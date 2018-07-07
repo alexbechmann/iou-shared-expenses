@@ -1,4 +1,7 @@
+import { FriendRequest } from '@iou/core';
 import {
+  GETTING_FRIENDS,
+  GET_FRIENDS,
   SET_SEARCH_TEXT,
   FINDING_USERS,
   FOUND_USERS,
@@ -8,9 +11,7 @@ import {
   ACCEPTED_FRIEND_REQUEST,
   GET_FRIEND_REQUESTS,
   GETTING_FRIEND_REQUESTS
-} from 'src/social/state/social.actions';
-import { FriendRequest } from '@iou/core';
-import { GETTING_FRIENDS, GET_FRIENDS } from './social.actions';
+} from './social.actions';
 import { User } from 'parse';
 import * as Parse from 'parse';
 import { SocialState } from 'src/social/state/social.state';
@@ -42,46 +43,45 @@ export function socialReducer(state: SocialState = defaultState, action: AppActi
     }
     case FOUND_USERS: {
       if (action.payload && !(action.payload instanceof Parse.Error)) {
-        const newState: SocialState = Object.assign({}, state);
-        newState.searchResults = action.payload as User[];
-        newState.findingUsers = false;
-        return newState;
+        return {
+          ...state,
+          searchResults: action.payload,
+          findingUsers: false
+        };
       } else {
         return state;
       }
     }
     case SENDING_FRIEND_REQUEST: {
-      const newState: SocialState = Object.assign({}, state);
-      newState.sendingFriendRequests = Array.from(state.sendingFriendRequests)
-        .filter(r => r !== action.payload)
-        .concat([action.payload]);
-      return newState;
+      return {
+        ...state,
+        sendingFriendRequests: Array.from(state.sendingFriendRequests)
+          .filter(r => r !== action.payload)
+          .concat([action.payload])
+      };
     }
     case SENT_FRIEND_REQUEST: {
       if (action.payload && !(action.payload instanceof Parse.Error)) {
         const newState: SocialState = Object.assign({}, state);
-        newState.sendingFriendRequests = state.sendingFriendRequests.filter(r => r !== action.metadata.id);
+        newState.sendingFriendRequests = state.sendingFriendRequests.filter(r => r !== action.meta.id);
         return newState;
       } else {
         return state;
       }
     }
     case ACCEPTING_FRIEND_REQUEST: {
-      if (action.payload && !(action.payload instanceof Parse.Error)) {
-        const newState: SocialState = Object.assign({}, state);
-        newState.acceptingFriendRequests = Array.from(state.acceptingFriendRequests)
+      return {
+        ...state,
+        acceptingFriendRequests: Array.from(state.acceptingFriendRequests)
           .filter(r => r !== action.payload)
-          .concat([action.payload]);
-        return newState;
-      } else {
-        return state;
-      }
+          .concat([action.payload])
+      };
     }
     case ACCEPTED_FRIEND_REQUEST: {
       if (action.payload && !(action.payload instanceof Parse.Error)) {
         const newState: SocialState = Object.assign({}, state);
-        newState.acceptingFriendRequests = state.acceptingFriendRequests.filter(r => r !== action.metadata.id);
-        newState.friendRequests = state.friendRequests.filter(r => r.getToUser().id !== action.metadata.id);
+        newState.acceptingFriendRequests = state.acceptingFriendRequests.filter(r => r !== action.meta.toUserId);
+        newState.friendRequests = state.friendRequests.filter(r => r.getToUser().id !== action.meta.toUserId);
         return newState;
       } else {
         return state;

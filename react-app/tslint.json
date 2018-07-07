@@ -23,6 +23,9 @@
       "no-public"
     ],
     "no-empty-interface": false,
-    "no-console": false
+    "no-console": false,
+    "object-literal-shorthand": false,
+    "jsx-boolean-value": false,
+    "jsx-no-lambda": false
   }
 }

@@ -4,7 +4,7 @@ import { enrichUserProfileWithFacebook, findFriendsWithFacebook } from 'src/soci
 import { User } from 'parse';
 import { LoginModel } from 'src/auth/login/models/login.model';
 import { RegisterModel } from 'src/auth/register/models/register.model';
-import { promiseAction } from '../../state/promise-action';
+import { promiseAction, parsePromiseAction } from '../../state/promise-action';
 import { createStandardAction } from 'typesafe-actions';
 export const LOGGING_IN = 'IOU/LOGGING_IN';
 export const LOGIN = 'IOU/LOGIN';
@@ -39,11 +39,11 @@ export function loginWithFacebook() {
 
 export function loginWithPassword(loginModel: LoginModel) {
   store.dispatch(loggingIn());
-  return promiseAction(LOGIN, Parse.User.logIn(loginModel.username, loginModel.password));
+  return parsePromiseAction(LOGIN, Parse.User.logIn(loginModel.username, loginModel.password));
 }
 
 export function logout() {
-  return promiseAction(LOGOUT, Parse.User.logOut());
+  return parsePromiseAction(LOGOUT, Parse.User.logOut());
 }
 
 export const registering = createStandardAction(REGISTERING)();
@@ -51,7 +51,7 @@ export const registering = createStandardAction(REGISTERING)();
 export function register(registerModel: RegisterModel) {
   store.dispatch(registering());
 
-  return promiseAction(
+  return parsePromiseAction(
     REGISTERED,
     Parse.User.signUp(registerModel.username, registerModel.password, {
       email: registerModel.email

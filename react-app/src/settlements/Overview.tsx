@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { combineContainers } from 'combine-containers';
 import { getFriendsForUser } from 'src/social/state/social.actions';
 import { AppState } from 'src/state';
-import { NewTransactionDialog } from 'src/transactions/dialog/NewTransactionDialog';
+import NewTransactionDialog from 'src/transactions/dialog/NewTransactionDialog';
 
 type ClassNames = 'actionButton';
 
