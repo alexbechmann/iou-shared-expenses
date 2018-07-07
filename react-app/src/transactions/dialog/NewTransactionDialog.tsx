@@ -75,4 +75,4 @@ class NewTransactionDialog extends React.Component<Props> {
   }
 }
 
-export default withMobileDialog<Props>()(NewTransactionDialog) as React.ComponentType<NewTransactionDialogProps>;
+export default withMobileDialog()(NewTransactionDialog) as React.ComponentType<NewTransactionDialogProps>;
