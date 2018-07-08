@@ -102,7 +102,7 @@ class FindFriends extends React.Component<Props> {
   }
 }
 
-function mapStateToProps(state: AppState, prevProps: Props) {
+function mapStateToProps(state: AppState) {
   return {
     searchText: state.social.searchText,
     searchResults: state.social.searchResults,

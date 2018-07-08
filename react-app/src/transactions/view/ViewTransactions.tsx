@@ -13,9 +13,9 @@ import {
   ListItemText,
   Paper,
   ListSubheader,
-  StyleRulesCallback,
   WithStyles,
-  withStyles
+  withStyles,
+  Theme
 } from '@material-ui/core';
 import * as Icons from '@material-ui/icons';
 import { SettlementsTable } from 'src/settlements/SettlementsTable';
@@ -23,9 +23,7 @@ import { UserProperties, userHelper, Transaction } from '@iou/core';
 import { combineContainers } from 'combine-containers';
 import { ConnectedReduxProps } from 'src/state/connected-redux-props';
 
-type StyleClassNames = 'icon';
-
-const styles: StyleRulesCallback<StyleClassNames> = theme => ({
+const styles = (theme: Theme) => ({
   icon: {
     color: theme.palette.secondary.main
   }
@@ -47,7 +45,7 @@ interface Props
   extends ViewTransactionsProps,
     ConnectedReduxProps,
     RouteComponentProps<ViewTransactionsRouteParameters>,
-    WithStyles<StyleClassNames> {}
+    WithStyles<typeof styles> {}
 
 class ViewTransactions extends React.Component<Props> {
   render() {
@@ -95,7 +93,7 @@ class ViewTransactions extends React.Component<Props> {
       this.props.dispatch(getTransactionsToUser(props.currentUser.id, props.friend.id, []));
     } else {
       this.props.dispatch(getFriendsForUser(props.currentUser)).meta.promise.then(() => {
-        this.props.dispatch(getTransactionsToUser(props.currentUser.id, props.friend!.id, []));
+        this.props.dispatch(getTransactionsToUser(this.props.currentUser.id, this.props.friend!.id, []));
       });
     }
   }

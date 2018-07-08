@@ -5,7 +5,7 @@ export function promiseAction<T extends string, P, M>(type: T, payload: Promise<
   return action(type, (payload as any) as P, meta);
 }
 
-export function parsePromiseAction<T extends string, P, M = undefined>(type: T, payload: Parse.Promise<P>, meta?: M) {
+export function parsePromiseAction<T extends string, P, M = undefined>(type: T, payload: Parse.IPromise<P>, meta?: M) {
   const m = meta as M;
   return {
     type: type,
@@ -14,7 +14,7 @@ export function parsePromiseAction<T extends string, P, M = undefined>(type: T, 
       ...(m as any),
       promise: payload
     } as M & {
-      promise: Parse.Promise<P>;
+      promise: Parse.IPromise<P>;
     }
   };
 }

@@ -12,7 +12,7 @@ import FindFriends from 'src/social/FindFriends';
 import FriendRequests from 'src/social/FriendRequests';
 import ViewTransactions from 'src/transactions/view/ViewTransactions';
 import Overview from 'src/settlements/Overview';
-import { EditTransaction } from './transactions/edit/EditTransaction';
+import EditTransaction from './transactions/edit/EditTransaction';
 import { Authorize } from 'src/auth/Authorize';
 import { initParseSDK } from 'src/parse/state/parse.actions';
 

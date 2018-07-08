@@ -1,5 +1,4 @@
 import { TransactionState } from './transaction.state';
-import { AnyAction } from 'redux';
 import {
   SAVING_TRANSACTION,
   SAVED_TRANSACTION,
@@ -9,6 +8,7 @@ import {
   GETTING_EDIT_TRANSACTION
 } from './transaction.actions';
 import { Transaction } from '@iou/core';
+import { AppAction } from '../../state/app-action';
 
 const defaultState: TransactionState = {
   savingTransaction: false,
@@ -18,30 +18,36 @@ const defaultState: TransactionState = {
   loadingEditTransaction: false
 };
 
-export function transactionReducer(state: TransactionState = defaultState, action: AnyAction) {
+export function transactionReducer(state: TransactionState = defaultState, action: AppAction): TransactionState {
   switch (action.type) {
     case SAVING_TRANSACTION: {
-      const newState: TransactionState = Object.assign({}, state);
-      newState.savingTransaction = true;
-      return newState;
+      return {
+        ...state,
+        savingTransaction: true
+      };
     }
     case SAVED_TRANSACTION: {
-      const newState: TransactionState = Object.assign({}, state);
+      const newState: TransactionState = {
+        ...state
+      };
       newState.savingTransaction = false;
       if (action.payload instanceof Transaction) {
         newState.transactionError = '';
       } else if (action.payload instanceof Parse.Error) {
-        newState.transactionError = (action.payload as Parse.Error).message;
+        newState.transactionError = action.payload.message;
       }
       return newState;
     }
     case GETTING_TRANSACTIONS: {
-      const newState: TransactionState = Object.assign({}, state);
-      newState.gettingTransactions = true;
-      return newState;
+      return {
+        ...state,
+        gettingTransactions: true
+      };
     }
     case GOT_TRANSACTIONS: {
-      const newState: TransactionState = Object.assign({}, state);
+      const newState: TransactionState = {
+        ...state
+      };
       newState.gettingTransactions = false;
       if (action.payload) {
         const receivedTransactions = action.payload as Transaction[];
@@ -56,13 +62,16 @@ export function transactionReducer(state: TransactionState = defaultState, actio
     }
 
     case GETTING_EDIT_TRANSACTION: {
-      const newState: TransactionState = Object.assign({}, state);
-      newState.gettingTransactions = true;
-      newState.loadingEditTransaction = true;
-      return newState;
+      return {
+        ...state,
+        gettingTransactions: true,
+        loadingEditTransaction: true
+      };
     }
     case GOT_EDIT_TRANSACTION: {
-      const newState: TransactionState = Object.assign({}, state);
+      const newState: TransactionState = {
+        ...state
+      };
       newState.gettingTransactions = false;
       if (action.payload) {
         const receivedTransaction = action.payload as Transaction;

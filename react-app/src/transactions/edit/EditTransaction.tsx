@@ -12,6 +12,7 @@ import { combineContainers } from 'combine-containers';
 import { connect } from 'react-redux';
 import { saveTransaction, getTransactionAndSetEditFormValues } from 'src/transactions/state/transaction.actions';
 import { getFriendsForUser } from 'src/social/state/social.actions';
+import { ConnectedReduxProps } from '../../state/connected-redux-props';
 
 interface RouteParameters {
   id: string;
@@ -41,23 +42,17 @@ export interface TransactionFormData {
   transactionType: TransactionType;
 }
 
-export interface EditTransactionDispatchProps {
-  saveTransaction: (transaction: Transaction) => any;
-  getFriendsForUser: (user: User) => any;
-  getTransactionAndSetEditFormValues: (id: string, formName: string) => any;
-}
-
 interface Props
   extends RouteComponentProps<RouteParameters>,
     EditTransactionProps,
-    EditTransactionDispatchProps,
+    ConnectedReduxProps,
     InjectedFormProps {}
 
 interface State {
   lastTouchedUserSelect: string;
 }
 
-class EditTransactionComponent extends React.Component<Props, State> {
+class EditTransaction extends React.Component<Props, State> {
   state: State = {
     lastTouchedUserSelect: nameof<TransactionFormData>('fromUserId')
   };
@@ -80,9 +75,9 @@ class EditTransactionComponent extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.props.getFriendsForUser(this.props.currentUser);
+    this.props.dispatch(getFriendsForUser(this.props.currentUser));
     if (this.props.match.params.id) {
-      this.props.getTransactionAndSetEditFormValues(this.props.match.params.id, this.props.form);
+      this.props.dispatch(getTransactionAndSetEditFormValues(this.props.match.params.id, this.props.form));
     }
   }
 
@@ -229,7 +224,7 @@ class EditTransactionComponent extends React.Component<Props, State> {
     transaction.amount = parseInt(transactionFormData.amount, 10);
     transaction.setFromUserPointer(createUserPointer(transactionFormData.fromUserId));
     transaction.setToUserPointer(createUserPointer(transactionFormData.toUserId));
-    this.props.saveTransaction(transaction).then(() => {
+    this.props.dispatch(saveTransaction(transaction)).meta.promise.then(() => {
       this.props.history.push('/overview');
     });
   }
@@ -287,20 +282,11 @@ function mapStateToProps(
   };
 }
 
-const mapDispatchToProps: EditTransactionDispatchProps = {
-  saveTransaction,
-  getFriendsForUser,
-  getTransactionAndSetEditFormValues
-};
-
-export const EditTransaction = combineContainers(
+export default combineContainers(
   reduxForm({
     form: formName,
     destroyOnUnmount: true,
     validate: validate
   }),
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )
-)(EditTransactionComponent);
+  connect(mapStateToProps)
+)(EditTransaction);
