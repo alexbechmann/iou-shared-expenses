@@ -28,7 +28,7 @@ interface Props extends ConnectedReduxProps {
   currentUser: User;
 }
 
-export class FriendRequestsComponent extends React.Component<Props> {
+class FriendRequests extends React.Component<Props> {
   render() {
     return <div>{this.renderResults()}</div>;
   }
@@ -81,4 +81,4 @@ function mapStateToProps(state: AppState, prevProps: Props) {
   };
 }
 
-export const FriendRequests = connect(mapStateToProps)(FriendRequestsComponent);
+export default connect(mapStateToProps)(FriendRequests);

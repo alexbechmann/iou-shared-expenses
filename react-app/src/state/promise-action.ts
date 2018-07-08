@@ -6,9 +6,15 @@ export function promiseAction<T extends string, P, M>(type: T, payload: Promise<
 }
 
 export function parsePromiseAction<T extends string, P, M = undefined>(type: T, payload: Parse.Promise<P>, meta?: M) {
+  const m = meta as M;
   return {
     type: type,
     payload: (payload as any) as P | Parse.Error,
-    meta: meta as M
+    meta: {
+      ...(m as any),
+      promise: payload
+    } as M & {
+      promise: Parse.Promise<P>;
+    }
   };
 }
