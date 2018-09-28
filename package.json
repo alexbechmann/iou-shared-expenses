@@ -4,21 +4,23 @@
   "description": "IOU Shared expenses developer commands",
   "scripts": {
     "test": "",
-    "install:core": "cd ./core && npm install",
-    "install:parse-server": "cd ./parse-server && npm install",
-    "install:react-app": "cd ./react-app && npm install",
     "clean:core": "remove-node-modules ./react-app/node_modules/",
-    "clean:parse-server": "remove-node-modules ./parse-server/node_modules/",
+    "clean:server": "remove-node-modules ./server/node_modules/",
     "clean:react-app": "remove-node-modules ./react-app/node_modules/",
-    "clean": "npm-run-all -p clean:core clean:parse-server clean:react-app",
-    "postinstall": "npm-run-all install:core install:parse-server install:react-app",
+    "clean": "npm-run-all -p clean:core clean:server clean:react-app",
+    "postinstall_": "npm-run-all install:core install:server install:react-app",
     "start:core": "cd ./core && npm start",
-    "start:parse-server": "cd ./parse-server && npm start",
+    "start:server": "cd ./server && npm start",
     "start:react-app": "cd ./react-app && npm start",
-    "start": "npm run build:core && npm-run-all -p start:core start:parse-server start:react-app docker-compose",
+    "start": "npm run build:core && npm-run-all -p start:core start:server docker-compose",
     "docker-compose": "docker-compose up",
     "build:core": "cd ./core && npm run build"
   },
+  "workspaces": [
+    "core",
+    "react-app",
+    "server"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/alexbechmann/iou-shared-expenses.git"

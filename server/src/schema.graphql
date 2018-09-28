@@ -1,0 +1,7 @@
+type Transaction {
+  _id: String
+}
+
+type Query {
+  getAllTransactions: [Transaction]
+}
