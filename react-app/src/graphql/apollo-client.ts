@@ -6,7 +6,7 @@ import { onError, ErrorResponse } from 'apollo-link-error';
 import { setContext } from 'apollo-link-context';
 
 export const createApolloClient = () => {
-  const httpLink = new HttpLink({ uri: `http://localhost:3400/graphql` });
+  const httpLink = new HttpLink({ uri: `http://localhost:3004/graphql` });
   const withTokenLink = setContext((operation, { headers }) =>
     Promise.resolve({
       headers: {

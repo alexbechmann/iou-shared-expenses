@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/lodash": "^4.14.116",
+    "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-graphql": "^0.6.12",
     "graphql": "^14.0.2",

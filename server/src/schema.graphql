@@ -2,7 +2,27 @@ type Transaction {
   _id: String
   title: String!
   purchase: Purchase
-  purchaseId: String
+  isSecure: Boolean
+  transactionDate: Date
+  amount: Int
+  formattedAmount: String
+  transactionType: TransactionType
+  currency: Currency
+}
+
+type Date {
+  iso: String
+  timestamp: String
+}
+
+type TransactionType {
+  typeId: Int
+  name: String
+}
+
+type Currency {
+  typeId: Int
+  name: String
 }
 
 input CreateTransactionInput {
@@ -35,4 +55,13 @@ type Mutation {
   createTransaction(transaction: CreateTransactionInput): Transaction
   updateTransaction(id: String!, transaction: PatchTransactionInput): Transaction
   deleteTransaction(id: String!): Boolean
+}
+
+type User {
+ _id: String
+ facebookId: String
+ preferredCurrencyId: String
+ displayName: String
+ friends: [User]
+ email: String
 }

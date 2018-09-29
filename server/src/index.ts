@@ -4,16 +4,19 @@ import Schema from './schema.graphql';
 import { merge } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
 import { transactionCollection, purchaseCollection, initMongoDb } from './db';
+import cors from 'cors';
+import { currencyHelper } from './currencies/currency-helper';
 
 const app = express();
 
-const typeDefs = [Schema];
+app.use(cors());
 
 const transactionResolvers = {
   Query: {
     getTransactions: () =>
       transactionCollection()
         .find()
+        .limit(30)
         .toArray()
   },
 
@@ -26,7 +29,14 @@ const transactionResolvers = {
 
   Transaction: {
     _id: transaction => `${transaction._id}`,
-    purchase: transaction => purchaseCollection().find(purchase => purchase._id === transaction.purchaseId)
+    purchase: ({ purchaseTransactionLinkUUID }) => purchaseCollection().find({ purchaseTransactionLinkUUID }),
+    transactionDate: transaction => ({
+      iso: transaction.transactionDate.toISOString(),
+      timestamp: transaction.transactionDate
+    }),
+    amount: ({ amount }) => parseInt(amount, 10),
+    currency: ({ currencyId }) => currencyHelper.buildCurrency(currencyId),
+    formattedAmount: ({ amount, currencyId }) => currencyHelper.formatAmount(parseInt(amount, 10), currencyId)
   }
 };
 
@@ -35,17 +45,19 @@ const purchaseResolvers = {
     getPurchases: () =>
       purchaseCollection()
         .find()
+        .limit(10)
         .toArray()
   },
   Purchase: {
     _id: purchase => `${purchase._id}`,
-    transactions: purchase =>
+    transactions: ({ purchaseTransactionLinkUUID }) =>
       transactionCollection()
-        .find({ purchaseId: purchase._id })
+        .find({ purchaseTransactionLinkUUID })
         .toArray()
   }
 };
 
+const typeDefs = [Schema];
 const resolvers = merge(transactionResolvers, purchaseResolvers);
 
 export const graphqlSchema = makeExecutableSchema({
