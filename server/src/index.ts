@@ -9,14 +9,11 @@ import { transactionCollection, purchaseCollection, initMongoDb } from './db';
 const app = express();
 
 const typeDefs = [Schema];
-const resolvers = merge({
+
+const transactionResolvers = {
   Query: {
     getTransactions: () =>
       transactionCollection()
-        .find()
-        .toArray(),
-    getPurchases: () =>
-      purchaseCollection()
         .find()
         .toArray()
   },
@@ -28,16 +25,26 @@ const resolvers = merge({
     }
   },
 
-  Purchase: {
-    _id: purchase => `${purchase._id}`,
-    transactions: purchase => transactions.filter(transaction => transaction.purchaseId === purchase._id)
-  },
-
   Transaction: {
     _id: transaction => `${transaction._id}`,
     purchase: transaction => purchases.find(purchase => purchase._id === transaction.purchaseId)
   }
-});
+};
+
+const purchaseResolvers = {
+  Query: {
+    getPurchases: () =>
+      purchaseCollection()
+        .find()
+        .toArray()
+  },
+  Purchase: {
+    _id: purchase => `${purchase._id}`,
+    transactions: purchase => transactions.filter(transaction => transaction.purchaseId === purchase._id)
+  }
+};
+
+const resolvers = merge(transactionResolvers, purchaseResolvers);
 
 export const graphqlSchema = makeExecutableSchema({
   typeDefs,
