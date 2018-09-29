@@ -3,13 +3,19 @@ import graphqlHTTP from 'express-graphql';
 import Schema from './schema.graphql';
 import { merge } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
+import { transactions, purchases } from './test-data';
 
 const app = express();
 
 const typeDefs = [Schema];
 const resolvers = merge({
   Query: {
-    getAllTransactions: () => []
+    getTransactions: () => transactions,
+    getPurchases: () => purchases
+  },
+
+  Purchase: {
+    transactions: purchase => transactions.filter(transaction => transaction.purchaseId === purchase._id)
   }
 });
 

@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "ts-mocha --paths -p tsconfig.json src/**/*.test*.ts",
     "start": "webpack && npm-run-all -p build:watch start:dev",
     "start:dev": "nodemon ./dist/bundle.js",
-    "start:prod": "node ./dist/bundle.js"
+    "start:prod": "node ./dist/bundle.js",
+    "build:prod": "cross-env NODE_ENV=production webpack",
+    "build:watch": "cross-env NODE_ENV=development webpack -w"
   },
   "author": "",
   "license": "ISC",

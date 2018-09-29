@@ -14,7 +14,7 @@ module.exports = {
       modulesDir: path.resolve(__dirname, '../node_modules')
     })
   ],
-  mode: "production",
+  mode: "development",
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js'
@@ -23,10 +23,7 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "ts-loader",
-        // options: {
-        //   getCustomTransformers: () => ({ before: [getTransformer()] })
-        // }
+        loader: "ts-loader"
       },
       {
         test: /\.(ts|tsx)?$/,

@@ -1,7 +1,15 @@
 type Transaction {
   _id: String
+  name: String
+}
+
+type Purchase {
+  _id: String
+  name: String
+  transactions: [Transaction]
 }
 
 type Query {
-  getAllTransactions: [Transaction]
+  getTransactions: [Transaction]
+  getPurchases: [Purchase]
 }
