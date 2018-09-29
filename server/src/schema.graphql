@@ -1,17 +1,38 @@
 type Transaction {
   _id: String
-  name: String
+  title: String!
   purchase: Purchase
   purchaseId: String
 }
 
+input CreateTransactionInput {
+  title: String!
+}
+
+input PatchTransactionInput {
+  _id: String!
+  title: String
+}
+
 type Purchase {
   _id: String
-  name: String
+  title: String!
   transactions: [Transaction]
+}
+
+input CreatePurchaseInput {
+  _id: String
+  title: String!
+  transactions: [CreateTransactionInput]
 }
 
 type Query {
   getTransactions: [Transaction]
   getPurchases: [Purchase]
+}
+
+type Mutation {
+  createTransaction(transaction: CreateTransactionInput): Transaction
+  updateTransaction(id: String!, transaction: PatchTransactionInput): Transaction
+  deleteTransaction(id: String!): Boolean
 }
