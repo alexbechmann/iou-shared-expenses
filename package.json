@@ -12,7 +12,7 @@
     "start:core": "cd ./core && npm start",
     "start:server": "cd ./server && npm start",
     "start:react-app": "cd ./react-app && npm start",
-    "start": "npm run build:core && npm-run-all -p start:core start:server docker-compose",
+    "start": "npm run build:core && npm-run-all -p start:core start:server start:react-app docker-compose",
     "docker-compose": "docker-compose up",
     "build:core": "cd ./core && npm run build"
   },

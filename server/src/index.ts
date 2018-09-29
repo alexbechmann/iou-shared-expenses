@@ -3,7 +3,6 @@ import graphqlHTTP from 'express-graphql';
 import Schema from './schema.graphql';
 import { merge } from 'lodash';
 import { makeExecutableSchema } from 'graphql-tools';
-import { transactions, purchases } from './test-data';
 import { transactionCollection, purchaseCollection, initMongoDb } from './db';
 
 const app = express();
@@ -27,7 +26,7 @@ const transactionResolvers = {
 
   Transaction: {
     _id: transaction => `${transaction._id}`,
-    purchase: transaction => purchases.find(purchase => purchase._id === transaction.purchaseId)
+    purchase: transaction => purchaseCollection().find(purchase => purchase._id === transaction.purchaseId)
   }
 };
 
@@ -40,7 +39,10 @@ const purchaseResolvers = {
   },
   Purchase: {
     _id: purchase => `${purchase._id}`,
-    transactions: purchase => transactions.filter(transaction => transaction.purchaseId === purchase._id)
+    transactions: purchase =>
+      transactionCollection()
+        .find({ purchaseId: purchase._id })
+        .toArray()
   }
 };
 

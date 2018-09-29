@@ -14,7 +14,6 @@ export const initMongoDb = () =>
         console.log('Connected successfully to server');
         db = client.db(dbName);
         resolve(db);
-        //client.close();
       }
     );
   });
