@@ -16,6 +16,10 @@ const resolvers = merge({
 
   Purchase: {
     transactions: purchase => transactions.filter(transaction => transaction.purchaseId === purchase._id)
+  },
+
+  Transaction: {
+    purchase: transaction => purchases.find(purchase => purchase._id === transaction.purchaseId)
   }
 });
 

@@ -1,6 +1,8 @@
 type Transaction {
   _id: String
   name: String
+  purchase: Purchase
+  purchaseId: String
 }
 
 type Purchase {
